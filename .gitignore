@@ -1,0 +1,10 @@
+# Node
+node_modules/
+
+# backend stored data
+/backend/data/
+/backend/database/
+
+# env files
+.env
+backend/.env

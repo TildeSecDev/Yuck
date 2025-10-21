@@ -1,0 +1,621 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Yuck. — Taste the Truth (Mockup v3 - Concept)</title>
+<meta name="description" content="Yuck. — Tastes bad. Works good. Bold concept mockup with playful animations, subscription counter, community gating and prototype checkout." />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<style>
+  /* =========================
+     Theme & Reset
+     ========================= */
+  :root{
+    --bg-black: #0b0b0b;
+    --accent-lime: #cfff04; /* ugly-beautiful lime */
+    --accent-red: #e32636;
+    --cream: #f5f3e7;
+    --muted: #9aa0a6;
+    --card: #0f1112;
+    --glass: rgba(255,255,255,0.04);
+    --max: 1200px;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+    background:var(--bg-black);
+    color:var(--cream);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    line-height:1.45;
+  }
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+
+  /* =========================
+     Header
+     ========================= */
+  header{
+    position:fixed; inset:0 0 auto 0; z-index:60;
+    height:72px; display:flex; align-items:center; justify-content:center;
+    background:linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.22));
+    backdrop-filter: blur(6px);
+    border-bottom:1px solid rgba(255,255,255,0.03);
+  }
+  .nav{max-width:var(--max); width:100%; padding:0 20px; display:flex; align-items:center; gap:18px}
+  .logo{display:flex; align-items:center; gap:12px; cursor:pointer}
+  .badge{
+    width:56px; height:56px; border-radius:10px; display:grid; place-items:center;
+    font-weight:900; font-family:Anton, sans-serif; color:#0b0b0b;
+    background:linear-gradient(135deg,#cfff04 0%, #ffda6d 40%);
+    box-shadow:0 8px 26px rgba(0,0,0,0.45);
+  }
+  .logo .brand {font-weight:800; letter-spacing:0.6px; color:var(--cream); font-size:16px}
+  nav .links{margin-left:auto; display:flex; gap:14px; align-items:center}
+  nav .links a{padding:8px 12px; border-radius:8px; color:var(--muted); font-weight:700; font-size:13px;}
+  nav .links a.active{color:var(--accent-lime); background:rgba(207,255,4,0.06);}
+
+  /* =========================
+     Hero (big, noisy, proud)
+     ========================= */
+  main{margin-top:72px}
+  .hero{
+    position:relative; height:92vh; min-height:560px; display:grid; place-items:center; overflow:hidden;
+  }
+  .hero video, .hero .hero-image{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover; pointer-events:none;
+    transform:scale(1.05);
+    mix-blend-mode:normal;
+    filter:contrast(0.86) saturate(1.05);
+  }
+  /* grain overlay & vignette */
+  .grain{position:absolute; inset:0; background-image: url('https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?q=80&w=2000&auto=format&fit=crop'); opacity:0.06; mix-blend-mode:overlay}
+  .vignette{position:absolute; inset:0; background: radial-gradient(ellipse at center, rgba(0,0,0,0) 45%, rgba(0,0,0,0.42) 100%)}
+
+  .hero-inner{position:relative; z-index:6; max-width:var(--max); width:100%; padding:36px 22px; display:grid; grid-template-columns:1fr 420px; gap:28px; align-items:center}
+  .hero-copy{padding:10px 12px}
+  h1.title{font-family:Anton, sans-serif; font-weight:400; font-size:64px; line-height:0.92; color:var(--cream); text-transform:uppercase; letter-spacing:1px; text-shadow:0 10px 30px rgba(0,0,0,0.6)}
+  p.lead{color:rgba(245,243,231,0.92); font-weight:600; margin-top:12px; font-size:18px}
+  .hero-cta{margin-top:18px; display:flex; gap:12px; align-items:center}
+  .btn{
+    border-radius:12px; padding:12px 16px; font-weight:900; font-size:14px; cursor:pointer; border:0;
+    transform:translateZ(0); transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .btn-ugly{background:var(--accent-lime); color:#0b0b0b; box-shadow:0 12px 28px rgba(207,255,4,0.08)}
+  .btn-danger{background:transparent; border:2px solid rgba(227,38,54,0.12); color:var(--cream)}
+  /* jitter micro-interaction */
+  .btn-ugly:hover{transform:translateY(-4px) rotate(-0.6deg); box-shadow:0 18px 36px rgba(207,255,4,0.12)}
+  .btn-ugly:active{transform:translateY(-2px) rotate(-0.3deg)}
+
+  /* right card - translucent, reversed palette */
+  .hero-card{background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(0,0,0,0.04)); padding:18px; border-radius:12px; color:var(--cream); box-shadow:0 8px 40px rgba(0,0,0,0.6); border:1px solid rgba(255,255,255,0.03)}
+  .hero-card h4{font-weight:900; color:var(--accent-lime)}
+  .price{font-weight:900; font-size:28px; margin-top:8px}
+  .save{display:inline-block; margin-top:8px; padding:6px 10px; border-radius:999px; background:rgba(227,38,54,0.08); color:var(--accent-red); font-weight:800}
+
+  /* =========================
+     Product grid + ripple effect
+     ========================= */
+  .section{max-width:var(--max); margin:28px auto; padding:28px 22px}
+  h2.section-title{font-size:28px; color:var(--cream); margin-bottom:18px}
+  .grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
+  .product{
+    background:linear-gradient(180deg,#0f1112 0%, #0b0b0b 100%);
+    border-radius:14px; padding:18px; box-shadow:0 18px 60px rgba(0,0,0,0.6); position:relative; overflow:hidden;
+    transition:transform .28s cubic-bezier(.2,.9,.27,1), box-shadow .28s;
+  }
+  .product:hover{transform:translateY(-8px) scale(1.01)}
+  .thumb{height:240px; border-radius:10px; background:linear-gradient(180deg,#111 0%, #0a0a0a 100%); display:grid; place-items:center; font-weight:900; color:var(--muted); position:relative; overflow:hidden}
+  .product h3{margin-top:12px; font-size:18px; font-weight:900}
+  .meta{display:flex; justify-content:space-between; align-items:center; margin-top:12px}
+  .meta .price{font-weight:900; color:var(--cream)}
+
+  /* ripple on hover — using pseudo element and JS for ripple center */
+  .ripple{position:absolute; border-radius:50%; transform:scale(0); background: radial-gradient(circle, rgba(207,255,4,0.18), rgba(207,255,4,0.06)); pointer-events:none; transition:transform .6s cubic-bezier(.2,.9,.27,1), opacity .6s;}
+  /* small "liquid" ripple subtle movement on hover */
+  .thumb::after{content:''; position:absolute; inset:0; background:radial-gradient(circle at 20% 20%, rgba(207,255,4,0.02), transparent 8%); opacity:0; transition:opacity .4s}
+  .thumb:hover::after{opacity:1}
+
+  /* =========================
+     Community section
+     ========================= */
+  .community{
+    margin-top:14px; padding:20px; border-radius:14px; background:linear-gradient(180deg,#0b0b0b,#0d0d0d); display:flex; gap:18px; align-items:center; justify-content:space-between;
+  }
+  .community .left{flex:1}
+  .join-row{display:flex; gap:10px; align-items:center; margin-top:12px}
+  input[type="email"]{padding:12px 14px; border-radius:10px; border:1px solid rgba(255,255,255,0.06); background:transparent; color:var(--cream)}
+  .counter{font-weight:900; color:var(--accent-lime); font-size:22px; margin-top:8px}
+
+  /* =========================
+     Articles/testimonials strip
+     ========================= */
+  .strip{display:flex; gap:12px; margin-top:18px}
+  .tile{background:linear-gradient(180deg,#0f1112,#0b0b0b); padding:14px; border-radius:12px; width:33%; box-shadow:0 8px 30px rgba(0,0,0,0.6)}
+  .tile p{color:var(--muted); margin-top:8px; font-size:14px}
+
+  /* =========================
+     About / Contact / FAQ
+     ========================= */
+  .two-col{display:grid; grid-template-columns:1fr 380px; gap:18px; margin-top:18px}
+  .faq .q{background:rgba(255,255,255,0.02); padding:12px; border-radius:10px; cursor:pointer; margin-top:8px}
+  .faq .a{height:0; overflow:hidden; transition:height .28s ease; color:var(--muted); padding:0 12px}
+
+  /* =========================
+     Footer
+     ========================= */
+  footer{padding:28px 22px; margin-top:32px; text-align:center; color:var(--muted)}
+
+  /* =========================
+     Modal checkout
+     ========================= */
+  .modal{position:fixed; inset:0; display:none; z-index:120; align-items:center; justify-content:center; background:linear-gradient(180deg, rgba(2,6,8,0.6), rgba(2,6,8,0.6))}
+  .modal.show{display:flex}
+  .panel{background:#0f1112; border-radius:12px; padding:18px; width:420px; border:1px solid rgba(255,255,255,0.03)}
+  .panel h3{color:var(--cream)}
+  .panel .foot{display:flex; gap:8px; justify-content:flex-end; margin-top:14px}
+
+  /* =========================
+     Responsive
+     ========================= */
+  @media(max-width:1100px){ .hero-inner{grid-template-columns:1fr} .grid{grid-template-columns:repeat(2,1fr)} .tile{width:46%} .two-col{grid-template-columns:1fr} }
+  @media(max-width:680px){ .grid{grid-template-columns:1fr} .tile{width:100%} h1.title{font-size:36px} .hero{height:72vh} .logo .brand{display:none} nav .links{display:none} .hero-card{display:none} }
+</style>
+</head>
+<body>
+<header>
+  <div class="nav">
+    <div class="logo" onclick="location.hash='#/product'">
+      <div class="badge">Y</div>
+      <div style="display:flex;flex-direction:column">
+        <div class="brand" style="font-weight:800">Yuck.</div>
+        <div style="font-size:11px;color:var(--muted)">Tastes the truth</div>
+      </div>
+    </div>
+
+    <nav class="links" aria-label="Main navigation">
+      <a href="#/product" class="navlink active">Product</a>
+      <a href="#/community" class="navlink">Community</a>
+      <a href="#/about" class="navlink">About</a>
+      <a href="#/contact" class="navlink">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="app" role="main">
+  <!-- pages rendered by JS -->
+</main>
+
+<!-- Checkout modal (prototype only) -->
+<div id="checkoutModal" class="modal" aria-hidden="true">
+  <div class="panel" role="dialog" aria-modal="true" aria-labelledby="ckTitle">
+    <h3 id="ckTitle">Mock Checkout</h3>
+    <p style="color:var(--muted); margin-top:8px">Prototype only — replace with Stripe/PayPal on server for production.</p>
+    <label style="display:block;margin-top:12px;color:var(--muted);font-size:13px">Email</label>
+    <input id="ckEmail" type="email" placeholder="you@domain.com" style="width:100%; padding:10px; border-radius:8px; border:1px solid rgba(255,255,255,0.04); background:transparent; color:var(--cream)">
+    <div class="foot">
+      <button id="closeModal" class="btn btn-danger" style="padding:10px 12px">Cancel</button>
+      <button id="confirmPay" class="btn btn-ugly" style="padding:10px 12px">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div style="max-width:var(--max); margin:0 auto; padding:6px 22px;">
+    <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;">
+      <div>© <strong>Yuck.</strong> 2025 — Taste the truth.</div>
+      <div style="color:var(--muted)">Prototype — security & DMARC/SPF/DKIM recommended by TildeSec</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* =========================
+   Single-file router & pages
+   - Includes mock dynamic behaviours:
+     * subscription counter (persisted)
+     * email capture animations (mock send)
+     * fake invite link generation
+     * ripple effects on product thumbs
+   ========================= */
+
+const app = document.getElementById('app');
+const navlinks = document.querySelectorAll('.navlink');
+
+window.addEventListener('hashchange', route);
+window.addEventListener('load', () => { if(!location.hash) location.hash='#/product'; route(); });
+
+function setActiveRoute(path){
+  navlinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === path));
+}
+
+/* ---------- persistent fake subscriber counter ----------
+   We'll persist "brave souls" in localStorage and animate increments.
+---------------------------------------------------------*/
+const COUNTER_KEY = 'yuck_brave_counter';
+if(!localStorage.getItem(COUNTER_KEY)) localStorage.setItem(COUNTER_KEY', '427'); // seed
+
+function getCounter(){ return parseInt(localStorage.getItem(COUNTER_KEY) || '0', 10); }
+function bumpCounter(n=1){
+  const v = getCounter() + n;
+  localStorage.setItem(COUNTER_KEY, ''+v);
+  return v;
+}
+
+/* ---------- product dataset ---------- */
+const PRODUCTS = [
+  {id:'yck-01', name:'Original Blend', price:39.00, sub:32.00, desc:'Pre-workout push. Honest taste. Serious result.'},
+  {id:'yck-02', name:'Recovery Mix', price:35.00, sub:28.00, desc:'Post-workout calm & rebuild.'},
+  {id:'yck-03', name:'Daily Greens', price:26.00, sub:21.00, desc:'Daily nutrient dust. No nonsense.'}
+];
+
+/* ---------- ROUTING ---------- */
+function route(){
+  const hash = location.hash.replace('#','') || '/product';
+  setActiveRoute('#' + hash);
+  if(hash.startsWith('/product')) renderProduct();
+  else if(hash.startsWith('/community')) renderCommunity();
+  else if(hash.startsWith('/about')) renderAbout();
+  else if(hash.startsWith('/contact')) renderContact();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+/* ---------- RENDERS ---------- */
+
+function renderProduct(){
+  document.title = 'Yuck. — Product';
+  const heroVideo = 'https://assets.mixkit.co/videos/preview/mixkit-powder-explosion-1074-large.mp4'; // stock powder video from mixkit
+  app.innerHTML = `
+    <section class="hero" id="hero">
+      <video class="hero-video" autoplay muted loop playsinline src="${heroVideo}"></video>
+      <div class="grain"></div>
+      <div class="vignette"></div>
+
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <h1 class="title">Tastes bad.<br>Works good.</h1>
+          <p class="lead">We made a product that prioritises effect over flavour. If you want pretty, you’re in the wrong place.</p>
+
+          <div class="hero-cta">
+            <button class="btn btn-ugly" id="ctaBuy">Buy — One-time</button>
+            <button class="btn btn-danger" id="ctaSub">Subscribe</button>
+            <button class="btn" id="ctaLearn" style="background:transparent;color:var(--muted);font-weight:800;border:1px solid rgba(255,255,255,0.04)">How it works</button>
+          </div>
+
+          <div class="join-hint" style="margin-top:14px;color:var(--muted)">Join <span class="counter-inline" style="font-weight:900;color:var(--accent-lime)">...</span> brave souls who tried Yuck.</div>
+        </div>
+
+        <aside class="hero-card">
+          <h4>Starter Pack</h4>
+          <div class="price">£${PRODUCTS[0].price.toFixed(2)}</div>
+          <div class="save">save £${(PRODUCTS[0].price - PRODUCTS[0].sub).toFixed(2)} when you subscribe</div>
+          <div style="margin-top:12px">
+            <div style="font-size:13px;color:var(--muted)">Flavor: Honest (not pleasant)</div>
+            <div style="margin-top:10px;display:flex;gap:8px">
+              <button class="btn btn-ugly" id="heroBuySmall">Buy</button>
+              <button class="btn btn-danger" id="heroSubSmall">Subscribe</button>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Supplements you feel good using</h2>
+      <div class="grid">
+        ${PRODUCTS.map(p => `
+          <article class="product" data-id="${p.id}">
+            <div class="thumb" data-id="${p.id}" aria-hidden="true">
+              <img src="https://images.unsplash.com/photo-1547592166-7a3d0f5acb4b?q=80&w=1400&auto=format&fit=crop" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;opacity:0.94" />
+            </div>
+            <h3>${p.name}</h3>
+            <div class="meta">
+              <div>
+                <div class="price">£${p.price.toFixed(2)}</div>
+                <div class="small" style="color:var(--muted); margin-top:4px">or £${p.sub.toFixed(2)}/month (sub)</div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <button class="btn btn-ugly buy" data-id="${p.id}">Buy</button>
+                <button class="btn btn-danger sub" data-id="${p.id}">Subscribe</button>
+              </div>
+            </div>
+          </article>
+        `).join('')}
+      </div>
+
+      <div class="community" style="margin-top:22px">
+        <div class="left">
+          <div style="font-weight:900;font-size:16px">Join the Cult of Yuck</div>
+          <div class="small" style="color:var(--muted); margin-top:6px">Ambassadors get early drops, promo codes and invite-only Discord access.</div>
+          <div class="join-row">
+            <input id="miniEmail" type="email" placeholder="you@domain.com" />
+            <button class="btn btn-ugly" id="miniJoin">Join</button>
+            <div style="margin-left:16px" class="counter">Brave souls: <span id="counterDisplay">...</span></div>
+          </div>
+        </div>
+        <div style="width:340px; text-align:right">
+          <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=800&auto=format&fit=crop" alt="ambassador" style="width:100%;border-radius:8px;opacity:0.97" />
+          <div style="color:var(--muted); font-size:13px; margin-top:10px">Ambassador perks include free samples & feedback sessions.</div>
+        </div>
+      </div>
+
+      <div class="strip" aria-hidden="false">
+        <div class="tile"><strong>Honesty</strong><p>We call the taste out loud — because honesty builds trust, not puffery.</p></div>
+        <div class="tile"><strong>Subscription-first</strong><p>Better pricing, earlier drops, predictable supply chain.</p></div>
+        <div class="tile"><strong>Security</strong><p>TildeSec recommends DMARC/SPF/DKIM & monitoring for launch.</p></div>
+      </div>
+    </section>
+  `;
+
+  // initialize counter display
+  const c = getCounterDisplayValue();
+  document.querySelector('.counter-inline').textContent = c;
+  document.getElementById('counterDisplay').textContent = c;
+
+  // events
+  document.getElementById('ctaBuy').onclick = () => openModal({mode:'one-time', id: PRODUCTS[0].id});
+  document.getElementById('ctaSub').onclick = () => openModal({mode:'subscribe', id: PRODUCTS[0].id});
+  document.getElementById('heroBuySmall').onclick = () => openModal({mode:'one-time', id: PRODUCTS[0].id});
+  document.getElementById('heroSubSmall').onclick = () => openModal({mode:'subscribe', id: PRODUCTS[0].id});
+  document.getElementById('miniJoin').onclick = handleMiniJoin;
+
+  // product buttons
+  document.querySelectorAll('.buy').forEach(b => b.onclick = (e) => openModal({mode:'one-time', id: e.target.dataset.id}));
+  document.querySelectorAll('.sub').forEach(b => b.onclick = (e) => openModal({mode:'subscribe', id: e.target.dataset.id}));
+
+  // ripple effect wiring for thumbs (click generates ripple)
+  document.querySelectorAll('.thumb').forEach(el=>{
+    el.addEventListener('pointerdown', (ev)=>{
+      const r = document.createElement('div');
+      r.className='ripple';
+      el.appendChild(r);
+      const s = Math.max(el.clientWidth, el.clientHeight) * 1.1;
+      r.style.width = r.style.height = s + 'px';
+      const rect = el.getBoundingClientRect();
+      const x = ev.clientX - rect.left - s/2;
+      const y = ev.clientY - rect.top - s/2;
+      r.style.left = x + 'px'; r.style.top = y + 'px';
+      r.style.transform = 'scale(1)';
+      r.style.opacity = '1';
+      setTimeout(()=> { r.style.opacity='0'; r.style.transform='scale(1.6)'; }, 260);
+      setTimeout(()=> r.remove(), 900);
+    });
+  });
+
+  // lazy subtle scale/apparition using IntersectionObserver
+  document.querySelectorAll('.product').forEach(p => p.style.opacity=0);
+  const io = new IntersectionObserver(entries=>{
+    entries.forEach(en=>{
+      if(en.isIntersecting){ en.target.style.transition='opacity .6s ease, transform .6s ease'; en.target.style.opacity=1; en.target.style.transform='translateY(0)'; }
+    });
+  }, {threshold:0.06});
+  document.querySelectorAll('.product').forEach(p=> { p.style.transform='translateY(14px)'; io.observe(p); });
+
+  // helper: miniJoin
+  function handleMiniJoin(){
+    const email = document.getElementById('miniEmail').value.trim();
+    if(!validateEmail(email)){ alert('Enter a valid email'); return; }
+    // playful fake invite generator
+    const code = 'YUCK-' + Math.random().toString(36).slice(2,8).toUpperCase();
+    alert(`Mock invite generated for ${email}\nInvite code: ${code}\n(Invite will be sent once ambassador spots open)`);
+    bumpAndAnimateCounter();
+    document.getElementById('miniEmail').value='';
+  }
+}
+
+/* ---------- COMMUNITY ---------- */
+function renderCommunity(){
+  document.title = 'Yuck. — Community';
+  app.innerHTML = `
+    <section class="section">
+      <h2 class="section-title">Join the Cult of Yuck</h2>
+      <div class="two-col">
+        <div>
+          <p style="color:var(--muted)">Be part of a small group of people who value function over flavour. We gate the Discord to keep quality high — ambassadors get perks and early drops.</p>
+
+          <div style="margin-top:14px" class="community">
+            <div style="flex:1">
+              <div style="font-weight:900">Request an Ambassador Invite</div>
+              <div style="margin-top:8px;color:var(--muted)">Enter your email and tell us why you deserve an invite (short answers only)</div>
+              <div style="margin-top:10px;display:flex;gap:8px">
+                <input id="commEmail" type="email" placeholder="you@domain.com" style="min-width:0"/>
+                <input id="reason" placeholder="Why you're a good fit (optional)" style="min-width:0"/>
+                <button class="btn btn-ugly" id="requestInvite">Request</button>
+              </div>
+              <div style="margin-top:8px;color:var(--muted)">We review submissions manually — no bots.</div>
+            </div>
+            <div style="width:320px;text-align:right">
+              <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=900&auto=format&fit=crop" alt="community" style="border-radius:8px">
+            </div>
+          </div>
+        </div>
+
+        <aside class="card">
+          <strong>Where we hang out</strong>
+          <ul style="margin-top:8px;color:var(--muted)">
+            <li>Discord (gated)</li>
+            <li>Instagram — @yuckofficial</li>
+            <li>TikTok — @yuck</li>
+          </ul>
+          <div style="margin-top:12px">
+            <button class="btn btn-danger" id="fakeDiscord">Get Discord invite (mock)</button>
+          </div>
+        </aside>
+      </div>
+
+      <div style="margin-top:18px" class="strip">
+        <div class="tile"><strong>Ambassador Perks</strong><p>Free samples, early access, influence on small batch flavours.</p></div>
+        <div class="tile"><strong>Safety</strong><p>We vet accounts and use invite codes; moderation rules apply.</p></div>
+        <div class="tile"><strong>Community-first</strong><p>Members shape the product roadmap.</p></div>
+      </div>
+    </section>
+  `;
+  document.getElementById('requestInvite').onclick = ()=> {
+    const email = document.getElementById('commEmail').value.trim();
+    if(!validateEmail(email)) return alert('Enter a valid email');
+    alert('Request received (mock). We will review and send invites to chosen applicants.');
+    bumpAndAnimateCounter();
+    document.getElementById('commEmail').value=''; document.getElementById('reason').value='';
+  };
+  document.getElementById('fakeDiscord').onclick = ()=> {
+    // fake invite modal
+    const code = 'DISC-' + Math.random().toString(36).slice(2,7).toUpperCase();
+    alert(`Mock Discord invite (one-time): ${code}\nIn production this would be created server-side and emailed to subscribers.`);
+    bumpAndAnimateCounter();
+  };
+}
+
+/* ---------- ABOUT ---------- */
+function renderAbout(){
+  document.title = 'Yuck. — About';
+  app.innerHTML = `
+    <section class="section">
+      <h2 class="section-title">About Yuck.</h2>
+      <div class="two-col">
+        <div>
+          <p style="color:var(--muted)">We prioritise clarity: the product tastes bad, because we prefer effect over sugar and fluff. Our brand is built on candour and community.</p>
+
+          <h3 style="margin-top:12px">Our values</h3>
+          <ul style="margin-top:8px;color:var(--muted)">
+            <li>Transparency — we tell you what’s in it (and what it tastes like).</li>
+            <li>Community — ambassadors help steer our decisions.</li>
+            <li>Security — we advise DMARC/SPF/DKIM & monitoring for all launch comms.</li>
+          </ul>
+        </div>
+
+        <aside class="card">
+          <strong>Founders note</strong>
+          <p style="margin-top:8px;color:var(--muted)">We wanted a product that helps people train better. Taste is a tradeoff we make, intentionally. If your tastebuds revolt, your muscles will not.</p>
+        </aside>
+      </div>
+
+      <div style="margin-top:18px" class="faq">
+        <h3 style="margin-bottom:8px">FAQ</h3>
+        <div class="q" data-open><strong>Why is it called Yuck?</strong></div>
+        <div class="a"><p style="margin:8px 0;color:var(--muted)">Because we are honest. Also, it’s memorable. Also, try it.</p></div>
+
+        <div class="q"><strong>Is it safe?</strong></div>
+        <div class="a"><p style="margin:8px 0;color:var(--muted)">Yes — made from common natural ingredients. Not a medical product. See ingredient list in product panel (prototype).</p></div>
+
+        <div class="q"><strong>Do you ship internationally?</strong></div>
+        <div class="a"><p style="margin:8px 0;color:var(--muted)">Initially UK & EU. Scaling plans depend on demand.</p></div>
+      </div>
+    </section>
+  `;
+
+  // FAQ toggles
+  document.querySelectorAll('.faq .q').forEach((q,i)=>{
+    q.addEventListener('click', ()=>{
+      const a = q.nextElementSibling;
+      const opened = a.style.height && a.style.height !== '0px';
+      if(opened){ a.style.height='0'; }
+      else {
+        a.style.height = a.scrollHeight + 'px';
+      }
+    });
+    // init collapsed
+    const a = q.nextElementSibling; a.style.height='0';
+  });
+}
+
+/* ---------- CONTACT ---------- */
+function renderContact(){
+  document.title = 'Yuck. — Contact';
+  app.innerHTML = `
+    <section class="section">
+      <h2 class="section-title">Contact & Support</h2>
+      <div style="max-width:740px; margin-top:12px">
+        <form id="contact" style="display:grid; gap:10px">
+          <input id="name" placeholder="Name" required style="padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--cream)">
+          <input id="email" placeholder="Email" required style="padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--cream)">
+          <textarea id="message" placeholder="Message" rows="6" style="padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--cream)"></textarea>
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-ugly">Send</button>
+            <button type="reset" class="btn btn-danger">Clear</button>
+          </div>
+        </form>
+        <div style="margin-top:12px;color:var(--muted)">Support hours: Mon–Fri. This is a prototype; in production wire the form to an authenticated backend and add server-side validation & rate-limiting.</div>
+      </div>
+    </section>
+  `;
+  document.getElementById('contact').addEventListener('submit', (ev)=>{
+    ev.preventDefault();
+    const n = document.getElementById('name').value.trim();
+    const e = document.getElementById('email').value.trim();
+    const m = document.getElementById('message').value.trim();
+    if(!n || !validateEmail(e) || !m) return alert('Complete the form with a valid email');
+    alert('Thanks — your message has been sent (mock). We will respond within 48 hours.');
+    bumpAndAnimateCounter();
+    ev.target.reset();
+  });
+}
+
+/* ---------- Modal handlers ---------- */
+const modal = document.getElementById('checkoutModal');
+const closeModal = document.getElementById('closeModal');
+const confirmPay = document.getElementById('confirmPay');
+
+function openModal({mode='one-time', id}){
+  modal.classList.add('show');
+  document.getElementById('ckEmail').value = '';
+  document.getElementById('ckEmail').focus();
+  // store state if needed
+  modal.dataset.mode = mode;
+  modal.dataset.product = id;
+}
+
+closeModal.onclick = ()=> modal.classList.remove('show');
+confirmPay.onclick = ()=> {
+  const email = document.getElementById('ckEmail').value.trim();
+  if(!validateEmail(email)) return alert('Enter a valid email');
+  // fake Stripe flow — in production POST to server that returns Stripe Checkout session.
+  alert(`Mock payment successful for ${email} — thank you! (This is a prototype.)`);
+  modal.classList.remove('show');
+  bumpAndAnimateCounter(); // celebrate a mock order
+};
+
+/* ---------- Helpers ---------- */
+function validateEmail(e){ return /\S+@\S+\.\S+/.test(e); }
+
+/* Counter helpers: animate bump visually */
+function getCounterDisplayValue(){
+  return localStorage.getItem('yuck_brave_counter') || '0';
+}
+function bumpAndAnimateCounter(inc=1){
+  // read, write, animate
+  const before = parseInt(localStorage.getItem('yuck_brave_counter') || '0', 10);
+  const after = before + inc;
+  localStorage.setItem('yuck_brave_counter', ''+after);
+  // update inline displays if present
+  document.querySelectorAll('.counter-inline').forEach(el => {
+    // animate quick +1
+    el.animate([{transform:'scale(1.0)'},{transform:'scale(1.06)'},{transform:'scale(1)'}], {duration:380});
+    el.textContent = after;
+  });
+  const cd = document.getElementById('counterDisplay');
+  if(cd){ cd.animate([{transform:'translateY(0)'},{transform:'translateY(-6px)'},{transform:'translateY(0)'}], {duration:420}); cd.textContent=after; }
+}
+
+/* initialize counter seed if missing */
+if(!localStorage.getItem('yuck_brave_counter')) localStorage.setItem('yuck_brave_counter','427');
+
+/* ensure nav active class is set properly when user loads a route */
+(function initialSet(){
+  const routePath = location.hash || '#/product';
+  setActiveNavLink(routePath);
+})();
+function setActiveNavLink(path){
+  document.querySelectorAll('.navlink').forEach(a=> a.classList.toggle('active', a.getAttribute('href')===path));
+}
+// also update when route changes
+window.addEventListener('hashchange', ()=> setActiveNavLink(location.hash || '#/product'));
+
+/* keyboard shortcut: press 'k' to bump counter (dev easter-egg) */
+window.addEventListener('keydown', (e)=> { if(e.key.toLowerCase()==='k'){ bumpAndAnimateCounter(1); } });
+
+</script>
+</body>
+</html>

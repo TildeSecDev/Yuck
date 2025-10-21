@@ -3,18 +3,26 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Yuck — Natural Workout Powder</title>
-  <meta name="description" content="Yuck — a natural workout powder. Intentionally 'yuck' tasting, but good for you. Prototype mockup." />
+  <title>Yuck - Natural Workout Powder</title>
+  <meta name="description" content="Yuck - a natural workout powder. Intentionally 'yuck' tasting, but good for you. Prototype mockup." />
+  <meta name="theme-color" content="#071016" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="manifest" href="manifest.json" />
   <link rel="stylesheet" href="index.css" />
 </head>
 <body>
   <div id="app" class="app">
     <header class="site-header">
       <div class="brand">
-        <div class="logo">Yuck</div>
-        <div class="tag">It tastes bad. You feel good.</div>
+        <div class="logo" aria-hidden="true">Yuck</div>
+  <div class="tag">It tastes bad. You feel good.</div>
       </div>
-      <nav class="nav">
+      <button id="navToggle" class="nav-toggle" aria-expanded="false" aria-controls="mainNav">
+        <span class="sr-only">Toggle navigation</span>
+        Menu
+      </button>
+      <nav class="nav" id="mainNav">
         <a href="#product" data-link>Product</a>
         <a href="#community" data-link>Join</a>
         <a href="#about" data-link>About</a>
@@ -23,498 +31,34 @@
       </nav>
     </header>
 
-    <main id="main" class="main">
+    <main id="main" class="main" tabindex="-1">
       <!-- Pages injected by JS -->
     </main>
 
+    <div class="bg-wrap" aria-hidden="true">
+      <video id="bgVideo" class="bg-video" autoplay muted loop playsinline></video>
+      <div id="bgOverlay" class="bg-overlay" aria-hidden="true"></div>
+    </div>
+
+    <div class="bg-controls" id="bgControls">
+      <span class="sr-only" id="bgThumbsLabel">Select background scene</span>
+      <div class="bg-thumbs" id="bgThumbs" role="listbox" aria-labelledby="bgThumbsLabel" tabindex="0"></div>
+      <button id="bgToggle" class="btn btn-ghost" type="button">Pause</button>
+      <button id="bgHide" class="btn btn-ghost" type="button">Hide</button>
+    </div>
+
     <footer class="site-footer">
-      <div>© <span id="year"></span> Yuck — by TildeSec</div>
+  <div>&copy; <span id="year"></span> Yuck - by TildeSec</div>
       <div class="foot-links">
         <a href="#privacy" data-link>Privacy</a>
         <a href="#terms" data-link>Terms</a>
       </div>
     </footer>
 
-    <!-- floating decorative elements -->
-    <div class="float-deco deco-1" aria-hidden></div>
-    <div class="float-deco deco-2" aria-hidden></div>
+    <div class="float-deco deco-1" aria-hidden="true"></div>
+    <div class="float-deco deco-2" aria-hidden="true"></div>
   </div>
 
   <script src="index.js" defer></script>
-</body>
-</html>
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Yuck. — Natural Workout Powder (Prototype)</title>
-  <meta name="description" content="Yuck. — a natural workout powder. Prototype site with product, subscription, community, about and contact pages." />
-
-  <!--
-    Single-file prototype for 'Yuck.'
-    - Hash-based simple SPA (/#/product, /#/community, /#/about, /#/contact)
-    - Product page supports one-time / subscription toggles and a mock checkout modal.
-    - Community page captures emails and suggests community links (Discord/Slack/Instagram).
-    - Contact page with support form.
-    - About page placeholder.
-
-    SECURITY & PRODUCTION NOTES (READ BEFORE DEPLOYMENT):
-    - Replace mock checkout with a backend-powered Stripe integration. Use Stripe Checkout or Stripe Subscriptions via server-side.
-    - Ensure all form endpoints use HTTPS and server-side validation.
-    - Implement CSP, HSTS, rate limiting, WAF rules and regular vulnerability scanning.
-    - Add DMARC/SPF/DKIM records for domain email (example DNS entries are not included here). TildeSec should configure DMARC policy (p=quarantine or p=reject) after testing.
-    - For spam/bot protection, integrate invisible reCAPTCHA or hCaptcha on forms and require invite flow for community links where needed.
-  -->
-
-  <style>
-    :root{
-      --bg:#f8fafb;
-      --card:#ffffff;
-      --muted:#707782;
-      --accent:#2b8c6f; /* lively green */
-      --accent-2:#e04b3b; /* slightly 'yuck' tangy orange */
-      --glass: rgba(255,255,255,0.6);
-      --radius:14px;
-      --max-width:1100px;
-      --shadow: 0 8px 24px rgba(16,24,40,0.06);
-      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', 'Segoe UI Mono', monospace;
-      --ui-sans: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-    }
-
-    *{box-sizing:border-box}
-    html,body{height:100%;}
-    body{
-      margin:0; font-family:var(--ui-sans); color:#0b1720; background:linear-gradient(180deg, #fbfdfe 0%, var(--bg) 100%); -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
-    }
-
-    header{
-      backdrop-filter: blur(6px);
-      background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.4));
-      border-bottom:1px solid rgba(11,23,32,0.04);
-      position:sticky; top:0; z-index:40; 
-      display:flex; align-items:center; justify-content:center; padding:10px 20px;
-      box-shadow:var(--shadow);
-    }
-    .nav-wrap{max-width:var(--max-width); width:100%; display:flex; align-items:center; gap:16px;}
-    .brand{display:flex; align-items:center; gap:12px; text-decoration:none; color:inherit}
-    .brand .logo{width:42px; height:42px; border-radius:10px; display:grid; place-items:center; font-weight:700; background:linear-gradient(135deg,var(--accent),var(--accent-2)); color:white}
-    nav{margin-left:auto; display:flex; gap:10px; align-items:center}
-    nav a{padding:8px 12px; text-decoration:none; color:var(--muted); border-radius:8px; font-weight:600}
-    nav a.active{color:var(--accent); background:rgba(43,140,111,0.07)}
-
-    .container{max-width:var(--max-width); margin:36px auto; padding:0 20px}
-
-    /* Hero */
-    .hero{display:grid; grid-template-columns:1fr 420px; gap:32px; align-items:center}
-    .hero-card{background:var(--card); border-radius:var(--radius); padding:28px; box-shadow:var(--shadow)}
-    .hero h1{margin:0; font-size:34px}
-    .hero p{color:var(--muted); margin-top:10px}
-
-    .product-preview{border-radius:12px; overflow:hidden; box-shadow: 0 14px 40px rgba(43,140,111,0.06); background:linear-gradient(180deg,#fff,#fbfffb); padding:18px}
-    .product-image{height:220px; display:flex; align-items:center; justify-content:center; border-radius:10px; background:linear-gradient(180deg,#f2f8f6,#ffffff); font-weight:700; color:var(--muted)}
-
-    /* grid for features and pages */
-    .grid-2{display:grid; grid-template-columns:repeat(2, 1fr); gap:20px;}
-    .card{background:var(--card); padding:20px; border-radius:12px; box-shadow:var(--shadow)}
-
-    /* Product details */
-    .price{font-size:28px; font-weight:800;}
-    .muted{color:var(--muted)}
-    .options{display:flex; gap:10px; margin-top:12px}
-    .btn{display:inline-flex; align-items:center; gap:10px; padding:10px 14px; border-radius:10px; font-weight:700; cursor:pointer; border:0}
-    .btn-primary{background:linear-gradient(90deg,var(--accent), #3aae83); color:white}
-    .btn-ghost{background:transparent; border:1px solid rgba(11,23,32,0.06)}
-
-    .toggle{display:flex; gap:8px; align-items:center}
-    .pill{padding:8px 10px; background:rgba(11,23,32,0.03); border-radius:999px; font-weight:700}
-
-    /* subscription box */
-    .sub-box{display:flex; gap:10px; align-items:center; margin-top:12px}
-    .freq{padding:8px 10px; border-radius:8px; background:rgba(11,23,32,0.03); font-weight:600}
-
-    /* forms */
-    form input, form textarea{width:100%; padding:12px; border-radius:10px; border:1px solid rgba(11,23,32,0.06); font-size:15px}
-    label{font-size:13px; color:var(--muted); display:block; margin-bottom:6px}
-    .row{display:flex; gap:12px}
-
-    footer{margin-top:60px; padding:36px 20px; color:var(--muted); text-align:center}
-
-    /* Responsive */
-    @media (max-width:980px){ .hero{grid-template-columns:1fr} .product-preview{height:auto} nav{display:none} }
-
-    /* subtle animations */
-    .fade-up{transform:translateY(10px); opacity:0; transition:all 420ms cubic-bezier(.2,.9,.27,1)}
-    .fade-up.in{transform:none; opacity:1}
-
-    /* checkout modal */
-    .modal{position:fixed; inset:0; display:none; align-items:center; justify-content:center; z-index:120}
-    .modal.show{display:flex}
-    .modal .panel{background:var(--card); padding:20px; border-radius:12px; width:420px; box-shadow:0 20px 60px rgba(2,6,23,0.16)}
-
-    .small{font-size:13px}
-  </style>
-</head>
-<body>
-
-<header>
-  <div class="nav-wrap">
-    <a href="#/product" class="brand" data-link>
-      <div class="logo">Yuck</div>
-      <div>
-        <div style="font-weight:800;">Yuck.</div>
-        <div style="font-size:12px;color:var(--muted);margin-top:2px">Natural workout powder — prototype</div>
-      </div>
-    </a>
-
-    <nav>
-      <a href="#/product" data-link class="nav-item">Product</a>
-      <a href="#/community" data-link class="nav-item">Community</a>
-      <a href="#/about" data-link class="nav-item">About</a>
-      <a href="#/contact" data-link class="nav-item">Contact</a>
-    </nav>
-  </div>
-</header>
-
-<main>
-  <div class="container" id="app">
-    <!-- Pages injected here by JS -->
-  </div>
-</main>
-
-<!-- Checkout Modal (mock) -->
-<div id="checkoutModal" class="modal" aria-hidden="true">
-  <div class="panel">
-    <h3 id="checkoutTitle">Checkout</h3>
-    <div id="checkoutBody">
-      <p class="small muted">This is a prototype checkout. Integrate Stripe or PayPal SDKs for production.</p>
-      <div style="margin-top:12px">
-        <label class="small">Email</label>
-        <input id="checkoutEmail" type="email" placeholder="you@domain.com" />
-      </div>
-      <div style="display:flex;gap:8px;margin-top:12px;justify-content:flex-end">
-        <button class="btn btn-ghost" id="closeCheckout">Cancel</button>
-        <button class="btn btn-primary" id="confirmCheckout">Confirm & Pay</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<footer>
-  <div class="container">
-    <div style="display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap">
-      <div style="text-align:left">
-        <strong>Yuck.</strong> <div class="small muted">Prototype site • TildeSec devs</div>
-      </div>
-      <div class="small muted">Built with a focus on privacy, security & scalability.</div>
-    </div>
-  </div>
-</footer>
-
-<script>
-// Simple Hash Router and page content generator
-const app = document.getElementById('app');
-const navLinks = document.querySelectorAll('[data-link]');
-
-function setActiveNav(){
-  const hash = location.hash || '#/product';
-  document.querySelectorAll('nav a').forEach(a=> a.classList.remove('active'));
-  const active = document.querySelector(`nav a[href="${hash}"]`);
-  if(active) active.classList.add('active');
-}
-
-window.addEventListener('hashchange', ()=>{render(); setActiveNav();});
-window.addEventListener('load', ()=>{render(); setActiveNav(); requestAnimationFrame(()=>document.querySelectorAll('.fade-up').forEach(el=>el.classList.add('in')))});
-
-// Mock product data
-const product = {
-  id: 'yck-001',
-  name: 'Yuck. Natural Workout Powder',
-  priceOneTime: 19.99,
-  priceSubMonthly: 16.49,
-  description: 'All-natural workout powder. Tastes like honesty. Designed to energise your workout with simple, natural ingredients.'
-}
-
-function money(n){ return '£' + n.toFixed(2); }
-
-function render(){
-  const route = (location.hash || '#/product').replace('#','');
-  switch(route){
-    case '/product': return renderProduct();
-    case '/community': return renderCommunity();
-    case '/about': return renderAbout();
-    case '/contact': return renderContact();
-    default: return renderProduct();
-  }
-}
-
-function renderProduct(){
-  app.innerHTML = `
-  <div class="hero">
-    <div class="hero-card fade-up">
-      <h1>Yuck. <span class="small muted">— natural workout powder</span></h1>
-      <p class="muted">A clean, direct product page prototype. Swap copy and assets when branding is final.</p>
-
-      <div style="margin-top:18px" class="grid-2">
-        <div>
-          <div class="card">
-            <div style="display:flex;gap:14px;align-items:center">
-              <div style="flex:1">
-                <div style="font-weight:800">${product.name}</div>
-                <div class="muted small" style="margin-top:6px">${product.description}</div>
-              </div>
-              <div style="text-align:right">
-                <div class="price">${money(product.priceOneTime)}</div>
-                <div class="muted small">one-time</div>
-              </div>
-            </div>
-
-            <div style="margin-top:16px">
-              <div class="options">
-                <div class="pill">Powder 300g</div>
-                <div class="pill">Single Serve</div>
-              </div>
-
-              <div class="sub-box">
-                <div class="toggle">
-                  <div id="oneTimeBtn" class="btn btn-ghost">One-time</div>
-                  <div id="subBtn" class="btn">Subscribe</div>
-                </div>
-                <div style="margin-left:auto; text-align:right">
-                  <div class="muted small">Save with subscription</div>
-                </div>
-              </div>
-
-              <div id="subControls" style="display:none; margin-top:12px">
-                <label class="small">Billing Frequency</label>
-                <div style="display:flex;gap:8px;margin-top:6px">
-                  <div class="freq" data-freq="monthly">Monthly</div>
-                  <div class="freq" data-freq="2monthly">Every 2 months</div>
-                  <div class="freq" data-freq="quarter">Quarterly</div>
-                </div>
-              </div>
-
-              <div style="margin-top:16px; display:flex; gap:8px">
-                <button class="btn btn-primary" id="buyNow">Buy Now</button>
-                <button class="btn btn-ghost" id="addCart">Add to Cart</button>
-              </div>
-
-              <div style="margin-top:12px" class="small muted">Shipping & returns info placeholder.</div>
-            </div>
-          </div>
-
-          <div style="margin-top:14px" class="card">
-            <h4 style="margin:0">Ingredients</h4>
-            <p class="muted small">Simple, natural ingredients. Copy pending.</p>
-          </div>
-        </div>
-
-        <div>
-          <div class="product-preview">
-            <div class="product-image">PRODUCT MOCKUP</div>
-            <div style="margin-top:12px; display:flex;justify-content:space-between;align-items:center">
-              <div>
-                <div style="font-weight:800">${product.name}</div>
-                <div class="muted small">${product.description}</div>
-              </div>
-              <div style="text-align:right">
-                <div style="font-weight:800">${money(product.priceOneTime)}</div>
-                <div class="muted small">one-time</div>
-              </div>
-            </div>
-
-            <div style="margin-top:16px">
-              <div class="muted small">Trust & Security</div>
-              <div class="muted small">Payments processed securely. Implement Stripe/PayPal for production.</div>
-            </div>
-
-            <div style="margin-top:14px; display:flex;gap:8px; justify-content:space-between">
-              <button class="btn btn-primary" id="buyNow2">Buy now</button>
-              <button class="btn btn-ghost" id="subscribeNow">Subscribe</button>
-            </div>
-          </div>
-
-          <div style="margin-top:12px" class="card">
-            <h4 style="margin:0">Sales Goals</h4>
-            <p class="muted small">Objective: reach 1,000 units/month. Consider bundles, referral discounts and subscription incentives.</p>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <aside class="hero-card fade-up">
-      <div style="font-weight:800">Quick actions</div>
-      <div style="margin-top:12px;display:flex;flex-direction:column;gap:10px">
-        <button class="btn btn-primary" id="openCartSmall">Open Checkout</button>
-        <a class="btn btn-ghost" href="#/community">Join the community</a>
-      </div>
-
-      <div style="margin-top:18px">
-        <div class="muted small">Pro tips</div>
-        <ul class="small muted">
-          <li>Offer subscriber-only early drops.</li>
-          <li>Use social content to amplify the 'it tastes bad' honesty angle.</li>
-        </ul>
-      </div>
-    </aside>
-  </div>
-  `;
-
-  // events
-  document.getElementById('oneTimeBtn').addEventListener('click', ()=>setMode('one-time'));
-  document.getElementById('subBtn').addEventListener('click', ()=>setMode('subscribe'));
-  document.querySelectorAll('.freq').forEach(el=>el.addEventListener('click', (e)=>{selectFreq(e.target.dataset.freq)}));
-  document.getElementById('buyNow').addEventListener('click', ()=>openCheckout('one-time'));
-  document.getElementById('buyNow2').addEventListener('click', ()=>openCheckout('one-time'));
-  document.getElementById('subscribeNow').addEventListener('click', ()=>openCheckout('subscribe'));
-  document.getElementById('openCartSmall').addEventListener('click', ()=>openCheckout('one-time'));
-  document.getElementById('addCart').addEventListener('click', ()=>{alert('Added to cart (prototype)')});
-
-  // default mode
-  let mode = 'one-time';
-  function setMode(m){ mode=m; document.getElementById('subControls').style.display = (m==='subscribe')? 'block':'none';
-    document.getElementById('oneTimeBtn').classList.toggle('btn-ghost', m!=='one-time');
-    document.getElementById('subBtn').classList.toggle('btn-primary', m==='subscribe');
-  }
-  function selectFreq(f){ document.querySelectorAll('.freq').forEach(el=>el.style.outline=''); const el = document.querySelector(`.freq[data-freq="${f}"]`); if(el) el.style.outline = '3px solid rgba(43,140,111,0.14)'; }
-
-}
-
-function renderCommunity(){
-  app.innerHTML = `
-  <div class="grid-2">
-    <div class="card fade-up">
-      <h2>Join the Yuck. Community</h2>
-      <p class="muted">Sign up for product news, ambassador invites, and exclusive drops. We recommend using mailing + gated Discord/Slack for best engagement.</p>
-
-      <form id="joinForm" style="margin-top:12px">
-        <label>Email address</label>
-        <input id="joinEmail" type="email" placeholder="your@email.com" required />
-        <div style="margin-top:10px;display:flex;gap:8px">
-          <button class="btn btn-primary" type="submit">Join</button>
-          <button class="btn btn-ghost" type="button" id="joinLater">Maybe later</button>
-        </div>
-      </form>
-
-      <div style="margin-top:12px" class="small muted">By signing up you may be invited to the ambassador programme. We'll minimise marketing noise — quality over spam.</div>
-
-      <div style="margin-top:16px">
-        <h4 style="margin:0">Community Strategy (developer notes)</h4>
-        <div class="muted small">
-          - Use a mailing provider with strong APIs (e.g., Brevo, Mailchimp, or ConvertKit).<br>
-          - Gate community (Discord/Slack) with invite codes generated for subscribers to reduce bots.<br>
-          - Use two-factor invites and require basic profile info for ambassadors.
-        </div>
-      </div>
-    </div>
-
-    <div class="card fade-up">
-      <h3>Channels</h3>
-      <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
-        <a class="btn btn-ghost" href="#">Instagram</a>
-        <a class="btn btn-ghost" href="#">TikTok</a>
-        <a class="btn btn-ghost" href="#">Discord (invite)</a>
-        <a class="btn btn-ghost" href="#">Slack (invite)</a>
-      </div>
-
-      <div style="margin-top:14px">
-        <h4 style="margin:0">Ambassador perks</h4>
-        <ul class="small muted">
-          <li>Early product drops</li>
-          <li>Exclusive discount codes</li>
-          <li>Community-only content and chats</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-  `;
-
-  document.getElementById('joinForm').addEventListener('submit', (e)=>{
-    e.preventDefault();
-    const email = document.getElementById('joinEmail').value.trim();
-    if(!email) return alert('Please provide an email');
-    // PROTOTYPE: send to backend here
-    console.log('New community signup', email);
-    alert('Thanks! You\'re on the list — we\'ll send an invite when ambassador spots open.');
-  });
-}
-
-function renderAbout(){
-  app.innerHTML = `
-  <div class="card fade-up">
-    <h2>About Yuck.</h2>
-    <p class="muted">Yuck. is a brand-first natural workout powder. The product keeps things simple; the brand does the heavy lifting.</p>
-    <div style="margin-top:12px">
-      <h4 style="margin:0">Our approach</h4>
-      <p class="muted small">Honest, playful, and intentionally unglossed. Packaging will lean into the "it tastes bad" honesty while focusing on community and story.
-      </p>
-    </div>
-
-    <div style="margin-top:12px">
-      <h4 style="margin:0">Security and trust</h4>
-      <p class="muted small">TildeSec provides security monitoring, DMARC/SPF/DKIM guidance, and secure payment integration recommendations. All personal data will be handled according to GDPR.</p>
-    </div>
-  </div>
-  `;
-}
-
-function renderContact(){
-  app.innerHTML = `
-  <div class="card fade-up">
-    <h2>Contact & Support</h2>
-    <p class="muted">Have a question about orders, subscriptions or partnerships? Drop us a message.</p>
-
-    <form id="contactForm" style="margin-top:12px">
-      <label>Name</label>
-      <input id="contactName" type="text" placeholder="Your name" required />
-      <label style="margin-top:10px">Email</label>
-      <input id="contactEmail" type="email" placeholder="you@domain.com" required />
-      <label style="margin-top:10px">Message</label>
-      <textarea id="contactMessage" rows="5" placeholder="How can we help?" required></textarea>
-      <div style="margin-top:10px;display:flex;gap:8px">
-        <button class="btn btn-primary" type="submit">Send message</button>
-        <button class="btn btn-ghost" type="button" id="contactClear">Clear</button>
-      </div>
-    </form>
-
-    <div style="margin-top:12px" class="muted small">Support hours: Mon–Fri. We try to respond within 48 hours (prototype).</div>
-  </div>
-  `;
-
-  document.getElementById('contactForm').addEventListener('submit', (e)=>{
-    e.preventDefault();
-    const data = {
-      name: document.getElementById('contactName').value.trim(),
-      email: document.getElementById('contactEmail').value.trim(),
-      message: document.getElementById('contactMessage').value.trim()
-    };
-    console.log('Support message', data);
-    alert('Thanks — your message has been sent (prototype).');
-    document.getElementById('contactForm').reset();
-  });
-  document.getElementById('contactClear').addEventListener('click', ()=>document.getElementById('contactForm').reset());
-}
-
-// Checkout modal handlers
-const checkoutModal = document.getElementById('checkoutModal');
-const closeCheckout = document.getElementById('closeCheckout');
-const confirmCheckout = document.getElementById('confirmCheckout');
-
-function openCheckout(mode){
-  checkoutModal.classList.add('show');
-  document.getElementById('checkoutTitle').innerText = mode === 'subscribe' ? 'Subscribe — Checkout' : 'Buy — Checkout';
-}
-closeCheckout.addEventListener('click', ()=>{checkoutModal.classList.remove('show')});
-confirmCheckout.addEventListener('click', ()=>{
-  const email = document.getElementById('checkoutEmail').value.trim();
-  if(!email) return alert('Please enter your email');
-  // In production: call backend to create Stripe session
-  console.log('Checkout confirmed', {email});
-  alert('Payment processed (prototype). Thank you!');
-  checkoutModal.classList.remove('show');
-});
-
-</script>
 </body>
 </html>
