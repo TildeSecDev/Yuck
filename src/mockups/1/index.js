@@ -637,56 +637,18 @@
   }
 
   const video = document.getElementById('bgVideo');
-  const thumbContainer = document.getElementById('bgThumbs');
-  const toggle = document.getElementById('bgToggle');
-  const hide = document.getElementById('bgHide');
-  const controls = document.getElementById('bgControls');
   const overlay = document.getElementById('bgOverlay');
   const STATIC_BG = '/assets/images/background-image.png';
 
-  if(!video || !thumbContainer || !toggle || !hide || !controls) return;
-
-  thumbContainer.setAttribute('tabindex','0');
+  if(!video) return;
 
   const mobile = window.matchMedia('(max-width:680px)');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   let currentIndex = -1;
   let currentSrc = null;
 
-  const observer = ('IntersectionObserver' in window) ? new IntersectionObserver((entries)=>{
-    entries.forEach(entry=>{
-      if(entry.isIntersecting) resolveThumbPoster(entry.target);
-    });
-  }, {root:null, rootMargin:'160px'}) : null;
-
-  function buildThumbs(){
-    thumbContainer.innerHTML = '';
-    manifest.forEach((asset, index)=>{
-      const btn = createThumbEl(asset, index);
-      thumbContainer.appendChild(btn);
-      if(observer) observer.observe(btn);
-    });
-    selectByIndex(chooseDefaultIndex());
-  }
-
   function chooseDefaultIndex(){
     return mobile.matches ? Math.max(0, Math.floor(manifest.length/2)) : 0;
-  }
-
-  function createThumbEl(asset, index){
-    const btn = document.createElement('button');
-    btn.className = 'thumb';
-    btn.type = 'button';
-    btn.dataset.src = asset.src;
-    btn.dataset.index = index;
-    btn.id = `bg-thumb-${index}`;
-    btn.setAttribute('role','option');
-    btn.setAttribute('aria-selected','false');
-    btn.style.backgroundImage = `url('${asset.poster}')`;
-    btn.innerHTML = `<span class="sr-only">${asset.label} background</span><span aria-hidden="true" class="thumb-title">${asset.label}</span>`;
-    btn.addEventListener('click', ()=>selectByIndex(index));
-    btn.addEventListener('focus', ()=>thumbContainer.setAttribute('aria-activedescendant', btn.id));
-    return btn;
   }
 
   function selectByIndex(index){
@@ -696,19 +658,9 @@
     loadVideo(asset, index);
   }
 
-  function setActiveThumb(index){
-    const nodes = Array.from(thumbContainer.children);
-    nodes.forEach((node, idx)=>{
-      const isActive = idx === index;
-      node.classList.toggle('active', isActive);
-      node.setAttribute('aria-selected', isActive ? 'true':'false');
-      if(isActive) thumbContainer.setAttribute('aria-activedescendant', node.id);
-    });
-  }
+  function setActiveThumb(index){ /* no-op: controls removed */ }
 
-  function updateToggleLabel(){
-    toggle.textContent = (!video.paused && !video.ended) ? 'Pause' : 'Play';
-  }
+  function updateToggleLabel(){ /* no-op: controls removed */ }
 
   function loadVideo(asset, index){
     const src = '/assets/' + asset.src;
@@ -730,100 +682,44 @@
     updateToggleLabel();
   }
 
-  async function resolveThumbPoster(node){
-    if(node.dataset.posterChecked === '1') return;
-    node.dataset.posterChecked = '1';
-    const index = Number(node.dataset.index);
-    const asset = manifest[index];
-    if(!asset) return;
-    const jpg = '/assets/' + asset.src.replace(/\.mp4$/, '.jpg');
-    try{
-      const res = await fetch(jpg, {method:'HEAD'});
-      if(res.ok){
-        node.style.backgroundImage = `url('${jpg}')`;
-        node.dataset.hiresLoaded = '1';
-        if(index === currentIndex) video.setAttribute('poster', jpg);
-      }
-    }catch(err){
-      console.debug('Poster preload skipped for', asset.src, err);
-    }
-  }
-
-  function togglePlay(){
-    if(video.paused){ video.play().catch(()=>{}); }
-    else { video.pause(); }
-    updateToggleLabel();
-  }
-
-  function toggleVisibility(){
+  function hideBackground(){
     const wrap = document.querySelector('.bg-wrap');
     if(!wrap) return;
-    if(wrap.style.display === 'none'){
-      wrap.style.display = 'block';
-      hide.textContent = 'Hide';
-      if(!(mobile.matches || reduceMotion.matches)) video.play().catch(()=>{});
-    }else{
-      wrap.style.display = 'none';
-      hide.textContent = 'Show';
-      video.pause();
-    }
-    updateToggleLabel();
-  }
-
-  function handleThumbKeyNav(e){
-    const total = manifest.length;
-    if(!total) return;
-    if(e.key === 'ArrowRight' || e.key === 'ArrowDown'){
-      e.preventDefault();
-      const next = (currentIndex + 1 + total) % total;
-      selectByIndex(next);
-      focusThumb(next);
-    }else if(e.key === 'ArrowLeft' || e.key === 'ArrowUp'){
-      e.preventDefault();
-      const prev = (currentIndex - 1 + total) % total;
-      selectByIndex(prev);
-      focusThumb(prev);
-    }
-  }
-
-  function focusThumb(index){
-    const target = thumbContainer.querySelector(`#bg-thumb-${index}`);
-    if(target) target.focus();
+    wrap.style.display = 'none';
+    video.pause();
   }
 
   function init(){
-    buildThumbs();
-    // set a default poster to the static background image so it shows while videos load or when paused
+    // set a default poster so the static image shows until video loads
     if(STATIC_BG) video.setAttribute('poster', STATIC_BG);
-    toggle.addEventListener('click', togglePlay);
-    hide.addEventListener('click', toggleVisibility);
-    thumbContainer.addEventListener('keydown', handleThumbKeyNav);
-    video.addEventListener('play', updateToggleLabel);
-    video.addEventListener('pause', updateToggleLabel);
-    if(overlay){
-      overlay.style.pointerEvents = 'none';
-    }
-    if(mobile.matches || reduceMotion.matches){
-      video.pause();
-      updateToggleLabel();
-    }
+
+    // select default and schedule an automatic change after 3 seconds
+    selectByIndex(chooseDefaultIndex());
+    setTimeout(()=>{
+      const next = (currentIndex + 1 + manifest.length) % manifest.length;
+      selectByIndex(next);
+    }, 3000);
+
+    // after looping twice, hide the background automatically
+    let loops = 0;
+    video.addEventListener('ended', ()=>{
+      loops += 1;
+      if(loops >= 2){ hideBackground(); }
+    });
+
+    if(overlay){ overlay.style.pointerEvents = 'none'; }
+    if(mobile.matches || reduceMotion.matches){ video.pause(); }
+
     const mqHandler = ()=>{
-      if(mobile.matches){
-        video.pause();
-      }else if(currentSrc){
-        video.play().catch(()=>{});
-      }
-      updateToggleLabel();
+      if(mobile.matches){ video.pause(); }
+      else if(currentSrc){ video.play().catch(()=>{}); }
     };
     if(typeof mobile.addEventListener === 'function') mobile.addEventListener('change', mqHandler);
     else if(typeof mobile.addListener === 'function') mobile.addListener(mqHandler);
+
     const motionHandler = ()=>{
-      if(reduceMotion.matches){
-        video.pause();
-      }else if(currentSrc && !mobile.matches){
-        video.play().catch(()=>{});
-      }
-      updateToggleLabel();
+      if(reduceMotion.matches){ video.pause(); }
+      else if(currentSrc && !mobile.matches){ video.play().catch(()=>{}); }
     };
     if(typeof reduceMotion.addEventListener === 'function') reduceMotion.addEventListener('change', motionHandler);
     else if(typeof reduceMotion.addListener === 'function') reduceMotion.addListener(motionHandler);
