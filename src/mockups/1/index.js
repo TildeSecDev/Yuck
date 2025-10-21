@@ -60,6 +60,14 @@
       const re = /\[([^\]]+)\]/g; let sm;
       while((sm = re.exec(socialSec))) socials.push(sm[1]);
     }
+    const socialLinks = {};
+    const socialLinksBlock = getField(communityBlock, 'Social Links');
+    if(socialLinksBlock){
+      socialLinksBlock.split(/\n+/).forEach(line=>{
+        const m = line.match(/^([^:]+):\s*(https?:\/\/[^\s]+)\s*$/);
+        if(m) socialLinks[m[1].trim()] = m[2].trim();
+      });
+    }
     // parse FAQ from contact
     const faq = [];
     const faqSec = getField(contactBlock, 'FAQ Section');
@@ -95,6 +103,7 @@
         cta: getField(communityBlock, 'Email Capture CTA'),
         counter: getField(communityBlock, 'Dynamic Counter Placeholder'),
         socials,
+        socialLinks,
         tagline: getField(communityBlock, 'Footer Tagline')
       },
       about: {
@@ -126,7 +135,13 @@
       const res = await fetch(FORMSUBMIT_ENDPOINT, {
         method: 'POST',
         headers: {'Content-Type':'application/json','Accept':'application/json'},
-        body: JSON.stringify({...payload, _captcha:'false', _template:'table', _honey:''})
+        body: JSON.stringify({
+          ...payload,
+          _captcha:'false',
+          _template:'table',
+          _honey:'',
+          _next: (location.origin + location.pathname + '?thanks=1')
+        })
       });
       const j = await res.json().catch(()=>({}));
       if(res.ok) return {ok:true, data:j};
@@ -201,6 +216,7 @@
       case 'contact': main.appendChild(contactPage()); break;
       case 'privacy': main.appendChild(privacyPage()); break;
       case 'terms': main.appendChild(termsPage()); break;
+      case 'admin': main.appendChild(adminPage()); break;
       default: main.appendChild(productPage()); break;
     }
     // set active class for focus/animation
@@ -227,6 +243,9 @@
     const c = state.content?.product;
     hero.innerHTML = `
       <div class="product-card">
+        <div class="product-media">
+          <img src="/assets/yuck-demo-supplement/Supplement.png" alt="Yuck supplement container" loading="lazy" />
+        </div>
         <h2>${c?.headline || state.product.name}</h2>
         <p class="subtle">${c?.subheadline || "All-natural ingredients. Marketing-forward brand. Taste: intentionally 'yuck'."}</p>
         <div style="margin-top:14px" class="price" id="displayPrice">$${state.product.priceOneTime.toFixed(2)}</div>
@@ -398,11 +417,13 @@
   // add community invite quicklinks (Slack/Discord) and anti-bot recommendations
   function communityExtras(c){
     const socials = (c?.socials||[]).map(name=>{
+      const hrefFromConfig = c?.socialLinks?.[name];
       const key = name.toLowerCase();
-      const href = key.includes('discord')? 'https://discord.com/invite/your-invite'
+      const fallback = key.includes('discord')? 'https://discord.com/invite/your-invite'
         : key.includes('tiktok')? 'https://tiktok.com/@yuck'
         : key.includes('instagram')? 'https://instagram.com/yuck'
         : '#';
+      const href = hrefFromConfig || fallback;
       return `<a class="btn btn-ghost" href="${href}" target="_blank" rel="noopener">${name}</a>`;
     }).join('');
     return `
@@ -501,6 +522,81 @@
     return page;
   }
 
+  function adminPage(){
+    const page = document.createElement('div'); page.className='page admin';
+    const wrap = document.createElement('div'); wrap.className='card';
+    wrap.innerHTML = `<h2>Admin Panel</h2><div id="adminBody" class="subtle">Loading…</div>`;
+    page.appendChild(wrap);
+
+    const renderLogin = (msg='')=>{
+      const html = `
+        ${msg ? `<div class="helper muted" style="margin-bottom:8px">${msg}</div>`:''}
+        <form id="adminLogin" onsubmit="return false;" style="display:grid;gap:8px;max-width:360px;margin-top:8px">
+          <input id="adminUser" type="text" placeholder="Username" />
+          <input id="adminPass" type="password" placeholder="Password" />
+          <button id="adminLoginBtn" class="btn">Login</button>
+        </form>`;
+      el('#adminBody', wrap).innerHTML = html;
+      setTimeout(()=>{
+        el('#adminLoginBtn', wrap)?.addEventListener('click', async ()=>{
+          const user = el('#adminUser', wrap).value.trim();
+          const pass = el('#adminPass', wrap).value.trim();
+          if(!user||!pass) return alert('Enter credentials');
+          try{
+            const res = await fetch('/admin/login', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({user, pass})});
+            if(res.ok){ loadSignups(); }
+            else renderLogin('Login failed');
+          }catch(e){ renderLogin('Network error'); }
+        });
+      },0);
+    };
+
+    const renderSignups = (rows)=>{
+      const tbody = rows.map(r=>`
+        <tr>
+          <td>${r.id}</td>
+          <td>${r.email}</td>
+          <td class="muted">${r.ip||''}</td>
+          <td class="muted">${new Date(r.ts).toLocaleString()}</td>
+        </tr>`).join('');
+      el('#adminBody', wrap).innerHTML = `
+        <div style="display:flex;justify-content:space-between;align-items:center;margin:6px 0 12px 0">
+          <div class="subtle">Recent signups (${rows.length})</div>
+          <div style="display:flex;gap:8px">
+            <button id="refreshSignups" class="btn btn-ghost">Refresh</button>
+            <button id="adminLogout" class="btn btn-ghost">Logout</button>
+          </div>
+        </div>
+        <div style="overflow:auto">
+          <table class="table" style="width:100%;min-width:520px">
+            <thead><tr><th>ID</th><th>Email</th><th>IP</th><th>Timestamp</th></tr></thead>
+            <tbody>${tbody}</tbody>
+          </table>
+        </div>`;
+      setTimeout(()=>{
+        el('#adminLogout', wrap)?.addEventListener('click', async ()=>{
+          try{ await fetch('/admin/logout', {method:'POST'}); }catch(_){}
+          renderLogin('Logged out');
+        });
+        el('#refreshSignups', wrap)?.addEventListener('click', ()=>loadSignups());
+      },0);
+    };
+
+    const loadSignups = async ()=>{
+      el('#adminBody', wrap).textContent = 'Loading…';
+      try{
+        const res = await fetch('/admin/signups');
+        if(res.status === 401){ renderLogin(); return; }
+        if(!res.ok){ el('#adminBody', wrap).textContent = 'Failed to load signups'; return; }
+        const rows = await res.json();
+        renderSignups(rows);
+      }catch(e){ el('#adminBody', wrap).textContent = 'Network error'; }
+    };
+
+    loadSignups();
+    return page;
+  }
+
   // init
   document.addEventListener('DOMContentLoaded', mount);
 })();
@@ -546,6 +642,7 @@
   const hide = document.getElementById('bgHide');
   const controls = document.getElementById('bgControls');
   const overlay = document.getElementById('bgOverlay');
+  const STATIC_BG = '/assets/images/background-image.png';
 
   if(!video || !thumbContainer || !toggle || !hide || !controls) return;
 
@@ -696,6 +793,8 @@
 
   function init(){
     buildThumbs();
+    // set a default poster to the static background image so it shows while videos load or when paused
+    if(STATIC_BG) video.setAttribute('poster', STATIC_BG);
     toggle.addEventListener('click', togglePlay);
     hide.addEventListener('click', toggleVisibility);
     thumbContainer.addEventListener('keydown', handleThumbKeyNav);
