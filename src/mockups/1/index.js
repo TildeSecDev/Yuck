@@ -13,23 +13,182 @@
       priceOneTime: 24.00,
       priceSub: 19.00,
       currency: 'USD'
-    }
+    },
+    content: null
   };
+
+  let navToggleEl = null;
+  let navEl = null;
+  const mobileQuery = window.matchMedia('(max-width:680px)');
+
+  // lightweight content loader parsing docs/raw.txt into a usable object
+  async function loadContent(){
+    try{
+      const res = await fetch('/docs/raw.txt');
+      if(!res.ok) throw new Error('docs not served');
+      const raw = await res.text();
+      state.content = parseDocs(raw);
+    }catch(err){
+      // leave content as null; renderers will fallback to inline copy
+      console.warn('Content docs unavailable, using defaults:', err.message||err);
+    }
+  }
+
+  function getSection(raw, header){
+    const idx = raw.indexOf(header);
+    if(idx === -1) return '';
+    const rest = raw.slice(idx + header.length);
+    const cut = rest.indexOf('\u2e3b'); // ⸻ divider
+    return rest.slice(0, cut === -1 ? rest.length : cut).trim();
+  }
+
+  function getField(block, label){
+    const re = new RegExp(`^${label}\\:\\s*\\n?([\\s\\S]*?)\\n(?=[A-Z][A-Za-z ]+\\:|$)`, 'm');
+    const m = block.match(re);
+    return m ? m[1].trim() : '';
+  }
+
+  function parseDocs(raw){
+    const productBlock = getSection(raw, 'HOME / PRODUCT PAGE');
+    const communityBlock = getSection(raw, 'COMMUNITY / JOIN PAGE');
+    const aboutBlock = getSection(raw, 'ABOUT PAGE');
+    const contactBlock = getSection(raw, 'CONTACT / SUPPORT PAGE');
+    const socials = [];
+    const socialSec = getField(communityBlock, 'Social Section');
+    if(socialSec){
+      // find [Name] tokens
+      const re = /\[([^\]]+)\]/g; let sm;
+      while((sm = re.exec(socialSec))) socials.push(sm[1]);
+    }
+    // parse FAQ from contact
+    const faq = [];
+    const faqSec = getField(contactBlock, 'FAQ Section');
+    if(faqSec){
+      const qas = faqSec.split(/\n\n+/).map(s=>s.trim()).filter(Boolean);
+      qas.forEach(chunk=>{
+        const q = chunk.match(/^Q\:\s*(.*)$/m);
+        const a = chunk.match(/^A\:\s*(.*)$/m);
+        if(q && a) faq.push({q:q[1].trim(), a:a[1].trim()});
+      });
+    }
+    // support footer
+    const supportFooter = getField(contactBlock, 'Support Footer');
+    const support = { email: '', line: '' };
+    if(supportFooter){
+      const lines = supportFooter.split(/\n+/).map(s=>s.trim()).filter(Boolean);
+      support.email = lines[0] || '';
+      support.line = lines[1] || '';
+    }
+    return {
+      product: {
+        headline: getField(productBlock, 'Headline'),
+        subheadline: getField(productBlock, 'Subheadline'),
+        body: getField(productBlock, 'Body Copy'),
+        why: getField(productBlock, 'Section 2 — “Why Yuck?”') || getField(productBlock, 'Section 2 — "Why Yuck?"'),
+        how: getField(productBlock, 'Section 3 — “How to Use”') || getField(productBlock, 'Section 3 — "How to Use"'),
+        tagline: getField(productBlock, 'Tagline Footer')
+      },
+      community: {
+        headline: getField(communityBlock, 'Headline'),
+        subheadline: getField(communityBlock, 'Subheadline'),
+        body: getField(communityBlock, 'Body Copy'),
+        cta: getField(communityBlock, 'Email Capture CTA'),
+        counter: getField(communityBlock, 'Dynamic Counter Placeholder'),
+        socials,
+        tagline: getField(communityBlock, 'Footer Tagline')
+      },
+      about: {
+        headline: getField(aboutBlock, 'Headline'),
+        body: getField(aboutBlock, 'Body Copy'),
+        section: getField(aboutBlock, 'Section Header'),
+        team: getField(aboutBlock, 'Team Line'),
+        closing: getField(aboutBlock, 'Closing Line')
+      },
+      contact: {
+        headline: getField(contactBlock, 'Headline'),
+        subheadline: getField(contactBlock, 'Subheadline'),
+        labels: {
+          name: 'Name',
+          email: 'Email',
+          message: 'Message',
+          send: 'Send'
+        },
+        faq,
+        support
+      }
+    };
+  }
+
+  // FormSubmit helper
+  const FORMSUBMIT_ENDPOINT = 'https://formsubmit.co/ajax/tildesec@proton.me';
+  async function sendViaFormSubmit(payload){
+    try{
+      const res = await fetch(FORMSUBMIT_ENDPOINT, {
+        method: 'POST',
+        headers: {'Content-Type':'application/json','Accept':'application/json'},
+        body: JSON.stringify({...payload, _captcha:'false', _template:'table', _honey:''})
+      });
+      const j = await res.json().catch(()=>({}));
+      if(res.ok) return {ok:true, data:j};
+      return {ok:false, error: j?.message || res.statusText};
+    }catch(err){ return {ok:false, error: err.message||String(err)} }
+  }
+
+  function closeMobileNav(){
+    if(navEl){
+      navEl.classList.remove('is-open');
+      if(mobileQuery.matches) navEl.setAttribute('aria-hidden','true');
+      else navEl.removeAttribute('aria-hidden');
+    }
+    if(navToggleEl) navToggleEl.setAttribute('aria-expanded','false');
+  }
 
   // routing
   function navigate(hash){
     const target = (hash||location.hash||'#product').replace('#','');
     renderPage(target);
+    closeMobileNav();
   }
 
-  function mount(){
+  async function mount(){
     document.getElementById('year').textContent = new Date().getFullYear();
+    navEl = el('#mainNav');
+    navToggleEl = el('#navToggle');
+    if(navToggleEl && navEl){
+      navToggleEl.addEventListener('click', ()=>{
+        const isOpen = navEl.classList.toggle('is-open');
+        navToggleEl.setAttribute('aria-expanded', isOpen ? 'true':'false');
+        if(mobileQuery.matches) navEl.setAttribute('aria-hidden', isOpen ? 'false':'true');
+        else navEl.removeAttribute('aria-hidden');
+        if(isOpen){
+          const firstLink = navEl.querySelector('a, button');
+          if(firstLink) firstLink.focus();
+        }
+      });
+      navEl.addEventListener('keydown', (event)=>{
+        if(event.key === 'Escape' && navEl.classList.contains('is-open')){
+          closeMobileNav();
+          navToggleEl.focus();
+        }
+      });
+      const mqHandler = ()=>{
+        if(mobileQuery.matches){
+          navEl.setAttribute('aria-hidden', navEl.classList.contains('is-open') ? 'false':'true');
+        }else{
+          navEl.removeAttribute('aria-hidden');
+        }
+        if(!mobileQuery.matches) closeMobileNav();
+      };
+      if(typeof mobileQuery.addEventListener === 'function') mobileQuery.addEventListener('change', mqHandler);
+      else if(typeof mobileQuery.addListener === 'function') mobileQuery.addListener(mqHandler);
+      mqHandler();
+    }
     window.addEventListener('hashchange', ()=>navigate(location.hash));
-    qs('[data-link]').forEach(a=>a.addEventListener('click', e=>{
-      // let hash change do the job
-    }));
-    el('#cartBtn').addEventListener('click', ()=>alert('Cart drawer placeholder — implement as needed'));
-    renderPage((location.hash||'#product').replace('#',''));
+    qs('[data-link]').forEach(a=>a.addEventListener('click', ()=>closeMobileNav()));
+    el('#cartBtn').addEventListener('click', ()=>alert('Cart drawer placeholder - implement as needed'));
+    const initial = (location.hash||'#product').replace('#','');
+    await loadContent();
+    renderPage(initial);
   }
 
   // Renderers for pages
@@ -47,6 +206,15 @@
     // set active class for focus/animation
     qs('.page').forEach(p=>p.classList.remove('active'));
     const active = main.querySelector('.page'); if(active) active.classList.add('active');
+    setActiveLink(name);
+    requestAnimationFrame(()=>main.focus());
+  }
+
+  function setActiveLink(route){
+    qs('[data-link]').forEach(link=>{
+      const href = (link.getAttribute('href')||'').replace('#','');
+      link.classList.toggle('active', href === route);
+    });
   }
 
   // Product page
@@ -56,10 +224,11 @@
     const grid = document.createElement('div'); grid.className='product-grid';
 
     const hero = document.createElement('section'); hero.className='hero product-hero';
+    const c = state.content?.product;
     hero.innerHTML = `
       <div class="product-card">
-        <h2>${state.product.name}</h2>
-        <p class="subtle">All-natural ingredients. Marketing-forward brand. Taste: intentionally 'yuck'.</p>
+        <h2>${c?.headline || state.product.name}</h2>
+        <p class="subtle">${c?.subheadline || "All-natural ingredients. Marketing-forward brand. Taste: intentionally 'yuck'."}</p>
         <div style="margin-top:14px" class="price" id="displayPrice">$${state.product.priceOneTime.toFixed(2)}</div>
         <div class="variant">
           <div class="option selected" data-type="one">One-time</div>
@@ -82,16 +251,25 @@
     const aside = document.createElement('aside'); aside.className='card';
     aside.innerHTML = `
       <h3>What's inside</h3>
-      <p class="subtle">A straightforward mix of natural ingredients to support workouts. Packaging is intentionally loud.</p>
+      <p class="subtle">${c?.body || 'A straightforward mix of natural ingredients to support workouts. Packaging is intentionally loud.'}</p>
       <div style="margin-top:12px">
         <div class="pill">30 servings</div>
         <div class="pill" style="margin-left:8px">Vegan</div>
       </div>
       <div style="margin-top:14px">
-        <strong>Shipping</strong>
-        <div class="subtle">Flat rate available. Integrate carrier APIs in production.</div>
+        <strong>${c?.why ? 'Why Yuck?' : 'Shipping'}</strong>
+        <div class="subtle">${c?.why || 'Flat rate available. Integrate carrier APIs in production.'}</div>
       </div>
     `;
+
+    if(c?.how || c?.tagline){
+      const extra = document.createElement('div'); extra.className='card'; extra.style.marginTop='12px';
+      extra.innerHTML = `
+        ${c?.how ? `<h3>How to Use</h3><p class="subtle">${c.how}</p>`:''}
+        ${c?.tagline ? `<div class="helper muted" style="margin-top:8px">${c.tagline}</div>`:''}
+      `;
+      wrap.appendChild(extra);
+    }
 
     grid.appendChild(hero); grid.appendChild(aside);
     wrap.appendChild(grid);
@@ -124,7 +302,7 @@
     const qty = Math.max(1, parseInt(el('#qty').value||1));
     state.cart.push({productId:state.product.id,type,qty});
     updateCartCount();
-    alert('Added to cart — demo only');
+    alert('Added to cart - demo only');
   }
 
   function handlePurchase(direct=false){
@@ -144,40 +322,73 @@
       alert('No checkout URL returned from backend.');
     }).catch(err=>{
       console.warn('Checkout backend not reachable or failed:', err);
-      alert(`Checkout placeholder — ${qty} x ${type==='sub'? 'Subscription':'One-time'} — Total: $${total.toFixed(2)}\nStart the demo backend to try a Stripe test checkout (see /backend).`);
+      // Fallback: send a mock purchase order via FormSubmit
+      sendViaFormSubmit({
+        _subject: 'Yuck Mock Purchase Order',
+        form: 'purchase-order',
+        productId: state.product.id,
+        quantity: qty,
+        mode: type==='sub'? 'subscription':'payment',
+        total: `$${total.toFixed(2)} ${state.product.currency}`,
+        ts: new Date().toISOString(),
+        page: location.href
+      }).then(res=>{
+        if(res.ok){
+          alert(`Checkout fallback sent. ${qty} x ${type==='sub'? 'Subscription':'One-time'} - Total: $${total.toFixed(2)}. We'll email a confirmation.`);
+        }else{
+          alert(`Checkout placeholder - ${qty} x ${type==='sub'? 'Subscription':'One-time'} - Total: $${total.toFixed(2)}\nStart the demo backend to try a Stripe test checkout (see /backend).`);
+        }
+      });
     });
   }
 
   function updateCartCount(){
-    el('#cartCount').textContent = state.cart.reduce((s,i)=>s+i.qty,0);
+    const badge = el('#cartCount');
+    if(!badge) return;
+    badge.textContent = state.cart.reduce((s,i)=>s+i.qty,0);
   }
 
   // Community / Join page
   function communityPage(){
     const page = document.createElement('div'); page.className='page community';
+    const c = state.content?.community;
+    const baseCount = 4327;
+    const localCount = (JSON.parse(localStorage.getItem('yuck_signups')||'[]')||[]).length;
+    const counterText = c?.counter || `Brave souls converted: ${baseCount.toLocaleString()} and counting.`;
     page.innerHTML = `
       <div class="card">
-        <h2>Join the Yuck Community</h2>
-        <p class="subtle">Be part of our ambassador program. Early access, exclusive drops, and community updates.</p>
+        <h2>${c?.headline || 'Join the Yuck Community'}</h2>
+        <p class="subtle">${c?.subheadline || 'Be part of our ambassador program. Early access, exclusive drops, and community updates.'}</p>
         <form id="joinForm" class="email-capture" onsubmit="return false;">
-          <input id="joinEmail" type="email" placeholder="your@email.com" required />
-          <button id="joinBtn" class="btn">Join</button>
+          <input id="joinEmail" type="email" placeholder="you@email.com" required />
+          <button id="joinBtn" class="btn">${c?.cta || 'Join'}</button>
         </form>
-        <div class="helper muted">We recommend using Discord or Slack for community. Members will get access links after signup.</div>
+        <div class="helper muted">${counterText.replace(/4,327/, (baseCount+localCount).toLocaleString())}</div>
       </div>
+      ${communityExtras(c)}
     `;
 
     setTimeout(()=>{
-      el('#joinBtn').addEventListener('click', ()=>{
+      el('#joinBtn').addEventListener('click', async ()=>{
         const email = el('#joinEmail').value.trim();
         if(!email) return alert('Please enter an email');
-        // anti-bot: simple honeypot could be added server-side; here we do client-side note
-        // store locally as placeholder; in production POST to API with CAPTCHA or CAPTCHAless device signals
-        const signups = JSON.parse(localStorage.getItem('yuck_signups')||'[]');
-        signups.push({email,ts:Date.now()});
-        localStorage.setItem('yuck_signups', JSON.stringify(signups));
-        alert('Thanks! We saved your email locally as a demo. (Integrate real backend and email provider).');
-        el('#joinEmail').value = '';
+        const payload = {email, hp: ''}; // hp honeypot left blank
+        try{
+          const res = await fetch('/api/signup', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+          const j = await res.json();
+          if(res.ok && j.ok){ alert('Thanks - signup recorded.'); el('#joinEmail').value=''; return; }
+          // try FormSubmit fallback
+          const fs = await sendViaFormSubmit({_subject:'Yuck Community Signup', form:'community-signup', email, ts:new Date().toISOString(), page: location.href});
+          if(fs.ok){ alert('Thanks - signup received. Please check your email.'); el('#joinEmail').value=''; return; }
+          alert('Signup failed: '+(j.error||res.statusText||fs.error));
+        }catch(e){
+          // final fallback to local storage
+          const signups = JSON.parse(localStorage.getItem('yuck_signups')||'[]');
+          signups.push({email,ts:Date.now(),fallback:true});
+          localStorage.setItem('yuck_signups', JSON.stringify(signups));
+          alert('Offline - saved locally as demo.');
+          el('#joinEmail').value='';
+        }
       });
     },8);
 
@@ -185,37 +396,38 @@
   }
 
   // add community invite quicklinks (Slack/Discord) and anti-bot recommendations
-  function communityExtras(){
+  function communityExtras(c){
+    const socials = (c?.socials||[]).map(name=>{
+      const key = name.toLowerCase();
+      const href = key.includes('discord')? 'https://discord.com/invite/your-invite'
+        : key.includes('tiktok')? 'https://tiktok.com/@yuck'
+        : key.includes('instagram')? 'https://instagram.com/yuck'
+        : '#';
+      return `<a class="btn btn-ghost" href="${href}" target="_blank" rel="noopener">${name}</a>`;
+    }).join('');
     return `
       <div style="margin-top:12px" class="card">
         <h3>Community access</h3>
         <p class="subtle">After signup, we'll provide invite links. For demos, these are placeholders.</p>
-        <div style="display:flex;gap:8px;margin-top:8px">
+        <div style="display:flex;gap:8px;margin-top:8px">${socials || `
           <a class="btn btn-ghost" href="https://discord.com/invite/your-invite" target="_blank" rel="noopener">Discord</a>
-          <a class="btn btn-ghost" href="https://join.slack.com/t/yourworkspace/signup" target="_blank" rel="noopener">Slack</a>
+          <a class="btn btn-ghost" href="https://join.slack.com/t/yourworkspace/signup" target="_blank" rel="noopener">Slack</a>`}
         </div>
-        <div class="helper muted">Tip: Use invite tokens and email verification to reduce bots.</div>
+        <div class="helper muted">${c?.tagline || 'Tip: Use invite tokens and email verification to reduce bots.'}</div>
       </div>
     `;
   }
 
   function aboutPage(){
     const page = document.createElement('div'); page.className='page about';
+    const c = state.content?.about;
     page.innerHTML = `
       <div class="card">
-        <h2>About Yuck</h2>
-        <p class="subtle">Yuck is a marketing-first workout powder. It tastes intentionally bad to be memorable. Ingredients are natural and straightforward.</p>
-        <h3 style="margin-top:12px">Brand direction</h3>
-        <p class="subtle">Counter to 'super scientific' aesthetics — we favour bold, playful, and unapologetic design. Copy and creative assets coming from André.</p>
-        <div style="margin-top:12px">
-          <strong>Design notes</strong>
-          <p class="subtle">Palette: bold accent coral and mint; typography: heavy headings, compact body. Focus on large imagery, minimal copy on product pages, with marketing-first language.</p>
-        </div>
-      </div>
-      <div style="height:14px"></div>
-      <div class="card">
-        <h3>Mission</h3>
-        <p class="subtle">Make a memorable product that drives strong brand affinity. Ambassadors and community are the core growth channel.</p>
+        <h2>${c?.headline || 'About Yuck'}</h2>
+        <p class="subtle">${c?.body || 'Yuck is a marketing-first workout powder. It tastes intentionally bad to be memorable. Ingredients are natural and straightforward.'}</p>
+        ${c?.section ? `<h3 style="margin-top:12px">${c.section}</h3>`:''}
+        ${c?.team ? `<p class="subtle">${c.team}</p>`:''}
+        ${c?.closing ? `<div class="helper muted" style="margin-top:12px">${c.closing}</div>`:''}
       </div>
     `;
     return page;
@@ -223,44 +435,58 @@
 
   function contactPage(){
     const page = document.createElement('div'); page.className='page contact';
+    const c = state.content?.contact;
     page.innerHTML = `
       <div class="card">
-        <h2>Contact & Support</h2>
-        <p class="subtle">Questions? Security or partnership inquiries can be sent here.</p>
+        <h2>${c?.headline || 'Contact & Support'}</h2>
+        <p class="subtle">${c?.subheadline || 'Questions? Security or partnership inquiries can be sent here.'}</p>
         <form id="contactForm" onsubmit="return false;">
-          <input type="text" id="name" placeholder="Your name" />
-          <input type="email" id="email" placeholder="Email" required />
-          <textarea id="message" rows="4" placeholder="How can we help?" required></textarea>
+          <input type="text" id="name" placeholder="${c?.labels?.name || 'Your name'}" />
+          <input type="email" id="email" placeholder="${c?.labels?.email || 'Email'}" required />
+          <textarea id="message" rows="4" placeholder="${c?.labels?.message || 'How can we help?'}" required></textarea>
           <!-- honeypot field to trap bots -->
           <input type="text" id="hp" style="display:none" aria-hidden="true" />
-          <div style="margin-top:8px;display:flex;gap:8px"><button id="sendMsg" class="btn">Send</button><button id="clearMsg" type="button" class="btn btn-ghost">Clear</button></div>
+          <div style="margin-top:8px;display:flex;gap:8px"><button id="sendMsg" class="btn">${c?.labels?.send || 'Send'}</button><button id="clearMsg" type="button" class="btn btn-ghost">Clear</button></div>
         </form>
-        <div class="helper muted">This form is a front-end demo. In production, post to a backend with spam protections and email notifications.</div>
+        ${renderFaq(c)}
+        <div class="helper muted">This form is a front-end demo. It uses a zero-config email backend for prototypes.</div>
       </div>
     `;
 
     // add support links
     setTimeout(()=>{
       const supportCard = document.createElement('div'); supportCard.className='card';
-      supportCard.innerHTML = `<h3>Support channels</h3><p class="subtle">For urgent issues: <a href="mailto:support@yuck.example">support@yuck.example</a></p><div style="margin-top:8px"><a class=\"btn btn-ghost\" href=\"https://discord.com/invite/your-invite\" target=\"_blank\">Discord Support</a></div>`;
+      const email = c?.support?.email || 'support@yuck.com';
+      const line = c?.support?.line || 'We reply within 24 hours (we don\'t sleep much).';
+      supportCard.innerHTML = `<h3>Support channels</h3><p class="subtle">For urgent issues: <a href="mailto:${email}">${email}</a></p><p class="subtle">${line}</p><div style="margin-top:8px"><a class=\"btn btn-ghost\" href=\"https://discord.com/invite/your-invite\" target=\"_blank\">Discord Support</a></div>`;
       page.appendChild(supportCard);
     },10);
 
     setTimeout(()=>{
-      el('#sendMsg').addEventListener('click', ()=>{
+      el('#sendMsg').addEventListener('click', async ()=>{
         if(el('#hp').value){alert('Spam detected');return}
         const email = el('#email').value.trim(); const msg = el('#message').value.trim();
         if(!email||!msg) return alert('Please complete the form');
-        // demo: store locally
+        const name = el('#name').value.trim();
+        const fs = await sendViaFormSubmit({_subject:'Yuck Contact', form:'contact', name, email, message: msg, ts:new Date().toISOString(), page: location.href});
+        if(fs.ok){ el('#name').value=''; el('#email').value=''; el('#message').value=''; alert('Thanks - your message has been sent.'); return; }
+        // fallback: local save
         const msgs = JSON.parse(localStorage.getItem('yuck_messages')||'[]');
-        msgs.push({email,msg,ts:Date.now()});
+        msgs.push({email,msg,ts:Date.now(), fallback:true});
         localStorage.setItem('yuck_messages', JSON.stringify(msgs));
-        alert('Message saved locally. In production, this would send an email to support.');
+        alert('Offline - message saved locally.');
       });
       el('#clearMsg').addEventListener('click', ()=>{ el('#name').value=''; el('#email').value=''; el('#message').value=''; });
     },8);
 
     return page;
+  }
+
+  function renderFaq(c){
+    const faq = c?.faq||[];
+    if(!faq.length) return '';
+    const items = faq.map(qa=>`<details style="margin-top:8px"><summary><strong>Q:</strong> ${qa.q}</summary><div style="margin-top:6px" class="subtle"><strong>A:</strong> ${qa.a}</div></details>`).join('');
+    return `<div style="margin-top:12px" class="card"><h3>FAQ</h3>${items}</div>`;
   }
 
   function privacyPage(){
@@ -277,4 +503,243 @@
 
   // init
   document.addEventListener('DOMContentLoaded', mount);
+})();
+
+// Background media controller (separate from SPA closure for simplicity)
+(function(){
+  const palette = [
+    ['#ff6b6b','#ffd166'],
+    ['#6bffb8','#00b894'],
+    ['#7f5af0','#2cb1bc'],
+    ['#ff00a8','#ff6b6b'],
+    ['#3a86ff','#8338ec'],
+    ['#0beef9','#48cae4'],
+    ['#f6a560','#ffbf69'],
+    ['#05dfd7','#1b9aaa'],
+    ['#ff6f91','#ff9671']
+  ];
+
+  const manifest = [
+    {src:'istockphoto-1135987522-640_adpp_is.mp4', label:'Coral Motion'},
+    {src:'istockphoto-1326710142-640_adpp_is.mp4', label:'Mint Energy'},
+    {src:'istockphoto-1395689671-640_adpp_is.mp4', label:'Lift Session'},
+    {src:'istockphoto-1433818982-640_adpp_is.mp4', label:'Night Run'},
+    {src:'istockphoto-1459799539-640_adpp_is.mp4', label:'Studio Grit'},
+    {src:'istockphoto-173046678-640_adpp_is.mp4', label:'Iron Focus'},
+    {src:'istockphoto-2164753090-640_adpp_is.mp4', label:'Outdoor Sprint'},
+    {src:'istockphoto-2188877484-640_adpp_is.mp4', label:'Form Practice'},
+    {src:'istockphoto-863864540-640_adpp_is.mp4', label:'Core Training'}
+  ].map((item, idx)=>({
+    ...item,
+    poster: makePoster(idx)
+  }));
+
+  function makePoster(idx){
+    const colors = palette[idx % palette.length];
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="320" height="180" preserveAspectRatio="none"><defs><linearGradient id="g" x1="0%" x2="100%" y1="0%" y2="100%"><stop offset="0%" stop-color="${colors[0]}"/><stop offset="100%" stop-color="${colors[1]}"/></linearGradient></defs><rect fill="url(#g)" width="320" height="180" rx="14"/><text x="50%" y="52%" text-anchor="middle" fill="rgba(0,0,0,0.35)" font-size="26" font-family="'Inter','Arial',sans-serif">Yuck</text></svg>`;
+    return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+  }
+
+  const video = document.getElementById('bgVideo');
+  const thumbContainer = document.getElementById('bgThumbs');
+  const toggle = document.getElementById('bgToggle');
+  const hide = document.getElementById('bgHide');
+  const controls = document.getElementById('bgControls');
+  const overlay = document.getElementById('bgOverlay');
+
+  if(!video || !thumbContainer || !toggle || !hide || !controls) return;
+
+  thumbContainer.setAttribute('tabindex','0');
+
+  const mobile = window.matchMedia('(max-width:680px)');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let currentIndex = -1;
+  let currentSrc = null;
+
+  const observer = ('IntersectionObserver' in window) ? new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting) resolveThumbPoster(entry.target);
+    });
+  }, {root:null, rootMargin:'160px'}) : null;
+
+  function buildThumbs(){
+    thumbContainer.innerHTML = '';
+    manifest.forEach((asset, index)=>{
+      const btn = createThumbEl(asset, index);
+      thumbContainer.appendChild(btn);
+      if(observer) observer.observe(btn);
+    });
+    selectByIndex(chooseDefaultIndex());
+  }
+
+  function chooseDefaultIndex(){
+    return mobile.matches ? Math.max(0, Math.floor(manifest.length/2)) : 0;
+  }
+
+  function createThumbEl(asset, index){
+    const btn = document.createElement('button');
+    btn.className = 'thumb';
+    btn.type = 'button';
+    btn.dataset.src = asset.src;
+    btn.dataset.index = index;
+    btn.id = `bg-thumb-${index}`;
+    btn.setAttribute('role','option');
+    btn.setAttribute('aria-selected','false');
+    btn.style.backgroundImage = `url('${asset.poster}')`;
+    btn.innerHTML = `<span class="sr-only">${asset.label} background</span><span aria-hidden="true" class="thumb-title">${asset.label}</span>`;
+    btn.addEventListener('click', ()=>selectByIndex(index));
+    btn.addEventListener('focus', ()=>thumbContainer.setAttribute('aria-activedescendant', btn.id));
+    return btn;
+  }
+
+  function selectByIndex(index){
+    const asset = manifest[index];
+    if(!asset) return;
+    setActiveThumb(index);
+    loadVideo(asset, index);
+  }
+
+  function setActiveThumb(index){
+    const nodes = Array.from(thumbContainer.children);
+    nodes.forEach((node, idx)=>{
+      const isActive = idx === index;
+      node.classList.toggle('active', isActive);
+      node.setAttribute('aria-selected', isActive ? 'true':'false');
+      if(isActive) thumbContainer.setAttribute('aria-activedescendant', node.id);
+    });
+  }
+
+  function updateToggleLabel(){
+    toggle.textContent = (!video.paused && !video.ended) ? 'Pause' : 'Play';
+  }
+
+  function loadVideo(asset, index){
+    const src = '/assets/' + asset.src;
+    if(currentSrc === src){
+      if(!mobile.matches && !reduceMotion.matches) video.play().catch(()=>{});
+      updateToggleLabel();
+      return;
+    }
+    currentSrc = src;
+    currentIndex = index;
+    while(video.firstChild) video.removeChild(video.firstChild);
+    const source = document.createElement('source'); source.src = src; source.type='video/mp4';
+    video.appendChild(source);
+    video.setAttribute('poster', asset.poster);
+    video.preload = mobile.matches ? 'metadata' : 'auto';
+    const shouldAutoplay = !(mobile.matches || reduceMotion.matches);
+    if(shouldAutoplay){ video.play().catch(()=>{}); }
+    else { video.pause(); }
+    updateToggleLabel();
+  }
+
+  async function resolveThumbPoster(node){
+    if(node.dataset.posterChecked === '1') return;
+    node.dataset.posterChecked = '1';
+    const index = Number(node.dataset.index);
+    const asset = manifest[index];
+    if(!asset) return;
+    const jpg = '/assets/' + asset.src.replace(/\.mp4$/, '.jpg');
+    try{
+      const res = await fetch(jpg, {method:'HEAD'});
+      if(res.ok){
+        node.style.backgroundImage = `url('${jpg}')`;
+        node.dataset.hiresLoaded = '1';
+        if(index === currentIndex) video.setAttribute('poster', jpg);
+      }
+    }catch(err){
+      console.debug('Poster preload skipped for', asset.src, err);
+    }
+  }
+
+  function togglePlay(){
+    if(video.paused){ video.play().catch(()=>{}); }
+    else { video.pause(); }
+    updateToggleLabel();
+  }
+
+  function toggleVisibility(){
+    const wrap = document.querySelector('.bg-wrap');
+    if(!wrap) return;
+    if(wrap.style.display === 'none'){
+      wrap.style.display = 'block';
+      hide.textContent = 'Hide';
+      if(!(mobile.matches || reduceMotion.matches)) video.play().catch(()=>{});
+    }else{
+      wrap.style.display = 'none';
+      hide.textContent = 'Show';
+      video.pause();
+    }
+    updateToggleLabel();
+  }
+
+  function handleThumbKeyNav(e){
+    const total = manifest.length;
+    if(!total) return;
+    if(e.key === 'ArrowRight' || e.key === 'ArrowDown'){
+      e.preventDefault();
+      const next = (currentIndex + 1 + total) % total;
+      selectByIndex(next);
+      focusThumb(next);
+    }else if(e.key === 'ArrowLeft' || e.key === 'ArrowUp'){
+      e.preventDefault();
+      const prev = (currentIndex - 1 + total) % total;
+      selectByIndex(prev);
+      focusThumb(prev);
+    }
+  }
+
+  function focusThumb(index){
+    const target = thumbContainer.querySelector(`#bg-thumb-${index}`);
+    if(target) target.focus();
+  }
+
+  function init(){
+    buildThumbs();
+    toggle.addEventListener('click', togglePlay);
+    hide.addEventListener('click', toggleVisibility);
+    thumbContainer.addEventListener('keydown', handleThumbKeyNav);
+    video.addEventListener('play', updateToggleLabel);
+    video.addEventListener('pause', updateToggleLabel);
+    if(overlay){
+      overlay.style.pointerEvents = 'none';
+    }
+    if(mobile.matches || reduceMotion.matches){
+      video.pause();
+      updateToggleLabel();
+    }
+    const mqHandler = ()=>{
+      if(mobile.matches){
+        video.pause();
+      }else if(currentSrc){
+        video.play().catch(()=>{});
+      }
+      updateToggleLabel();
+    };
+    if(typeof mobile.addEventListener === 'function') mobile.addEventListener('change', mqHandler);
+    else if(typeof mobile.addListener === 'function') mobile.addListener(mqHandler);
+    const motionHandler = ()=>{
+      if(reduceMotion.matches){
+        video.pause();
+      }else if(currentSrc && !mobile.matches){
+        video.play().catch(()=>{});
+      }
+      updateToggleLabel();
+    };
+    if(typeof reduceMotion.addEventListener === 'function') reduceMotion.addEventListener('change', motionHandler);
+    else if(typeof reduceMotion.addListener === 'function') reduceMotion.addListener(motionHandler);
+  }
+
+  document.addEventListener('DOMContentLoaded', init);
+})();
+
+// Progressive enhancement: register service worker if available
+(function(){
+  if('serviceWorker' in navigator){
+    window.addEventListener('load', ()=>{
+      navigator.serviceWorker.register('service-worker.js').catch(err=>{
+        console.warn('Service worker registration failed', err);
+      });
+    });
+  }
 })();

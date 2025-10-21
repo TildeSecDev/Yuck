@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Yuck — Admin Signups (Demo)</title>
+  <style>
+    body{font-family:system-ui,Arial;background:#071016;color:#e6eef6;padding:20px}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:8px;border-bottom:1px solid rgba(255,255,255,0.04)}
+    .btn{background:#ff6b6b;color:#081018;padding:8px 12px;border-radius:8px;border:0}
+  </style>
+</head>
+<body>
+  <h1>Signups (demo)</h1>
+  <p>This admin view is a demo. Enter admin credentials to load the signup list. (Set `ADMIN_USER` / `ADMIN_PASS` in backend `.env`.)</p>
+  <div style="margin-bottom:12px">
+    <label style="display:inline-block;margin-right:8px">User <input id="adminUser" /></label>
+    <label style="display:inline-block;margin-right:8px">Pass <input id="adminPass" type="password"/></label>
+    <button id="login" class="btn">Login</button>
+    <button id="refresh" class="btn" style="margin-left:8px">Refresh</button>
+    <button id="download" class="btn" style="margin-left:8px">Download CSV</button>
+  </div>
+  <div id="list">Enter credentials and press Login</div>
+  <script>
+    async function fetchList(){
+      const res = await fetch('/admin/signups');
+      if(!res.ok){
+        if(res.status===401) document.getElementById('list').textContent = 'Unauthorized — please login';
+        else document.getElementById('list').textContent = 'Failed to load: '+res.statusText;
+        return;
+      }
+      const data = await res.json();
+      if(!data.length) return document.getElementById('list').textContent = 'No signups yet';
+      const table = document.createElement('table');
+      const thead = document.createElement('thead'); thead.innerHTML='<tr><th>Email</th><th>IP</th><th>When</th></tr>'; table.appendChild(thead);
+      const tbody = document.createElement('tbody');
+      data.forEach(s=>{
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${s.email}</td><td>${s.ip||''}</td><td>${new Date(s.ts).toLocaleString()}</td>`;
+        tbody.appendChild(tr);
+      });
+      table.appendChild(tbody);
+      const container = document.getElementById('list'); container.innerHTML=''; container.appendChild(table);
+      // prepare CSV
+      const csv = ['email,ip,ts', ...data.map(s=>`${s.email},${s.ip||''},${s.ts}`)].join('\n');
+      document.getElementById('download').onclick = ()=>{
+        const blob = new Blob([csv], {type:'text/csv'});
+        const u = URL.createObjectURL(blob);
+        const a = document.createElement('a'); a.href=u; a.download='signups.csv'; document.body.appendChild(a); a.click(); a.remove();
+      };
+    }
+    document.getElementById('login').addEventListener('click', async ()=>{
+      const u = document.getElementById('adminUser').value;
+      const p = document.getElementById('adminPass').value;
+      const res = await fetch('/admin/login', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({user:u,pass:p})});
+      if(!res.ok){ document.getElementById('list').textContent = 'Login failed'; return; }
+      document.getElementById('list').textContent = 'Logged in — loading…';
+      fetchList();
+    });
+    document.getElementById('refresh').addEventListener('click', fetchList);
+  </script>
+</body>
+</html>

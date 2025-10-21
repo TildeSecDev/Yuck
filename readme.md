@@ -27,6 +27,18 @@ node index.js
 
 2. Use the frontend `Buy now` flow to call `/create-checkout-session` when integrated with a real client.
 
+Admin & demo signups
+- The backend exposes a demo admin page at `/admin.html` (no auth) which lists signups saved to `backend/data/signups.json` and allows CSV download. Use only in local/dev environments and add auth for production.
+Admin & demo signups
+- The backend stores signups in a local SQLite database by default at `backend/database/yuck.db` (configurable via `DB_PATH` in `.env`).
+- Admin endpoints are now protected with Basic Auth. Set `ADMIN_USER` and `ADMIN_PASS` in your `.env` (see `backend/.env.example`).
+- To view signups in the browser, visit `http://localhost:4242/admin.html` and authenticate with the Basic Auth credentials when prompted (or use the admin endpoint with proper Authorization header).
+
+API endpoints
+- POST /api/signup  {email, hp?} — stores signup (basic rate-limiting and honeypot). Returns {ok:true}.
+- GET /admin/signups — returns JSON array of signups (demo-only, no auth).
+
+
 Security & production notes
 - Configure SPF, DKIM, and DMARC for your sending domain.
 - Use webhooks and server-side verification for payment events.
