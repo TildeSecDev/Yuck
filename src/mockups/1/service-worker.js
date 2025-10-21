@@ -1,10 +1,12 @@
-const CACHE_NAME = 'yuck-shell-v1';
+const CACHE_NAME = 'yuck-shell-v3';
 const SHELL_ASSETS = [
   './',
   './index.html',
   './index.css',
   './index.js',
-  './manifest.json'
+  './manifest.json',
+  '/docs/raw.txt',
+  '/assets/images/background-image.png'
 ];
 
 self.addEventListener('install', (event) => {

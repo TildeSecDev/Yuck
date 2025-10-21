@@ -24,6 +24,11 @@ if (fs.existsSync(frontDir)){
   if(fs.existsSync(assetsDir)){
     app.use('/assets', express.static(assetsDir, {fallthrough:true, maxAge: '7d'}));
   }
+  // serve docs for content population
+  const docsDir = path.join(__dirname, '..', 'docs');
+  if(fs.existsSync(docsDir)){
+    app.use('/docs', express.static(docsDir, {fallthrough:true, maxAge: '1h'}));
+  }
   app.get('/', (req,res)=>{
     res.sendFile(path.join(frontDir,'index.html'));
   });
