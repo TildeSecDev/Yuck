@@ -1,39 +1,56 @@
-const CACHE_NAME = 'yuck-trials-shell-v1';
-const OFFLINE_FILES = [
+const CACHE = 'yuck-m3-v1';
+const ASSETS = [
   './',
   './index.html',
-  './index.css',
-  './index.js',
-  './manifest.json'
+  './styles.css',
+  './app.js',
+  './manifest.webmanifest',
+  './icons/icon-192.svg',
+  './icons/icon-512.svg'
 ];
 
-self.addEventListener('install', event => {
+self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(OFFLINE_FILES)).then(() => self.skipWaiting())
+    caches.open(CACHE).then((cache) => cache.addAll(ASSETS)).then(() => self.skipWaiting())
   );
 });
 
-self.addEventListener('activate', event => {
+self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then(keys => Promise.all(keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))))
-      .then(() => self.clients.claim())
+    caches.keys().then((keys) => Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k)))).then(() => self.clients.claim())
   );
 });
 
-self.addEventListener('fetch', event => {
-  if(event.request.method !== 'GET') return;
-  const url = new URL(event.request.url);
-  if(url.origin !== self.location.origin) return;
-  event.respondWith(
-    caches.match(event.request).then(match => {
-      if(match) return match;
-      return fetch(event.request)
-        .then(response => {
-          const clone = response.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
-          return response;
+self.addEventListener('fetch', (event) => {
+  const req = event.request;
+
+  // HTML navigations: network-first with offline fallback
+  if (req.mode === 'navigate') {
+    event.respondWith(
+      fetch(req)
+        .then((resp) => {
+          const copy = resp.clone();
+          caches.open(CACHE).then((cache) => cache.put('./index.html', copy)).catch(() => {});
+          return resp;
         })
-        .catch(() => caches.match('./index.html'));
+        .catch(() => caches.match('./index.html'))
+    );
+    return;
+  }
+
+  // Static assets: cache-first
+  event.respondWith(
+    caches.match(req).then((cached) => {
+      return (
+        cached ||
+        fetch(req)
+          .then((resp) => {
+            const copy = resp.clone();
+            caches.open(CACHE).then((cache) => cache.put(req, copy)).catch(() => {});
+            return resp;
+          })
+          .catch(() => cached)
+      );
     })
   );
 });
