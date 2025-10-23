@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Yuck — Natural Performance Fuel</title>
+  <meta name="description" content="Mockup 6 reframes Yuck as a calm, modern nutrition studio with natural textures, motion, and the full interactive toolkit." />
+  <meta name="theme-color" content="#e7efe6" />
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%232c4b39'/%3E%3Ctext x='50%25' y='58%25' font-family='Manrope,Arial,sans-serif' font-size='28' text-anchor='middle' fill='%23f4f0e6'%3EY6%3C/text%3E%3C/svg%3E" />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Fraunces:opsz,wght@14..144,500;14..144,600;14..144,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body id="top">
+  <div class="grain"></div>
+  <header class="site-header" data-reveal>
+    <div class="shell header-inner">
+      <a class="brand" href="#top" aria-label="Yuck home">
+        Yuck<span class="dot">.</span>
+        <span class="tag">Field-Tested Fuel</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primaryNav">
+        <span class="menu-icon" aria-hidden="true"></span>
+        <span class="sr-only">Toggle navigation</span>
+      </button>
+      <nav id="primaryNav" class="primary-nav" aria-label="Primary">
+        <a href="#products">Products</a>
+        <a href="#experience">Experience</a>
+        <a href="#community">Community</a>
+        <a href="#research">Research</a>
+        <a href="#about">About</a>
+        <a href="#support">Support</a>
+      </nav>
+      <div class="header-actions">
+        <button class="btn ghost" data-modal-open="buyModal">Shop</button>
+        <button class="btn solid install" id="installBtn" disabled>Install App</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="hero">
+      <div class="shell hero-grid">
+        <div class="hero-copy reveal">
+          <span class="eyebrow">No hype. All signal.</span>
+          <h1>Nutrition that feels as good as it performs.</h1>
+          <p>
+            Yuck started as a rebellion against synthetic blends. In this light-filled build we centre calm focus, translucent
+            layers, and motion cues that echo the field notes shared by our athletes.
+          </p>
+          <div class="hero-actions">
+            <button class="btn solid" data-modal-open="buyModal" data-product="Y-01™ Organic Protein">Build your ritual</button>
+            <a class="btn link" href="#products">Explore lineup</a>
+          </div>
+          <dl class="hero-metrics">
+            <div>
+              <dt>Repeat buyers</dt>
+              <dd>20%+</dd>
+            </div>
+            <div>
+              <dt>Community rating</dt>
+              <dd>4.9★</dd>
+            </div>
+            <div>
+              <dt>Field tests logged</dt>
+              <dd>6K</dd>
+            </div>
+          </dl>
+        </div>
+        <div class="hero-stage reveal" data-scene-switcher>
+          <div class="stage-backdrop"></div>
+          <div class="scene-buttons" role="tablist" aria-label="Brand highlights">
+            <button class="scene-btn is-active" type="button" role="tab" aria-selected="true" data-scene="craft">
+              Craft
+            </button>
+            <button class="scene-btn" type="button" role="tab" aria-selected="false" data-scene="community">
+              Community
+            </button>
+            <button class="scene-btn" type="button" role="tab" aria-selected="false" data-scene="flow">
+              Flow
+            </button>
+          </div>
+          <div class="scene-panels">
+            <article class="scene is-active" id="scene-craft" data-scene-panel="craft">
+              <div class="scene-media" style="background-image:url('../../assets/images/powder-explosion.png')"></div>
+              <div class="scene-body">
+                <h2>Whole ingredients, soft gradients.</h2>
+                <p>
+                  A translucent capsule reveals the blends we perfected in earlier mockups, now suspended in a calm mint light to
+                  match the natural palette.
+                </p>
+              </div>
+            </article>
+            <article class="scene" id="scene-community" data-scene-panel="community" hidden>
+              <div class="scene-media" style="background-image:url('../../assets/images/background-image-title-cutout.png')"></div>
+              <div class="scene-body">
+                <h2>Signal-rich spaces.</h2>
+                <p>
+                  Live Discord pulses, partner callouts, and peer-led videos orbit the hero. Everything updates in place without
+                  breaking your flow.
+                </p>
+              </div>
+            </article>
+            <article class="scene" id="scene-flow" data-scene-panel="flow" hidden>
+              <div class="scene-media" style="background-image:url('../../assets/images/yuck-demo-supplement/yuck-demo-supplement.png')"></div>
+              <div class="scene-body">
+                <h2>Modal-first journey.</h2>
+                <p>
+                  Shop, join, or ask for help in a single overlay. Motion cues stay subtle—think breathing panels and gentle
+                  parallax that respects recovery days.
+                </p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+      <div class="hero-scroll" aria-hidden="true">
+        <span>Scroll to explore</span>
+      </div>
+    </section>
+
+    <section class="section promise" id="promise">
+      <div class="shell promise-grid">
+        <article class="promise-card reveal">
+          <h3>Field notes baked in</h3>
+          <p>
+            Every product card holds real test data from club runs and studio sessions. Metrics are surfaced with soft shadows and
+            micro-interactions rather than hard dividers.
+          </p>
+        </article>
+        <article class="promise-card reveal">
+          <h3>Nature-forward interface</h3>
+          <p>
+            Layered glass panels, soft gradients, and botanical strokes keep the palette light. Hovering cards tilt gently using
+            CSS variables and transitions.
+          </p>
+        </article>
+        <article class="promise-card reveal">
+          <h3>Framed for focus</h3>
+          <p>
+            The layout leans into whitespace and typographic rhythm so customers can browse, learn, and act without cognitive
+            overload.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section products" id="products">
+      <div class="shell">
+        <header class="section-head reveal">
+          <span class="badge">Lineup</span>
+          <h2>Honest fuel for different training days.</h2>
+          <p class="lead">
+            We kept the best-sellers from the earlier templates and set them inside a horizontally scrolling garden. Each card
+            animates forward as you hover.
+          </p>
+        </header>
+        <div class="product-track" data-scroll-snap>
+          <article class="product-card reveal">
+            <div class="product-visual" style="background-image:url('../../assets/yuck-demo-supplement/Supplement.png')"></div>
+            <div class="product-body">
+              <h3>Y-01&trade; Organic Protein + Recovery</h3>
+              <p>Whole-food protein with balanced carbs and electrolytes. Best-seller from Mockup 1.</p>
+              <div class="product-meta">
+                <span class="price">£32.00</span>
+                <button class="btn outline" data-modal-open="buyModal" data-product="Y-01™ Organic Protein">Add to bag</button>
+              </div>
+            </div>
+          </article>
+          <article class="product-card reveal">
+            <div class="product-visual" style="background-image:url('../../assets/yuck-demo-supplement/MultipleSupplement.png')"></div>
+            <div class="product-body">
+              <h3>WP-01&trade; Organic Whey</h3>
+              <p>Grass-fed whey with a tiny ingredient list. Soft launch visuals from Mockup 2.</p>
+              <div class="product-meta">
+                <span class="price">£55.00</span>
+                <button class="btn outline" data-modal-open="buyModal" data-product="WP-01™ Organic Whey">Add to bag</button>
+              </div>
+            </div>
+          </article>
+          <article class="product-card reveal">
+            <div class="product-visual" style="background-image:url('../../assets/yuck-demo-supplement/SourSupplement.png')"></div>
+            <div class="product-body">
+              <h3>CP-01&trade; Collagen Peptides</h3>
+              <p>Joint and recovery support with a tart taste. Carousel highlight from Mockup 3.</p>
+              <div class="product-meta">
+                <span class="price">£40.00</span>
+                <button class="btn outline" data-modal-open="buyModal" data-product="CP-01™ Collagen Peptides">Add to bag</button>
+              </div>
+            </div>
+          </article>
+          <article class="product-card reveal">
+            <div class="product-visual" style="background-image:url('../../assets/images/plasticbag/plasticbag.png')"></div>
+            <div class="product-body">
+              <h3>CM-01&trade; Creatine Monohydrate</h3>
+              <p>Single ingredient, lab-tested creatine to slot into any stack.</p>
+              <div class="product-meta">
+                <span class="price">£38.00</span>
+                <button class="btn outline" data-modal-open="buyModal" data-product="CM-01™ Creatine Monohydrate">Add to bag</button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section experience" id="experience">
+      <div class="shell experience-grid">
+        <div class="experience-copy reveal">
+          <span class="badge">Experience layer</span>
+          <h2>Flows that respect your pace.</h2>
+          <p class="lead">
+            Every interaction rides inside layered panels. Switch between shop, community, and support without losing context or
+            scroll position.
+          </p>
+          <div class="experience-actions">
+            <button class="btn solid" data-modal-open="buyModal">Open buy flow</button>
+            <button class="btn ghost" data-modal-open="supportModal">Talk to support</button>
+            <button class="btn link" data-modal-open="joinModal">Join community</button>
+          </div>
+        </div>
+        <div class="journey reveal" data-stepper>
+          <div class="step-buttons" role="tablist" aria-label="Experience tabs">
+            <button class="step-btn is-active" type="button" role="tab" aria-selected="true" data-step="shop">Shop</button>
+            <button class="step-btn" type="button" role="tab" aria-selected="false" data-step="community">Community</button>
+            <button class="step-btn" type="button" role="tab" aria-selected="false" data-step="support">Support</button>
+          </div>
+          <div class="step-panels">
+            <article class="step-panel is-active" id="step-shop" data-step-panel="shop">
+              <h3>Build bundles without leaving.</h3>
+              <p>
+                Multi-step modals gather quantity, frequency, and totals on the fly. Choose a product and see live pricing updates
+                as you adjust quantity.
+              </p>
+            </article>
+            <article class="step-panel" id="step-community" data-step-panel="community" hidden>
+              <h3>Switch channels instantly.</h3>
+              <p>
+                Discord, Slack, or Instagram invites are one tap away. Your choices persist inside the overlay until you are ready
+                to confirm.
+              </p>
+            </article>
+            <article class="step-panel" id="step-support" data-step-panel="support" hidden>
+              <h3>Help that meets you where you are.</h3>
+              <p>
+                Inline support keeps conversations short, while the expanded modal captures deeper context with gentle field
+                transitions.
+              </p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section community" id="community">
+      <div class="shell community-grid">
+        <div class="community-intro reveal">
+          <span class="badge">Community</span>
+          <h2>High-signal spaces. Low noise.</h2>
+          <p class="lead">
+            We borrowed the multi-channel invites, lightweight forms, and video highlights from earlier builds but wrapped them in
+            a bright conservatory vibe.
+          </p>
+          <form id="joinForm" autocomplete="off" novalidate>
+            <label class="form-field">
+              <span>Email</span>
+              <input type="email" name="email" placeholder="you@domain.com" required aria-describedby="joinHelp" />
+            </label>
+            <label class="form-field honeypot">Leave blank<input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+            <div class="form-actions">
+              <button class="btn solid" type="submit">Request invite</button>
+              <a class="btn link" href="#experience">See the tools</a>
+            </div>
+            <p id="joinHelp" class="form-hint">We send a one-time secure link. No spam, no bots.</p>
+            <p id="joinMsg" class="form-hint" role="status"></p>
+          </form>
+        </div>
+        <div class="community-feed reveal">
+          <div class="discord-card">
+            <h3>Discord snapshot</h3>
+            <ul>
+              <li>#slow-mile-report — 1,248 check-ins this week</li>
+              <li>#gear-desk — Verified reviews with photos</li>
+              <li>#flavor-lab — Voting now on the next seasonal drop</li>
+            </ul>
+          </div>
+          <div class="video-card">
+            <iframe src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ" title="Community highlight" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            <iframe src="https://www.youtube-nocookie.com/embed/oHg5SJYRHA0" title="Product walkthrough" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
+          <div class="partner-card">
+            <strong>Run Club Atlas</strong>
+            <span>Field testing every Thursday.</span>
+          </div>
+          <div class="partner-card">
+            <strong>Studio Hinge</strong>
+            <span>Designing our next hero visuals.</span>
+          </div>
+          <div class="partner-card">
+            <strong>Lab 11</strong>
+            <span>Third-party batch verification.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section research" id="research">
+      <div class="shell research-grid">
+        <div class="research-copy reveal">
+          <span class="badge">Research &amp; testing</span>
+          <h2>Transparent metrics carried over from the earlier builds.</h2>
+          <div class="stat-grid">
+            <div class="stat">
+              <span class="value">92%</span>
+              <span class="label">Repeat buyers after 3 months</span>
+            </div>
+            <div class="stat">
+              <span class="value">1.2K</span>
+              <span class="label">Verified reviews</span>
+            </div>
+            <div class="stat">
+              <span class="value">18</span>
+              <span class="label">Independent lab tests</span>
+            </div>
+          </div>
+        </div>
+        <div class="research-detail reveal">
+          <div class="accordion" data-accordion>
+            <button class="accordion-head" type="button">
+              <span>Biomarker tracking</span>
+              <span class="caret">+</span>
+            </button>
+            <div class="accordion-body" hidden>
+              We retained the Mockup 1 research stack: serum markers pre and post 8-week cycles, captured server-side.
+            </div>
+            <button class="accordion-head" type="button">
+              <span>Community experiments</span>
+              <span class="caret">+</span>
+            </button>
+            <div class="accordion-body" hidden>
+              Mockup 3's community polls now ship inside the app. Subscribers vote on flavor tweaks each month.
+            </div>
+            <button class="accordion-head" type="button">
+              <span>Packaging impact</span>
+              <span class="caret">+</span>
+            </button>
+            <div class="accordion-body" hidden>
+              Packaging footprint reduced 18% after the Mockup 2 redesign. Numbers update live from internal dashboards.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section about" id="about">
+      <div class="shell about-grid">
+        <div class="about-copy reveal">
+          <span class="badge">About</span>
+          <h2>Built by a small crew, tested by a big community.</h2>
+          <p>
+            Storytelling stays, but the structure shifts to an open gallery—warm neutrals, airy spacing, and editorial typography.
+          </p>
+          <ul class="timeline">
+            <li><strong>2023</strong> — Idea sparks in the weight room. Mockup 1 layout born.</li>
+            <li><strong>2024</strong> — Mockup 2 steady release with softer palette and community focus.</li>
+            <li><strong>2025</strong> — Modal-first flows arrive. We synthesize everything here.</li>
+          </ul>
+        </div>
+        <aside class="about-card reveal">
+          <h3>Contact snapshots</h3>
+          <p>Email <a href="mailto:hello@yuck.example">hello@yuck.example</a> or book a call. We reply within 24 hours.</p>
+          <button class="btn ghost" data-modal-open="supportModal">Open support modal</button>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section support" id="support">
+      <div class="shell support-grid">
+        <div class="support-copy reveal">
+          <span class="badge">Need a hand?</span>
+          <h2>Drop us a line.</h2>
+          <p>Use the inline form or open the full modal for more detail.</p>
+          <form id="supportForm" autocomplete="off" novalidate>
+            <div class="form-row">
+              <label class="form-field">
+                <span>Name</span>
+                <input type="text" name="name" placeholder="Your name" />
+              </label>
+              <label class="form-field">
+                <span>Email</span>
+                <input type="email" name="email" placeholder="you@domain.com" required />
+              </label>
+            </div>
+            <label class="form-field">
+              <span>Topic</span>
+              <select name="topic">
+                <option>Order / Shipping</option>
+                <option>Subscription</option>
+                <option>Partnership</option>
+                <option>Other</option>
+              </select>
+            </label>
+            <label class="form-field">
+              <span>Message</span>
+              <textarea name="message" rows="4" placeholder="How can we help?"></textarea>
+            </label>
+            <button class="btn solid" type="submit">Send message</button>
+            <p id="supportMsg" class="form-hint" role="status"></p>
+          </form>
+        </div>
+        <aside class="support-card reveal">
+          <h3>Prefer quick answers?</h3>
+          <ul>
+            <li>Delivery timelines: 2-4 working days UK.</li>
+            <li>Subscriptions: pause or cancel in two clicks.</li>
+            <li>Refunds: first-bag guarantee within 30 days.</li>
+          </ul>
+          <button class="btn outline" data-modal-open="supportModal">Open full support</button>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="shell footer-grid">
+      <div>
+        <div class="brand">Yuck<span class="dot">.</span></div>
+        <p>© <span id="year"></span> Yuck Labs. Mockup 6, inspired by the full template lineage.</p>
+      </div>
+      <div>
+        <strong>Navigation</strong>
+        <a href="#products">Products</a>
+        <a href="#community">Community</a>
+        <a href="#research">Research</a>
+        <a href="#support">Support</a>
+      </div>
+      <div>
+        <strong>Resources</strong>
+        <a href="#experience">Experience</a>
+        <a href="#about">About</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+      </div>
+      <div>
+        <strong>Newsletter</strong>
+        <form id="newsletterForm" autocomplete="off" novalidate>
+          <input type="email" name="email" placeholder="you@domain.com" required />
+          <button class="btn solid" type="submit">Join</button>
+        </form>
+        <p id="newsletterMsg" class="form-hint" role="status"></p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="modal" id="buyModal" role="dialog" aria-modal="true" aria-labelledby="buyTitle" hidden>
+    <div class="modal-backdrop" data-modal-close></div>
+    <div class="modal-content" role="document">
+      <button class="modal-close" type="button" data-modal-close aria-label="Close">×</button>
+      <h2 id="buyTitle">Build your pack</h2>
+      <p class="modal-sub">Pick a product, choose pack size, set delivery frequency.</p>
+      <form id="buyForm" novalidate>
+        <label class="form-field">
+          <span>Product</span>
+          <select id="buyProduct" name="product">
+            <option value="Y-01™ Organic Protein" data-price="32">Y-01™ Organic Protein</option>
+            <option value="WP-01™ Organic Whey" data-price="55">WP-01™ Organic Whey</option>
+            <option value="CP-01™ Collagen Peptides" data-price="40">CP-01™ Collagen Peptides</option>
+            <option value="CM-01™ Creatine Monohydrate" data-price="38">CM-01™ Creatine Monohydrate</option>
+          </select>
+        </label>
+        <label class="form-field">
+          <span>Delivery</span>
+          <select id="buyFrequency" name="frequency">
+            <option value="4">Every 4 weeks</option>
+            <option value="6">Every 6 weeks</option>
+            <option value="8">Every 8 weeks</option>
+          </select>
+        </label>
+        <div class="form-row">
+          <label class="form-field">
+            <span>Quantity</span>
+            <div class="qty">
+              <button type="button" class="qty-btn" data-qty="-1" aria-label="Decrease quantity">−</button>
+              <input type="number" id="buyQty" name="quantity" min="1" value="1" inputmode="numeric" />
+              <button type="button" class="qty-btn" data-qty="1" aria-label="Increase quantity">+</button>
+            </div>
+          </label>
+          <label class="form-field">
+            <span>Total</span>
+            <div class="total" id="buyTotal">£32.00</div>
+          </label>
+        </div>
+        <div class="form-actions">
+          <button class="btn solid" type="submit">Add to cart</button>
+          <button class="btn ghost" type="button" data-modal-close>Close</button>
+        </div>
+        <p id="buyMsg" class="form-hint" role="status"></p>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal" id="joinModal" role="dialog" aria-modal="true" aria-labelledby="joinTitle" hidden>
+    <div class="modal-backdrop" data-modal-close></div>
+    <div class="modal-content" role="document">
+      <button class="modal-close" type="button" data-modal-close aria-label="Close">×</button>
+      <h2 id="joinTitle">Join the community</h2>
+      <p class="modal-sub">Choose channels, drop your email, and we'll send the invite.</p>
+      <form id="joinModalForm" autocomplete="off" novalidate>
+        <label class="form-field">
+          <span>Email</span>
+          <input type="email" name="email" placeholder="you@domain.com" required />
+        </label>
+        <fieldset class="choice-grid">
+          <legend>Channels</legend>
+          <label><input type="checkbox" name="channel" value="Discord" checked /> Discord</label>
+          <label><input type="checkbox" name="channel" value="Slack" /> Slack</label>
+          <label><input type="checkbox" name="channel" value="Instagram" /> Instagram</label>
+        </fieldset>
+        <div class="form-actions">
+          <button class="btn solid" type="submit">Request invite</button>
+        </div>
+        <p id="joinModalMsg" class="form-hint" role="status"></p>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal" id="supportModal" role="dialog" aria-modal="true" aria-labelledby="supportTitle" hidden>
+    <div class="modal-backdrop" data-modal-close></div>
+    <div class="modal-content" role="document">
+      <button class="modal-close" type="button" data-modal-close aria-label="Close">×</button>
+      <h2 id="supportTitle">Support</h2>
+      <p class="modal-sub">Give us a few details and we'll reply within 24 hours.</p>
+      <form id="supportModalForm" autocomplete="off" novalidate>
+        <div class="form-row">
+          <label class="form-field">
+            <span>Name</span>
+            <input type="text" name="name" placeholder="Your name" />
+          </label>
+          <label class="form-field">
+            <span>Email</span>
+            <input type="email" name="email" placeholder="you@domain.com" required />
+          </label>
+        </div>
+        <label class="form-field">
+          <span>Topic</span>
+          <input type="text" name="topic" placeholder="Order, subscription, partnership" />
+        </label>
+        <label class="form-field">
+          <span>Message</span>
+          <textarea name="message" rows="4" placeholder="How can we help?"></textarea>
+        </label>
+        <div class="form-actions">
+          <button class="btn solid" type="submit">Send</button>
+          <button class="btn ghost" type="button" data-modal-close>Close</button>
+        </div>
+        <p id="supportModalMsg" class="form-hint" role="status"></p>
+      </form>
+    </div>
+  </div>
+
+  <script src="./app.js" defer></script>
+</body>
+</html>
