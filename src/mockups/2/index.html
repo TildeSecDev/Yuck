@@ -1,174 +1,292 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Yuck Flavor Lab</title>
-  <meta name="description" content="Experiment with the intentionally intense flavors of Yuck. Build your own formula and join the beta tasters." />
-  <meta name="theme-color" content="#060912" />
-  <link rel="manifest" href="manifest.json" />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23060b18'/%3E%3Cpath fill='%23ff5d8f' d='M14 16h36L44 48H20z'/%3E%3Ctext x='32' y='40' text-anchor='middle' font-size='22' font-family='Inter,Arial,sans-serif' font-weight='700' fill='%23fff'%3EL2%3C/text%3E%3C/svg%3E" />
-  <link rel="stylesheet" href="index.css" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Yuck — Honest Workout Fuel</title>
+<meta name="description" content="Yuck. All-natural workout powder. One-time purchase or subscription. Join the community." />
+<meta name="theme-color" content="#000000" />
+<link rel="manifest" href="./manifest.webmanifest" />
+<link rel="icon" type="image/svg+xml" href="./icons/icon-192.svg" />
+
+<!-- Fonts: serif for headings, sans for UI/body -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="./index.css" />
 </head>
 <body>
-  <a class="skip-link" href="#main">Skip to content</a>
-  <div class="scene">
-    <header class="site-header">
-      <div class="brand">
-        <div class="logo">Yuck Lab</div>
-        <p class="tag">Bad taste, best results.</p>
-      </div>
-      <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="siteNav">
-        <span class="nav-toggle__bar"></span>
-        <span class="nav-toggle__bar"></span>
-        <span class="nav-toggle__bar"></span>
-        <span class="sr-only">Toggle navigation</span>
-      </button>
-      <nav class="site-nav" id="siteNav">
-        <a href="#hero" class="nav-link">Experience</a>
-        <a href="#lab" class="nav-link">Flavor Lab</a>
-        <a href="#story" class="nav-link">Lore</a>
-        <a href="#join" class="nav-link">Beta</a>
+
+<!-- ===================== HEADER ===================== -->
+<header>
+  <div class="topbar container">
+    <div class="left">
+      <nav>
+        <a href="#/shop" data-link>Shop ▾</a>
+  <a href="#/community" data-link>Community</a>
+        <a href="#/about" data-link>About Us</a>
       </nav>
-    </header>
+    </div>
+    <div class="center brand">Yuck<span class="logo-dot">.</span></div>
+    <div class="right">
+      <a class="icon" href="#/search" title="Search">🔎</a>
+      <a class="icon" href="#/account" title="Account">👤</a>
+      <a class="icon" href="#/cart" title="Cart">👜</a>
+    </div>
+  </div>
+</header>
 
-    <main id="main" class="site-main">
-      <section id="hero" class="hero" aria-labelledby="hero-title">
-        <div class="hero__copy">
-          <p class="eyebrow">R&amp;D Drop 02</p>
-          <h1 id="hero-title">Craft your own intentionally awful Yuck blend.</h1>
-          <p class="lede">We built a playground for the select few who crave the sting. Tune the tartness, crank the tingle, and send your blend to the chemists.</p>
-          <div class="hero__actions">
-            <a class="btn" href="#lab">Enter the Lab</a>
-            <button class="btn btn--ghost" id="playDemo" type="button">Play the tasting audio</button>
-          </div>
-          <ul class="metrics" aria-label="Prototype metrics">
-            <li><strong id="labCount">2,108</strong><span>formulas logged</span></li>
-            <li><strong id="labTime">48h</strong><span>average log review</span></li>
-            <li><strong id="phStat">pH 1.8</strong><span>mean acidity</span></li>
-          </ul>
-        </div>
-        <div class="hero__demo" aria-hidden="true">
-          <div class="beaker">
-            <div class="beaker__liquid" id="beakerLiquid"></div>
-            <div class="beaker__glow"></div>
-          </div>
-          <img class="product-shot" src="/assets/yuck-demo-supplement/Supplement.png" alt="Yuck supplement container" loading="lazy" />
-          <img class="sticker-gif" src="/assets/videos/Natural Supplement Clip.gif" alt="" aria-hidden="true" />
-          <div class="hero__readout">
-            <div>
-              <span class="label">Current blend</span>
-              <span class="value" id="labLabel">Shockwave Nectar</span>
-            </div>
-            <div>
-              <span class="label">Volatility</span>
-              <span class="value" id="voltage">72%</span>
-            </div>
-            <div>
-              <span class="label">Heat signature</span>
-              <span class="value" id="heat">4.8 scovilles</span>
-            </div>
-          </div>
-        </div>
-      </section>
+<main id="app">
 
-      <section id="lab" class="panel" aria-labelledby="lab-title">
-        <div class="panel__header">
-          <h2 id="lab-title">Flavor Lab console</h2>
-          <p class="muted">Drag the sliders, lock in your formula, and submit it to join the Tasters Guild.</p>
+  <!-- ===================== HOME ===================== -->
+  <div id="page-home" class="page active">
+    <!-- HERO with GIF -->
+    <section class="hero">
+      <div class="container wrap">
+        <span class="badge">Now Live</span>
+        <h1>Training is hard,<br/>nutrition shouldn’t be.</h1>
+        <p>Natural, real-food ingredients that support recovery, resilience, and daily performance.</p>
+        <div class="mt-16">
+          <a class="btn solid" href="#/product/op-16">Try Y-01 “Organic Protein”</a>
         </div>
-        <div class="lab-grid">
-          <form class="lab-controls" id="labForm">
-            <fieldset>
-              <legend>Intensity sliders</legend>
-              <label for="sour">Sour spike <span aria-hidden="true">🧪</span></label>
-              <input type="range" min="0" max="100" value="62" id="sour" data-range="sour" />
-              <label for="bitter">Bitter grit <span aria-hidden="true">🪨</span></label>
-              <input type="range" min="0" max="100" value="45" id="bitter" data-range="bitter" />
-              <label for="buzz">Buzz factor <span aria-hidden="true">⚡</span></label>
-              <input type="range" min="0" max="100" value="78" id="buzz" data-range="buzz" />
-            </fieldset>
-            <fieldset class="lab-toggles">
-              <legend>Enhancers</legend>
-              <label><input type="checkbox" data-enhancer="capsaicin" checked /> Capsaicin drip</label>
-              <label><input type="checkbox" data-enhancer="kava" /> Kava foam</label>
-              <label><input type="checkbox" data-enhancer="spirulina" checked /> Spirulina haze</label>
-            </fieldset>
-            <button class="btn" type="submit">Log this flavor</button>
-            <p class="helper" id="labHelper">Shockwave Nectar queued for review in 2 hours.</p>
-          </form>
-          <div class="lab-output" role="status" aria-live="polite">
-            <div class="output-card">
-              <h3>Lab verdict</h3>
-              <p id="labSummary">Concentrated citrus acid colliding with arctic menthol. Expect immediate face scrunch.</p>
-            </div>
-            <div class="output-card">
-              <h3>Enhancer stack</h3>
-              <ul id="enhancerList" class="chips"></ul>
-            </div>
-            <div class="output-card">
-              <h3>Stability</h3>
-              <div class="gauge">
-                <div class="gauge__needle" id="gaugeNeedle"></div>
-              </div>
-              <p class="muted">0 = tame · 100 = catastrophic</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="story" class="panel" aria-labelledby="story-title">
-        <div class="panel__header">
-          <h2 id="story-title">Yuck lore vault</h2>
-          <p class="muted">Decoded from the founder's tasting journals. Tap a chapter to reveal the field notes.</p>
-        </div>
-        <div class="timeline">
-          <ol class="timeline__list" id="timelineList" aria-label="Research timeline"></ol>
-          <article class="timeline__detail" id="timelineDetail">
-            <h3>Prototype 2.04 — Shockwave Nectar</h3>
-            <p class="muted">An uppercut of lemon peel layered with fermented pineapple. Kept the testers buzzing for 16 hours.</p>
-            <ul class="muted">
-              <li>Batch yield: 14 bottles</li>
-              <li>Reported face scrunch: 97%</li>
-              <li>Recovery snacks required: 3</li>
-            </ul>
-          </article>
-        </div>
-      </section>
-
-      <section id="join" class="panel panel--compact" aria-labelledby="join-title">
-        <div class="panel__header">
-          <h2 id="join-title">Apply to the Tasters Guild</h2>
-          <p class="muted">Only 50 new slots unlock each lunar cycle. Tell us why your tastebuds can handle it.</p>
-        </div>
-        <form id="joinForm" class="join-form">
-          <label for="name">Code name</label>
-          <input id="name" name="name" required placeholder="Your alias" />
-          <label for="email">Contact email</label>
-          <input id="email" name="email" type="email" required placeholder="taster@gridmail.com" />
-          <label for="reason">Prove your resolve</label>
-          <textarea id="reason" name="reason" rows="4" required placeholder="Convince the lab chiefs..." minlength="20"></textarea>
-          <div class="checkbox">
-            <input id="nda" name="nda" type="checkbox" required />
-            <label for="nda">I consent to the unpalatable terms.</label>
-          </div>
-          <button class="btn" type="submit">Submit dossier</button>
-        </form>
-        <p class="muted join-note" id="joinNote">Guild review queue refreshes at 00:00 UTC.</p>
-      </section>
-    </main>
-    <footer class="site-footer">
-      <p>&copy; <span id="year"></span> Yuck Labs. Drop 02 experiment.</p>
-      <div class="foot-links">
-        <a href="#hero">Top</a>
-        <a href="#join">Join the guild</a>
-        <a href="mailto:lab@yuck.tilde">Contact</a>
       </div>
-    </footer>
-    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    </section>
+
+    <!-- Product Grid -->
+    <section class="section">
+      <div class="container">
+        <h2>Supplements you feel good taking</h2>
+        <div class="grid cols-4 mt-16">
+          <!-- card 1 -->
+          <a class="card" href="#/product/op-16">
+            <div class="img" style="background-image:url('../../assets/yuck-demo-supplement/Supplement.png')"></div>
+            <div class="body">
+              <div>Y-01™ Organic Protein + Recovery Blend</div>
+              <div class="price">£40.00</div>
+            </div>
+          </a>
+          <!-- card 2 -->
+          <a class="card" href="#/product/wp-01">
+            <div class="img" style="background-image:url('../../assets/yuck-demo-supplement/MultipleSupplement.png')"></div>
+            <div class="body">
+              <div>WP-01™ Organic Whey Protein</div>
+              <div class="price">£55.00</div>
+            </div>
+          </a>
+          <!-- card 3 -->
+          <a class="card" href="#/product/cp-01">
+            <div class="img" style="background-image:url('../../assets/yuck-demo-supplement/SourSupplement.png')"></div>
+            <div class="body">
+              <div>CP-01™ Collagen Peptides</div>
+              <div class="price">£40.00</div>
+            </div>
+          </a>
+          <!-- card 4 -->
+          <a class="card" href="#/product/cm-01">
+            <div class="img" style="background-image:url('../../assets/images/plasticbag.png')"></div>
+            <div class="body">
+              <div>CM-01™ Creatine Monohydrate</div>
+              <div class="price">£38.00</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cinematic product panel -->
+  <section class="panel" style="background:url('../../assets/images/background-image-title.png') center/cover no-repeat;">
+      <div class="inner container">
+        <span class="badge soft">All Products</span>
+        <h2 class="mt-12">No proprietary blends. No mystery formulas.<br/>What’s in it is on the label.</h2>
+        <div class="mt-16"><a class="btn dark" href="#/shop">Shop Natural Protein</a></div>
+      </div>
+    </section>
+
+    <!-- Light text + pack image callout -->
+    <section class="section alt">
+      <div class="container" style="display:grid; gap:32px; grid-template-columns:1fr 1fr; align-items:center">
+        <div>
+          <h2>Everything you need. Nothing you don’t.</h2>
+          <p>Y-01 is an all-in-one whole-food supplement. If you’re an endurance athlete or just keeping active, this is an easy, honest recovery formula.</p>
+          <a class="btn green mt-16" href="#/product/op-16">Shop Natural Protein</a>
+        </div>
+  <div class="round" style="background:#ecebe4; aspect-ratio:4/3; background-image:url('../../assets/images/powder-explosion.png'); background-size:cover; background-position:center"></div>
+      </div>
+    </section>
   </div>
 
-  <noscript><p class="no-js">The Yuck Lab console needs JavaScript to simulate the flavor physics.</p></noscript>
-  <script src="index.js" type="module"></script>
+  <!-- ===================== SHOP (All products) ===================== -->
+  <div id="page-shop" class="page">
+  <section class="panel" style="min-height:42vh; background:url('../../assets/images/background-image-title-cutout.png') center/cover no-repeat;">
+      <div class="inner container">
+        <h2>All products</h2>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <div class="grid cols-4">
+          <!-- Repeat the same product cards -->
+          <a class="card" href="#/product/op-16"><div class="img" style="background-image:url('../../assets/yuck-demo-supplement/Supplement.png')"></div><div class="body"><div>Y-01™ Organic Protein + Recovery Blend</div><div class="price">£40.00</div></div></a>
+          <a class="card" href="#/product/wp-01"><div class="img" style="background-image:url('../../assets/yuck-demo-supplement/MultipleSupplement.png')"></div><div class="body"><div>WP-01™ Organic Whey Protein</div><div class="price">£55.00</div></div></a>
+          <a class="card" href="#/product/cp-01"><div class="img" style="background-image:url('../../assets/yuck-demo-supplement/SourSupplement.png')"></div><div class="body"><div>CP-01™ Collagen Peptides</div><div class="price">£40.00</div></div></a>
+          <a class="card" href="#/product/cm-01"><div class="img" style="background-image:url('../../assets/images/plasticbag.png')"></div><div class="body"><div>CM-01™ Creatine Monohydrate</div><div class="price">£38.00</div></div></a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ===================== PRODUCT DETAIL ===================== -->
+  <div id="page-product" class="page">
+    <section class="product-detail">
+      <div class="container pd-grid">
+        <!-- Gallery -->
+        <div class="pd-gallery">
+          <div class="pd-image" id="pd-main" style="background-image:url('../../assets/yuck-demo-supplement/Supplement.png')"></div>
+          <div class="pd-thumbs">
+            <div style="background-image:url('../../assets/yuck-demo-supplement/Supplement.png')" data-src="../../assets/yuck-demo-supplement/Supplement.png"></div>
+            <div style="background-image:url('../../assets/yuck-demo-supplement/MultipleSupplement.png')" data-src="../../assets/yuck-demo-supplement/MultipleSupplement.png"></div>
+            <div style="background-image:url('../../assets/yuck-demo-supplement/SourSupplement.png')" data-src="../../assets/yuck-demo-supplement/SourSupplement.png"></div>
+          </div>
+        </div>
+
+        <!-- Info -->
+        <div class="pd-info">
+          <div class="badge soft" id="pd-breadcrumb">All products ▸ Y-01</div>
+          <h1 id="pd-title">Y-01™ Organic Protein + Recovery Blend</h1>
+          <div class="rating">★★★★★ <span style="color:#333; font-weight:600">26 reviews</span></div>
+          <p><strong>All-in-one, whole-food recovery supplement.</strong></p>
+          <p class="small">Best for: recovery, immune support, cognitive function. Natural, organic, real-food ingredients.</p>
+
+          <div class="mt-12"><span class="strike">£40.00</span> <span id="pd-price" style="font-weight:900">£32.00</span></div>
+
+          <h3 class="mt-16" style="font-family:Inter, sans-serif; font-size:1rem; text-transform:uppercase; letter-spacing:.06em">Select quantity</h3>
+          <div class="qty-row">
+            <button class="btn" data-qty="1">1 Pack</button>
+            <button class="btn" data-qty="2">2 Pack <span class="small">Save 8%</span></button>
+          </div>
+
+          <h3 class="mt-16" style="font-family:Inter, sans-serif; font-size:1rem; text-transform:uppercase; letter-spacing:.06em">Select frequency</h3>
+          <div class="toggle" role="tablist">
+            <button class="active" id="subBtn" role="tab" aria-selected="true">Subscribe & Save</button>
+            <button id="oneBtn" role="tab" aria-selected="false">One-Time Purchase</button>
+          </div>
+          <div id="subBox" class="mt-12">
+            <div class="badge soft">Lock in 20% off</div>
+            <div class="mt-8">
+              <select style="padding:10px 12px; border-radius:10px; border:1px solid rgba(0,0,0,.15)">
+                <option>Delivery every 4 weeks</option>
+                <option>Delivery every 6 weeks</option>
+                <option>Delivery every 8 weeks</option>
+              </select>
+            </div>
+            <p class="small mt-8">Skip, modify or cancel any time.</p>
+          </div>
+
+          <div class="buybar mt-16">
+            <div style="margin-right:auto; font-weight:800" id="buyPrice">£32.00</div>
+            <button class="btn dark">Add to cart</button>
+            <button class="btn green">Buy now</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ===================== ABOUT ===================== -->
+  <div id="page-about" class="page">
+  <section class="panel" style="background:url('../../assets/images/background-image-title-cutout-large.png') center/cover no-repeat;">
+      <div class="inner container">
+        <span class="badge soft">Fuelled by Nature™</span>
+        <h2 class="mt-12">We’re a small team working hard to make great products the right way.</h2>
+      </div>
+    </section>
+  <section class="panel" style="background:url('../../assets/images/background-image-title.png') center/cover no-repeat; min-height:58vh">
+      <div class="inner container">
+        <h2>A simple choice</h2>
+        <p>We love to train — and we know recovery matters. We were tired of drinks full of artificial flavoring and seed oils. So we made our own real-food recovery that makes fuelling better a simple choice.</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- COMMUNITY -->
+  <div id="page-community" class="page">
+    <section class="section">
+      <div class="container">
+        <span class="badge soft">Join the (actually helpful) crowd</span>
+        <h2 class="mt-12">Community & Ambassadors</h2>
+        <p>We keep bots out and signal in. Pick your platform and drop your email to get a secure invite. Subscribers get auto-access and private channels.</p>
+        <div class="mt-12" style="display:flex; gap:12px; flex-wrap:wrap">
+          <a class="btn green" href="#">Discord</a>
+          <a class="btn dark" href="#">Slack</a>
+          <a class="btn" style="background:linear-gradient(135deg, var(--rust), var(--cream)); border-color:transparent; color:#111" href="#">Instagram</a>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px">
+          <div class="card" style="padding:0; overflow:hidden">
+            <div style="position:relative; padding-top:56.25%">
+              <iframe class="video" src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ" title="Featured video 1" style="position:absolute; inset:0; width:100%; height:100%; border:0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+          </div>
+          <div class="card" style="padding:0; overflow:hidden">
+            <div style="position:relative; padding-top:56.25%">
+              <iframe class="video" src="https://www.youtube-nocookie.com/embed/oHg5SJYRHA0" title="Featured video 2" style="position:absolute; inset:0; width:100%; height:100%; border:0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+          </div>
+        </div>
+        <div class="card mt-16" style="padding:16px">
+          <h3 style="margin:0 0 8px">Why gated?</h3>
+          <p>We use invite links + basic verification to keep discussion high-signal. Ambassadors get early samples and voting power on future blends.</p>
+          <ul>
+            <li>Private channels for subscribers</li>
+            <li>Launch votes + training logs</li>
+            <li>Discounts for verified ambassadors</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- (Optional stub pages for header icons) -->
+  <div id="page-search" class="page"><section class="section"><div class="container"><h2>Search</h2><p>Search UI placeholder.</p></div></section></div>
+  <div id="page-account" class="page"><section class="section"><div class="container"><h2>Account</h2><p>Login/Sign-up placeholder.</p></div></section></div>
+  <div id="page-cart" class="page"><section class="section"><div class="container"><h2>Cart</h2><p>Cart placeholder.</p></div></section></div>
+
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="container footer-grid">
+    <div>
+      <div class="foot-logo">Yuck<span class="logo-dot">.</span></div>
+      <div class="mt-12 small">Certified (placeholder)</div>
+      <div class="mt-8 small">Organic (placeholder)</div>
+    </div>
+    <div>
+      <strong>SUPPORT</strong>
+      <div class="small mt-8">hello@yuck.example</div>
+      <div class="small">0203 000 0000</div>
+    </div>
+    <div>
+      <strong>MENU</strong>
+      <div class="mt-8"><a href="#/search">Search</a></div>
+      <div><a href="#/about">About us</a></div>
+      <div><a href="#/story">No mile wasted™</a></div>
+      <div><a href="#/shop">Shop</a></div>
+      <div><a href="#">Shipping & returns</a></div>
+      <div><a href="#">Terms of Service</a></div>
+      <div><a href="#">Privacy Policy</a></div>
+    </div>
+    <div>
+      <strong>Yuck Journal</strong>
+      <p class="small">Stories of adventure, sport, endurance, nutrition, and expeditions — field notes delivered to your inbox.</p>
+      <input class="newsletter" type="email" placeholder="Enter your email" />
+    </div>
+  </div>
+  <div class="container small" style="opacity:.8; margin-top:16px">© <span id="year"></span> Yuck Labs</div>
+</footer>
+
+<script src="./index.js" defer></script>
 </body>
 </html>

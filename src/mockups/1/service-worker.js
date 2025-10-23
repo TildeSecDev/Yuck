@@ -1,52 +1,56 @@
-const CACHE_NAME = 'yuck-shell-v3';
-const SHELL_ASSETS = [
+const CACHE = 'yuck-m1-v1';
+const ASSETS = [
   './',
   './index.html',
-  './index.css',
-  './index.js',
-  './manifest.json',
-  '/docs/raw.txt',
-  '/assets/images/background-image.png'
+  './styles.css',
+  './app.js',
+  './manifest.webmanifest',
+  './icons/icon-192.svg',
+  './icons/icon-512.svg'
 ];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then((cache) => cache.addAll(SHELL_ASSETS))
-      .then(() => self.skipWaiting())
+    caches.open(CACHE).then((cache) => cache.addAll(ASSETS)).then(() => self.skipWaiting())
   );
 });
 
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(
-        keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))
-      )
-    ).then(() => self.clients.claim())
+    caches.keys().then((keys) => Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k)))).then(() => self.clients.claim())
   );
 });
 
 self.addEventListener('fetch', (event) => {
-  if (event.request.method !== 'GET') return;
-  const requestURL = new URL(event.request.url);
-  if (requestURL.origin !== self.location.origin) return;
+  const req = event.request;
 
-  event.respondWith(
-    caches.match(event.request).then((cached) => {
-      if (cached) return cached;
-      return fetch(event.request)
-        .then((response) => {
-          const copy = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
-          return response;
+  // HTML navigations: network-first with offline fallback
+  if (req.mode === 'navigate') {
+    event.respondWith(
+      fetch(req)
+        .then((resp) => {
+          const copy = resp.clone();
+          caches.open(CACHE).then((cache) => cache.put('./index.html', copy)).catch(() => {});
+          return resp;
         })
-        .catch(() => {
-          if (event.request.mode === 'navigate') {
-            return caches.match('./index.html');
-          }
-          return new Response('Offline', { status: 503, statusText: 'Offline' });
-        });
+        .catch(() => caches.match('./index.html'))
+    );
+    return;
+  }
+
+  // Static assets in scope: cache-first
+  event.respondWith(
+    caches.match(req).then((cached) => {
+      return (
+        cached ||
+        fetch(req)
+          .then((resp) => {
+            const copy = resp.clone();
+            caches.open(CACHE).then((cache) => cache.put(req, copy)).catch(() => {});
+            return resp;
+          })
+          .catch(() => cached)
+      );
     })
   );
 });

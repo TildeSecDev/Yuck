@@ -8,6 +8,7 @@
     "start:mockup2": "node index.js --mockup=2",
     "start:mockup3": "node index.js --mockup=3",
     "start:mockup4": "node index.js --mockup=4",
+    "start:mockup5": "node index.js --mockup=5",
     "migrate": "node migrate.js",
     "cli": "node cli.js"
   },
