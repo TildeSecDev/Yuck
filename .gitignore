@@ -8,3 +8,12 @@ node_modules/
 # env files
 .env
 backend/.env
+
+# Design/source files
+*.psd
+*.ai
+*.sketch
+*.fig
+
+# macOS noise
+.DS_Store
