@@ -1,130 +1,291 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Yuck Field Reports</title>
-  <meta name="description" content="Internal dashboard visualising global Yuck experiments, community sentiment, and inventory data." />
-  <meta name="theme-color" content="#04060f" />
+  <title>YUCK — Product</title>
+  <meta name="description" content="Yuck single-page showcase: product, community, about, contact." />
+  <meta name="theme-color" content="#000000" />
   <link rel="manifest" href="manifest.json" />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2304060f'/%3E%3Ccircle cx='20' cy='24' r='8' fill='%23ff7ab8'/%3E%3Ccircle cx='42' cy='40' r='10' fill='%2300e3d7'/%3E%3C/svg%3E" />
-  <link rel="stylesheet" href="index.css" />
-</head>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%23000000'/%3E%3Ctext x='50%25' y='58%25' font-size='28' text-anchor='middle' fill='%23FFFFFF' font-family='system-ui, sans-serif'%3EY%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="index.css?v=4.0.1" />
+  <script defer src="index.js?v=4.0.1"></script>
+  <style>/* Prevent flash of scroll */html,body{height:100%;overflow:hidden}</style>
+  </head>
 <body>
-  <div class="app">
-    <header class="header">
-      <div class="brand">
-        <span class="logo">Yuck Field</span>
-        <span class="tag">Live telemetry for the unpalatable movement.</span>
-      </div>
-      <nav class="nav" id="nav">
-        <a href="#overview">Overview</a>
-        <a href="#insights">Insights</a>
-        <a href="#reports">Reports</a>
-        <a href="#signals">Signals</a>
-      </nav>
-      <div class="actions">
-        <button class="btn" id="syncBtn" type="button">
-          <span class="btn__dot" aria-hidden="true"></span>
-          Sync data
-        </button>
-        <button class="toggle" id="themeToggle" type="button" aria-pressed="false">
-          <span class="sr-only">Toggle color theme</span>
-          <span class="toggle__thumb"></span>
-        </button>
-      </div>
+  <div class="stage" id="app" data-view="product" aria-live="polite">
+    <!-- Top header bar like the reference screenshot -->
+    <header class="topbar" role="banner">
+      <div class="brand">YUCK.</div>
     </header>
 
-    <div class="ticker" aria-hidden="true">
-      <div class="ticker__track">
-        <img src="/assets/videos/Natural Supplement Clip.gif" alt="" class="ticker__gif" />
-        <span class="ticker__text">Experimental batch visuals — do not distribute — Yuck Labs — /// </span>
-        <img src="/assets/videos/Natural Supplement Clip.gif" alt="" class="ticker__gif" />
-        <span class="ticker__text">Signal noise rising — embrace the grimace — /// </span>
-        <img src="/assets/videos/Natural Supplement Clip.gif" alt="" class="ticker__gif" />
-        <span class="ticker__text">Internal telemetry only — unauthorized joy will be investigated — /// </span>
-      </div>
-    </div>
+    <!-- Background image -->
+  <div class="bg-base" aria-hidden="true"></div>
+  <div class="bg" aria-hidden="true"></div>
+      <div class="bg-cutout" aria-hidden="true"></div>
 
-    <main class="main" id="main">
-      <section class="panel hero" id="overview" aria-labelledby="overview-title">
-        <img class="hero__stamp" src="/assets/yuck-demo-supplement/Supplement.png" alt="Yuck Supplement container watermark" />
-        <div class="hero__copy">
-          <p class="pill">Internal only</p>
-          <h1 id="overview-title">Global taste rejection is trending upward by 36%.</h1>
-          <p class="lede">This control surface shows live community sentiment, batch stability data, and experimental lab reports for the next Yuck product wave.</p>
-          <div class="hero__metrics" role="group" aria-label="Topline metrics">
-            <div>
-              <span class="label">Active experiments</span>
-              <span class="value" id="metricExperiments">28</span>
+    <!-- Hero overlay area with gradient, heading, copy and CTA aligned left -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero__shade" aria-hidden="true"></div>
+      <div class="hero__content">
+        <p class="kicker">PRODUCT</p>
+        <h1 id="hero-title">Yuck Natural Workout Fuel</h1>
+        <p class="sub">All‑natural workout fuel that tells your body “you’re welcome” and your taste buds “sorry”.</p>
+        <div class="cta-row">
+          <button class="btn" data-action="buy">Get Yuck</button>
+        </div>
+        <!-- Social switcher (Community view) -->
+        <div class="social-switcher" hidden>
+          <div class="social-icons" role="toolbar" aria-label="Community platforms">
+            <button class="social-icon" data-platform="instagram" aria-pressed="false" title="Instagram" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true" focusable="false" fill="currentColor"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm0-6c3.1 0 3.6 0 4.9.1 1.3.1 2.2.3 3 .6.8.3 1.5.7 2.1 1.3.6.6 1 1.3 1.3 2.1.3.8.5 1.7.6 3 .1 1.3.1 1.8.1 4.9s0 3.6-.1 4.9c-.1 1.3-.3 2.2-.6 3-.3.8-.7 1.5-1.3 2.1-.6.6-1.3 1-2.1 1.3-.8.3-1.7.5-3 .6-1.3.1-1.8.1-4.9.1s-3.6 0-4.9-.1c-1.3-.1-2.2-.3-3-.6a6.9 6.9 0 0 1-2.1-1.3c-.6-.6-1-1.3-1.3-2.1-.3-.8-.5-1.7-.6-3C1 15.6 1 15.1 1 12s0-3.6.1-4.9c.1-1.3.3-2.2.6-3C2 3.3 2.4 2.6 3 2c.6-.6 1.3-1 2.1-1.3.8-.3 1.7-.5 3-.6C8.4 0 8.9 0 12 0Z"/></svg>
+              <span class="sr-only">Instagram</span>
+            </button>
+            <button class="social-icon" data-platform="youtube" aria-pressed="false" title="YouTube" aria-label="YouTube">
+              <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true" focusable="false" fill="currentColor"><path d="M23.5 6.2c-.2-1.3-1.3-2.3-2.6-2.5C18.6 3.3 12 3.3 12 3.3s-6.6 0-8.9.4C1.8 4 0.7 5 0.5 6.3 0.1 8.6 0.1 12 0.1 12s0 3.4.4 5.7c.2 1.3 1.3 2.3 2.6 2.5 2.3.4 8.9.4 8.9.4s6.6 0 8.9-.4c1.3-.2 2.4-1.2 2.6-2.5.4-2.3.4-5.7.4-5.7s0-3.4-.4-5.7ZM9.8 15.5V8.5l6.3 3.5-6.3 3.5Z"/></svg>
+              <span class="sr-only">YouTube</span>
+            </button>
+            <button class="social-icon" data-platform="handshake" aria-pressed="false" title="Partners" aria-label="Partners">
+              <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true" focusable="false" fill="currentColor"><path d="M20.3 7.3c1.1 1.1 1.1 3 0 4.1l-3.2 3.2c-.8.8-2 .9-2.9.3l-.3-.2-2.6 2.6a2.5 2.5 0 0 1-3.5 0l-.3-.3-1.2 1.2a1.5 1.5 0 0 1-2.1-2.1l1.2-1.2-.3-.3a2.5 2.5 0 0 1 0-3.5l2.6-2.6-.2-.3c-.6-.9-.5-2.1.3-2.9L9.6 2a3 3 0 0 1 4.1 0l1.9 1.9a1 1 0 1 1-1.4 1.4L12.3 3.4a1 1 0 0 0-1.4 0L8.9 5.4a.9.9 0 0 0-.2 1.1l1 1.5-3.5 3.5a.5.5 0 0 0 0 .7l1.6 1.6a.5.5 0 0 0 .7 0l3.5-3.5 1.5 1a.9.9 0 0 0 1.1-.2l3-3a1 1 0 1 1 1.4 1.4l-3 3-.2.2 1.3 1.3.2-.2 3.2-3.2c1.1-1.1 3-1.1 4.1 0Z"/></svg>
+              <span class="sr-only">Partners</span>
+            </button>
+          </div>
+          <div class="social-content" hidden>
+            <div class="social-pane" data-platform="instagram" hidden>
+              <div class="social-grid">
+                <div class="tile">
+                  <blockquote class="instagram-media" data-instgrm-version="14"><a href="https://www.instagram.com/p/DI_s8TaKKQ5/" target="_top"></a></blockquote>
+                </div>
+                <div class="tile">
+                  <blockquote class="instagram-media" data-instgrm-version="14"><a href="https://www.instagram.com/p/DJColwoqCsL/" target="_top"></a></blockquote>
+                </div>
+                <div class="tile">
+                  <blockquote class="instagram-media" data-instgrm-version="14"><a href="https://www.instagram.com/p/DE6w0tPyTj2/" target="_top"></a></blockquote>
+                </div>
+              </div>
             </div>
-            <div>
-              <span class="label">Avg. disgust rating</span>
-              <span class="value" id="metricDisgust">8.7</span>
+            <div class="social-pane" data-platform="youtube" hidden>
+              <div class="social-grid">
+                <div class="tile">
+                  <div class="yt-frame" data-yt="https://www.youtube.com/shorts/2cP7f8kBBpk">
+                    <div class="placeholder">Loading…</div>
+                  </div>
+                </div>
+                <div class="tile">
+                  <div class="yt-frame" data-yt="https://www.youtube.com/watch?v=IR5jW9iNNiw">
+                    <div class="placeholder">Loading…</div>
+                  </div>
+                </div>
+                <div class="tile">
+                  <div class="yt-frame" data-yt="https://www.youtube.com/watch?v=IvmaekQfKiw">
+                    <div class="placeholder">Loading…</div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div>
-              <span class="label">Inventory burn</span>
-              <span class="value" id="metricInventory">62%</span>
+            <div class="social-pane" data-platform="handshake" hidden>
+              <div class="social-grid">
+                <div class="tile"><div class="card"><strong>Partner 1</strong><p>Coming soon</p></div></div>
+                <div class="tile"><div class="card"><strong>Partner 2</strong><p>Coming soon</p></div></div>
+                <div class="tile"><div class="card"><strong>Partner 3</strong><p>Coming soon</p></div></div>
+              </div>
             </div>
           </div>
         </div>
-        <aside class="hero__aside" aria-label="Latest anomaly">
-          <h2>Latest anomaly</h2>
-          <p id="anomaly">Fermented rhubarb blend caused unexpected cravings in 12% of testers. Investigate palatability leak.</p>
-          <button class="btn btn--ghost" id="flagBtn" type="button">Flag for escalation</button>
-        </aside>
-      </section>
 
-      <section class="panel" id="insights" aria-labelledby="insights-title">
-        <div class="panel__header">
-          <h2 id="insights-title">Live telemetry snapshots</h2>
-          <p class="muted">Data updates every 90 seconds. Click a card to pin it to the top for leadership review.</p>
+        <!-- About content (About view) -->
+        <div class="about-content" hidden>
+          <div class="about-sections">
+            <section class="about-block">
+              <h3>Product</h3>
+              <p>Yuck is clean, all‑natural workout fuel designed to perform. We kept the ingredient list tight and effective, then gave it a bold flavor profile you won’t forget.</p>
+              <ul>
+                <li>All‑natural ingredients, no fillers</li>
+                <li>Focus + endurance support</li>
+                <li>Two flavors to start: Original and Sour</li>
+              </ul>
+            </section>
+            <section class="about-block">
+              <h3>Team</h3>
+              <p>Built by a small, hands‑on crew that cares about craft and community.</p>
+              <ul>
+                <li><strong>Andre</strong> — Founder</li>
+                <li><strong>TildeSec</strong> — Build & Ops</li>
+              </ul>
+            </section>
+            <section class="about-block">
+              <h3>Contact & Support</h3>
+              <p>Partnerships, questions, or feedback? We read everything.</p>
+              <p>Email: <a href="mailto:support@yuck.com">support@yuck.com</a></p>
+              <button class="btn" data-action="open-support">Open support form</button>
+            </section>
+          </div>
         </div>
-        <div class="grid" id="insightGrid"></div>
-      </section>
+      </div>
+    </section>
 
-      <section class="panel panel--reports" id="reports" aria-labelledby="reports-title">
-        <div class="panel__header">
-          <h2 id="reports-title">Field reports</h2>
-          <p class="muted">Filter by region to surface the latest chaos from our tasting cells.</p>
-        </div>
-        <div class="filters">
-          <button class="chip" data-region="all">All</button>
-          <button class="chip" data-region="americas">Americas</button>
-          <button class="chip" data-region="emea">EMEA</button>
-          <button class="chip" data-region="apac">APAC</button>
-        </div>
-        <div class="report-feed" id="reportFeed"></div>
-      </section>
+    <!-- Overlay: big YUCK. mark and product can, lightly animated -->
+    <div class="wordmark" aria-hidden="true">YUCK.</div>
+    <img class="can" src="/assets/yuck-demo-supplement/Supplement.png" alt="Yuck supplement container"
+      data-still="/assets/yuck-demo-supplement/Supplement.png"
+      data-gif="/assets/videos/Natural%20Supplement%20Clip.gif" />
 
-      <section class="panel panel--signals" id="signals" aria-labelledby="signals-title">
-        <div class="panel__header">
-          <h2 id="signals-title">Signals & automations</h2>
-          <p class="muted">Triggered when sentiment shifts or supply dips below thresholds.</p>
-        </div>
-        <div class="signals-grid" id="signalGrid"></div>
-        <form class="subscribe" id="subscribeForm">
-          <h3>Subscribe to outage alerts</h3>
-          <label for="email">Work email</label>
-          <input id="email" name="email" type="email" required placeholder="agent@yuck.inc" />
-          <button class="btn" type="submit">Subscribe</button>
+    <!-- Panels (swap content text in the hero area to keep single view) -->
+    <main class="panels" aria-hidden="true">
+      <section class="panel panel--product" data-panel="product"></section>
+      <section class="panel panel--community" data-panel="community" hidden>
+        <h2>Community</h2>
+        <p>Join our crew for early drops, challenges, and questionable flavor experiments.</p>
+        <form class="inline-form" id="joinForm" action="https://formsubmit.co/hello@yuck.example" method="POST">
+          <input type="email" id="joinEmail" name="email" placeholder="you@email.com" required />
+          <!-- FormSubmit helpers -->
+          <input type="hidden" name="_next" id="joinNext" value="" />
+          <input type="hidden" name="_subject" value="YUCK Community Join" />
+          <input type="hidden" name="_captcha" value="false" />
+          <!-- Honeypot -->
+          <input type="text" name="bot-field" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0" />
+          <button class="btn" data-action="join">Join</button>
         </form>
-        <p class="muted" id="subscribeNote">No outages detected in the last 4 hours.</p>
+      </section>
+      <section class="panel panel--about" data-panel="about" hidden>
+        <h2>About</h2>
+        <p>Yuck is a marketing‑first workout powder with a memorable bite. Clean inputs, bold attitude.</p>
       </section>
     </main>
 
-    <footer class="footer">
-      <p>&copy; <span id="year"></span> Yuck Command. Internal distribution only.</p>
-      <div class="foot-links">
-        <a href="#overview">Overview</a>
-        <a href="#reports">Reports</a>
-        <a href="mailto:ops@yuck.inc">Ops desk</a>
+    <!-- Footer with inline SVG icons -->
+    <footer class="footer" role="contentinfo">
+      <div class="copy">© <span id="year"></span> YUCK - Built with ❤️ by TildeSec</div>
+      <nav class="tabbar" aria-label="Primary">
+        <button class="tab is-active" data-view="product">Product</button>
+        <button class="tab" data-view="community">Community</button>
+        <button class="tab" data-view="about">About</button>
+      </nav>
+      <div class="icons" aria-label="social links">
+        <a href="#" aria-label="Discord" class="icon" title="Discord" rel="noopener">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false" fill="currentColor">
+            <path d="M20.317 4.369A19.791 19.791 0 0 0 16.558 3c-.2.347-.43.81-.589 1.177a18.27 18.27 0 0 0-7.938 0A7.516 7.516 0 0 0 7.442 3a19.736 19.736 0 0 0-3.761 1.369C1.211 8.103.53 12.713.877 17.262A19.93 19.93 0 0 0 7.3 19.5c.3-.412.566-.852.793-1.315a12.84 12.84 0 0 1-1.247-.6c.106-.08.21-.164.31-.25 2.407 1.123 5.022 1.123 7.43 0 .102.088.207.172.312.251-.402.232-.825.43-1.266.591.226.463.492.903.793 1.315a19.9 19.9 0 0 0 6.425-2.238c.42-5.338-.716-9.902-1.54-12.175ZM8.725 14.236c-.905 0-1.644-.84-1.644-1.872 0-1.033.73-1.873 1.644-1.873.915 0 1.654.84 1.644 1.873 0 1.032-.73 1.872-1.644 1.872Zm6.55 0c-.906 0-1.645-.84-1.645-1.872 0-1.033.73-1.873 1.645-1.873.914 0 1.644.84 1.644 1.873 0 1.032-.73 1.872-1.644 1.872Z"/>
+          </svg>
+        </a>
+        <a href="#" aria-label="TikTok" class="icon" title="TikTok" rel="noopener">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false" fill="currentColor">
+            <path d="M20 8.7a6.7 6.7 0 0 1-4-1.3v6.6a5.7 5.7 0 1 1-5.7-5.7c.2 0 .5 0 .7.1v2.4a3.3 3.3 0 1 0 2.6 3.2V2h2.4a6.7 6.7 0 0 0 4 4v2.7Z"/>
+          </svg>
+        </a>
+        <a href="#" aria-label="Instagram" class="icon" title="Instagram" rel="noopener">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false" fill="currentColor">
+            <path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm0-5c3 0 3.4 0 4.6.1 1.2.1 2 .2 2.7.5.7.3 1.3.6 1.9 1.2.6.6.9 1.2 1.2 1.9.3.7.5 1.5.5 2.7.1 1.2.1 1.6.1 4.6s0 3.4-.1 4.6c-.1 1.2-.2 2-.5 2.7-.3.7-.6 1.3-1.2 1.9-.6.6-1.2.9-1.9 1.2-.7.3-1.5.5-2.7.5-1.2.1-1.6.1-4.6.1s-3.4 0-4.6-.1c-1.2-.1-2-.2-2.7-.5a5.1 5.1 0 0 1-1.9-1.2c-.6-.6-.9-1.2-1.2-1.9-.3-.7-.5-1.5-.5-2.7C2 15.4 2 15 2 12s0-3.4.1-4.6c.1-1.2.2-2 .5-2.7.3-.7.6-1.3 1.2-1.9A5.1 5.1 0 0 1 5 1.7c.7-.3 1.5-.5 2.7-.5C8.9 1 9.3 1 12 1Z"/>
+          </svg>
+        </a>
       </div>
     </footer>
+    
+    <!-- Buy modal overlay -->
+    <div class="modal" id="buyModal" role="dialog" aria-modal="true" aria-labelledby="buyTitle" hidden>
+      <div class="modal__backdrop" data-modal-close></div>
+      <div class="modal__content" role="document">
+        <button class="modal__close" aria-label="Close" data-modal-close>×</button>
+        <h2 id="buyTitle">Get Yuck</h2>
+        <p class="modal__sub">Choose your pack, flavor, and quantity.</p>
+        <div class="modal__layout">
+        <form class="buy-form" id="buyForm" onsubmit="return false">
+          <div class="field">
+            <label for="pack">Pack</label>
+            <select id="pack" name="pack">
+              <option value="single" data-price="29">Single Can — $29</option>
+              <option value="three" data-price="79">3‑Pack — $79</option>
+              <option value="six" data-price="149">6‑Pack — $149</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="flavor">Flavor</label>
+            <select id="flavor" name="flavor">
+              <option value="original">Original</option>
+              <option value="sour">Sour</option>
+            </select>
+          </div>
+          <div class="field field--qty">
+            <label for="qty">Quantity</label>
+            <div class="qty">
+              <button type="button" class="qty__btn" data-qty="-1" aria-label="Decrease quantity">−</button>
+              <input id="qty" name="qty" type="number" min="1" step="1" value="1" inputmode="numeric" />
+              <button type="button" class="qty__btn" data-qty="1" aria-label="Increase quantity">+</button>
+            </div>
+          </div>
+          <div class="summary">
+            <span>Total</span>
+            <strong id="total">$29</strong>
+          </div>
+          <div class="actions">
+            <button class="btn" id="addToCart">Add to cart</button>
+            <button class="btn btn--alt" id="checkout">Checkout</button>
+          </div>
+        </form>
+        <aside class="modal__visual" aria-hidden="true">
+          <img id="buyPreview" src="/assets/yuck-demo-supplement/Supplement.png" alt="Single Yuck supplement can" />
+        </aside>
+        </div>
+      </div>
+    </div>
+    <!-- Join modal overlay for Community -->
+    <div class="modal" id="joinModal" role="dialog" aria-modal="true" aria-labelledby="joinTitle" hidden>
+      <div class="modal__backdrop" data-modal-close></div>
+      <div class="modal__content modal__content--join" role="document">
+        <button class="modal__close" aria-label="Close" data-modal-close>×</button>
+        <h2 id="joinTitle">Join the Community</h2>
+        <p class="modal__sub">Follow us and drop your email or number to get in.</p>
+        <div class="join-layout">
+          <form id="joinModalForm" class="join-form" action="https://formsubmit.co/hello@yuck.example" method="POST" onsubmit="return false">
+            <input type="text" id="joinInput" name="contact" placeholder="you@email.com or (555) 555-5555" required />
+            <input type="hidden" name="_next" id="joinModalNext" value="" />
+            <input type="hidden" name="_subject" value="YUCK Community Join" />
+            <input type="hidden" name="_captcha" value="false" />
+            <div class="actions">
+              <button class="btn" id="joinSubmit">Join</button>
+            </div>
+          </form>
+          <div class="social-links" aria-label="social links">
+            <a href="#" aria-label="Discord" class="icon" title="Discord" rel="noopener">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden="true"><path d="M20.317 4.369A19.791 19.791 0 0 0 16.558 3c-.2.347-.43.81-.589 1.177a18.27 18.27 0 0 0-7.938 0A7.516 7.516 0 0 0 7.442 3a19.736 19.736 0 0 0-3.761 1.369C1.211 8.103.53 12.713.877 17.262A19.93 19.93 0 0 0 7.3 19.5c.3-.412.566-.852.793-1.315a12.84 12.84 0 0 1-1.247-.6c.106-.08.21-.164.31-.25 2.407 1.123 5.022 1.123 7.43 0 .102.088.207.172.312.251-.402.232-.825.43-1.266.591.226.463.492.903.793 1.315a19.9 19.9 0 0 0 6.425-2.238c.42-5.338-.716-9.902-1.54-12.175ZM8.725 14.236c-.905 0-1.644-.84-1.644-1.872 0-1.033.73-1.873 1.644-1.873.915 0 1.654.84 1.644 1.873 0 1.032-.73 1.872-1.644 1.872Zm6.55 0c-.906 0-1.645-.84-1.645-1.872 0-1.033.73-1.873 1.645-1.873.914 0 1.644.84 1.644 1.873 0 1.032-.73 1.872-1.644 1.872Z"/></svg>
+            </a>
+            <a href="#" aria-label="TikTok" class="icon" title="TikTok" rel="noopener">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden="true"><path d="M20 8.7a6.7 6.7 0 0 1-4-1.3v6.6a5.7 5.7 0 1 1-5.7-5.7c.2 0 .5 0 .7.1v2.4a3.3 3.3 0 1 0 2.6 3.2V2h2.4a6.7 6.7 0 0 0 4 4v2.7Z"/></svg>
+            </a>
+            <a href="#" aria-label="Instagram" class="icon" title="Instagram" rel="noopener">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm0-5c3 0 3.4 0 4.6.1 1.2.1 2 .2 2.7.5.7.3 1.3.6 1.9 1.2.6.6.9 1.2 1.2 1.9.3.7.5 1.5.5 2.7.1 1.2.1 1.6.1 4.6s0 3.4-.1 4.6c-.1 1.2-.2 2-.5 2.7-.3.7-.6 1.3-1.2 1.9-.6.6-1.2.9-1.9 1.2-.7.3-1.5.5-2.7.5-1.2.1-1.6.1-4.6.1s-3.4 0-4.6-.1c-1.2-.1-2-.2-2.7-.5a5.1 5.1 0 0 1-1.9-1.2c-.6-.6-.9-1.2-1.2-1.9-.3-.7-.5-1.5-.5-2.7C2 15.4 2 15 2 12s0-3.4.1-4.6c.1-1.2.2-2 .5-2.7.3-.7.6-1.3 1.2-1.9A5.1 5.1 0 0 1 5 1.7c.7-.3 1.5-.5 2.7-.5C8.9 1 9.3 1 12 1Z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+      <!-- Intro overlay: shows cutout image then fades out to reveal page -->
+      <div class="intro" aria-hidden="true"></div>
   </div>
-
-  <div id="toast" class="toast" role="status" aria-live="polite"></div>
-  <noscript><p class="noscript">Enable JavaScript to monitor live telemetry and subscribe to alerts.</p></noscript>
-  <script src="index.js" type="module"></script>
+  
+    <!-- Support modal overlay for About -->
+    <div class="modal" id="supportModal" role="dialog" aria-modal="true" aria-labelledby="supportTitle" hidden>
+      <div class="modal__backdrop" data-modal-close></div>
+      <div class="modal__content modal__content--join" role="document">
+        <button class="modal__close" aria-label="Close" data-modal-close>×</button>
+        <h2 id="supportTitle">Contact / Support</h2>
+        <p class="modal__sub">Tell us what's up and how to reach you. We'll get back fast.</p>
+        <div class="join-layout">
+          <form id="supportForm" class="join-form" action="https://formsubmit.co/hello@yuck.example" method="POST" onsubmit="return false">
+            <input type="text" name="name" placeholder="Your name (optional)" />
+            <input type="email" name="email" placeholder="you@email.com" required />
+            <input type="text" name="topic" placeholder="Topic (order, partnership, question)" />
+            <textarea name="message" rows="4" placeholder="Your message" style="padding:10px 12px;border:2px solid var(--mint);border-radius:12px;width:100%"></textarea>
+            <input type="hidden" name="_next" id="supportNext" value="" />
+            <input type="hidden" name="_subject" value="YUCK Support" />
+            <input type="hidden" name="_captcha" value="false" />
+            <div class="actions">
+              <button class="btn" id="supportSubmit">Send</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  <!-- Instagram embed script once -->
+  <script async defer src="https://platform.instagram.com/en_US/embeds.js"></script>
 </body>
 </html>

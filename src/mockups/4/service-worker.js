@@ -1,13 +1,20 @@
-const CACHE = 'yuck-field-shell-v2';
+const CACHE = 'yuck-single-shell-v6';
 const OFFLINE = [
   './',
   './index.html',
   './index.css',
   './index.js',
   './manifest.json',
+  '/assets/images/powder-explosion.png',
   '/assets/images/background-image.png',
+  '/assets/images/plasticbag.png',
+  '/assets/images/background-image-title-cutout.png',
+  '/assets/images/background-image-title-cutout-large.png',
+  '/assets/videos/Natural%20Supplement%20Clip.gif',
   '/assets/yuck-demo-supplement/Supplement.png',
-  '/assets/videos/Natural Supplement Clip.gif'
+  '/assets/yuck-demo-supplement/MultipleSupplement.png',
+  '/assets/yuck-demo-supplement/SourSupplement.png',
+  '/assets/yuck-demo-supplement/SourMultipleSupplement.png'
 ];
 
 self.addEventListener('install', event => {

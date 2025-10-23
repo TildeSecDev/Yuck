@@ -55,7 +55,14 @@ function resolveFrontendDir(){
 // Serve static frontend from repo (if running backend as single server)
 const frontDir = resolveFrontendDir();
 if (frontDir){
-  app.use(express.static(frontDir));
+  // Serve current mockup with dev-friendly no-cache for HTML/CSS/JS
+  app.use(express.static(frontDir, {
+    setHeaders: (res, filePath) => {
+      if(/\.(html|css|js)$/.test(filePath)){
+        res.setHeader('Cache-Control', 'no-store, must-revalidate');
+      }
+    }
+  }));
   // serve background assets (videos/posters)
   const assetsDir = path.join(__dirname, '..', 'src', 'assets');
   if(fs.existsSync(assetsDir)){
@@ -67,6 +74,11 @@ if (frontDir){
     app.use('/docs', express.static(docsDir, {fallthrough:true, maxAge: '1h'}));
   }
   app.get('/', (req,res)=>{
+    res.setHeader('Cache-Control','no-store, must-revalidate');
+    res.sendFile(path.join(frontDir,'index.html'));
+  });
+  app.get('/index.html', (req,res)=>{
+    res.setHeader('Cache-Control','no-store, must-revalidate');
     res.sendFile(path.join(frontDir,'index.html'));
   });
   console.log('Serving frontend from', frontDir);
