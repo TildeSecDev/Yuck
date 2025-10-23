@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Yuck Flavor Lab</title>
+  <meta name="description" content="Experiment with the intentionally intense flavors of Yuck. Build your own formula and join the beta tasters." />
+  <meta name="theme-color" content="#060912" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23060b18'/%3E%3Cpath fill='%23ff5d8f' d='M14 16h36L44 48H20z'/%3E%3Ctext x='32' y='40' text-anchor='middle' font-size='22' font-family='Inter,Arial,sans-serif' font-weight='700' fill='%23fff'%3EL2%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="index.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="scene">
+    <header class="site-header">
+      <div class="brand">
+        <div class="logo">Yuck Lab</div>
+        <p class="tag">Bad taste, best results.</p>
+      </div>
+      <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="siteNav">
+        <span class="nav-toggle__bar"></span>
+        <span class="nav-toggle__bar"></span>
+        <span class="nav-toggle__bar"></span>
+        <span class="sr-only">Toggle navigation</span>
+      </button>
+      <nav class="site-nav" id="siteNav">
+        <a href="#hero" class="nav-link">Experience</a>
+        <a href="#lab" class="nav-link">Flavor Lab</a>
+        <a href="#story" class="nav-link">Lore</a>
+        <a href="#join" class="nav-link">Beta</a>
+      </nav>
+    </header>
+
+    <main id="main" class="site-main">
+      <section id="hero" class="hero" aria-labelledby="hero-title">
+        <div class="hero__copy">
+          <p class="eyebrow">R&amp;D Drop 02</p>
+          <h1 id="hero-title">Craft your own intentionally awful Yuck blend.</h1>
+          <p class="lede">We built a playground for the select few who crave the sting. Tune the tartness, crank the tingle, and send your blend to the chemists.</p>
+          <div class="hero__actions">
+            <a class="btn" href="#lab">Enter the Lab</a>
+            <button class="btn btn--ghost" id="playDemo" type="button">Play the tasting audio</button>
+          </div>
+          <ul class="metrics" aria-label="Prototype metrics">
+            <li><strong id="labCount">2,108</strong><span>formulas logged</span></li>
+            <li><strong id="labTime">48h</strong><span>average log review</span></li>
+            <li><strong id="phStat">pH 1.8</strong><span>mean acidity</span></li>
+          </ul>
+        </div>
+        <div class="hero__demo" aria-hidden="true">
+          <div class="beaker">
+            <div class="beaker__liquid" id="beakerLiquid"></div>
+            <div class="beaker__glow"></div>
+          </div>
+          <div class="hero__readout">
+            <div>
+              <span class="label">Current blend</span>
+              <span class="value" id="labLabel">Shockwave Nectar</span>
+            </div>
+            <div>
+              <span class="label">Volatility</span>
+              <span class="value" id="voltage">72%</span>
+            </div>
+            <div>
+              <span class="label">Heat signature</span>
+              <span class="value" id="heat">4.8 scovilles</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="lab" class="panel" aria-labelledby="lab-title">
+        <div class="panel__header">
+          <h2 id="lab-title">Flavor Lab console</h2>
+          <p class="muted">Drag the sliders, lock in your formula, and submit it to join the Tasters Guild.</p>
+        </div>
+        <div class="lab-grid">
+          <form class="lab-controls" id="labForm">
+            <fieldset>
+              <legend>Intensity sliders</legend>
+              <label for="sour">Sour spike <span aria-hidden="true">🧪</span></label>
+              <input type="range" min="0" max="100" value="62" id="sour" data-range="sour" />
+              <label for="bitter">Bitter grit <span aria-hidden="true">🪨</span></label>
+              <input type="range" min="0" max="100" value="45" id="bitter" data-range="bitter" />
+              <label for="buzz">Buzz factor <span aria-hidden="true">⚡</span></label>
+              <input type="range" min="0" max="100" value="78" id="buzz" data-range="buzz" />
+            </fieldset>
+            <fieldset class="lab-toggles">
+              <legend>Enhancers</legend>
+              <label><input type="checkbox" data-enhancer="capsaicin" checked /> Capsaicin drip</label>
+              <label><input type="checkbox" data-enhancer="kava" /> Kava foam</label>
+              <label><input type="checkbox" data-enhancer="spirulina" checked /> Spirulina haze</label>
+            </fieldset>
+            <button class="btn" type="submit">Log this flavor</button>
+            <p class="helper" id="labHelper">Shockwave Nectar queued for review in 2 hours.</p>
+          </form>
+          <div class="lab-output" role="status" aria-live="polite">
+            <div class="output-card">
+              <h3>Lab verdict</h3>
+              <p id="labSummary">Concentrated citrus acid colliding with arctic menthol. Expect immediate face scrunch.</p>
+            </div>
+            <div class="output-card">
+              <h3>Enhancer stack</h3>
+              <ul id="enhancerList" class="chips"></ul>
+            </div>
+            <div class="output-card">
+              <h3>Stability</h3>
+              <div class="gauge">
+                <div class="gauge__needle" id="gaugeNeedle"></div>
+              </div>
+              <p class="muted">0 = tame · 100 = catastrophic</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="story" class="panel" aria-labelledby="story-title">
+        <div class="panel__header">
+          <h2 id="story-title">Yuck lore vault</h2>
+          <p class="muted">Decoded from the founder's tasting journals. Tap a chapter to reveal the field notes.</p>
+        </div>
+        <div class="timeline">
+          <ol class="timeline__list" id="timelineList" aria-label="Research timeline"></ol>
+          <article class="timeline__detail" id="timelineDetail">
+            <h3>Prototype 2.04 — Shockwave Nectar</h3>
+            <p class="muted">An uppercut of lemon peel layered with fermented pineapple. Kept the testers buzzing for 16 hours.</p>
+            <ul class="muted">
+              <li>Batch yield: 14 bottles</li>
+              <li>Reported face scrunch: 97%</li>
+              <li>Recovery snacks required: 3</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section id="join" class="panel panel--compact" aria-labelledby="join-title">
+        <div class="panel__header">
+          <h2 id="join-title">Apply to the Tasters Guild</h2>
+          <p class="muted">Only 50 new slots unlock each lunar cycle. Tell us why your tastebuds can handle it.</p>
+        </div>
+        <form id="joinForm" class="join-form">
+          <label for="name">Code name</label>
+          <input id="name" name="name" required placeholder="Your alias" />
+          <label for="email">Contact email</label>
+          <input id="email" name="email" type="email" required placeholder="taster@gridmail.com" />
+          <label for="reason">Prove your resolve</label>
+          <textarea id="reason" name="reason" rows="4" required placeholder="Convince the lab chiefs..." minlength="20"></textarea>
+          <div class="checkbox">
+            <input id="nda" name="nda" type="checkbox" required />
+            <label for="nda">I consent to the unpalatable terms.</label>
+          </div>
+          <button class="btn" type="submit">Submit dossier</button>
+        </form>
+        <p class="muted join-note" id="joinNote">Guild review queue refreshes at 00:00 UTC.</p>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <p>&copy; <span id="year"></span> Yuck Labs. Drop 02 experiment.</p>
+      <div class="foot-links">
+        <a href="#hero">Top</a>
+        <a href="#join">Join the guild</a>
+        <a href="mailto:lab@yuck.tilde">Contact</a>
+      </div>
+    </footer>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  </div>
+
+  <noscript><p class="no-js">The Yuck Lab console needs JavaScript to simulate the flavor physics.</p></noscript>
+  <script src="index.js" type="module"></script>
+</body>
+</html>

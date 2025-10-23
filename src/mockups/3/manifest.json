@@ -1,0 +1,21 @@
+{
+  "name": "Yuck Trials 2024",
+  "short_name": "Trials",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#050714",
+  "theme_color": "#070b1b",
+  "description": "Landing page and registration console for the Yuck endurance Trials.",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='28' fill='%23050714'/%3E%3Cpath d='M64 152 96 40l32 112z' fill='%23ffdd57'/%3E%3Ccircle cx='96' cy='104' r='18' fill='%2300f5d4'/%3E%3C/svg%3E",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='72' fill='%23050714'/%3E%3Cpath d='M160 420 256 92l96 328z' fill='%23ffdd57'/%3E%3Ccircle cx='256' cy='272' r='44' fill='%2300f5d4'/%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}

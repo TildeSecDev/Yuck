@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Yuck Trials 2024</title>
+  <meta name="description" content="Register for the Yuck Trials — a 48 hour endurance event built around the worst tasting hydration powder ever devised." />
+  <meta name="theme-color" content="#070b1b" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23070b1b'/%3E%3Cpath d='M16 52 32 12l16 40z' fill='%23ffdd57'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="index.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header class="header">
+      <a class="brand" href="#hero">Yuck Trials</a>
+      <button class="nav-trigger" id="navTrigger" aria-expanded="false" aria-controls="mainNav">
+        <span class="sr-only">Toggle navigation</span>
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="nav" id="mainNav">
+        <a href="#hero">Overview</a>
+        <a href="#schedule">Schedule</a>
+        <a href="#modules">Training</a>
+        <a href="#faq">FAQ</a>
+        <a href="#register" class="nav__cta">Register</a>
+      </nav>
+    </header>
+
+    <main class="main" id="main">
+      <section class="hero" id="hero" aria-labelledby="hero-title">
+        <div class="hero__content">
+          <p class="label">April 19-21 — Cascade Bunker</p>
+          <h1 id="hero-title">The most miserable endurance race disguised as a wellness retreat.</h1>
+          <p class="intro">48 hours. Twelve activities. Unlimited servings of the intentionally awful Yuck prototype. Finishers earn lifetime bragging rights and a crate of flavor packet misfires.</p>
+          <div class="hero__cta">
+            <a class="btn" href="#register">Secure a slot</a>
+            <button class="btn btn--ghost" type="button" id="watchTrailer">Watch the misery reel</button>
+          </div>
+          <div class="stats" role="group" aria-label="Event stats">
+            <div class="stat"><strong id="slotsRemaining">38</strong><span>slots left</span></div>
+            <div class="stat"><strong id="teamsReady">14</strong><span>teams confirmed</span></div>
+            <div class="stat"><strong id="countdown">00:00:00</strong><span>countdown</span></div>
+          </div>
+        </div>
+        <aside class="hero__card" aria-label="Live telemetry">
+          <h2>Telemetry Feed</h2>
+          <ul id="telemetry" class="telemetry"></ul>
+        </aside>
+      </section>
+
+      <section class="panel" id="schedule" aria-labelledby="schedule-title">
+        <div class="panel__header">
+          <h2 id="schedule-title">Hour-by-hour schedule</h2>
+          <p class="muted">The Yuck Trials mixes endurance, chaos, and questionable flavors. Preview the 4 major blocks below.</p>
+        </div>
+        <div class="timeline" id="timeline"></div>
+      </section>
+
+      <section class="panel" id="modules" aria-labelledby="modules-title">
+        <div class="panel__header">
+          <h2 id="modules-title">Training modules</h2>
+          <p class="muted">Simulate the suffering early. Complete each module to unlock bonus hydration packet recipes.</p>
+        </div>
+        <div class="modules" id="moduleGrid"></div>
+      </section>
+
+      <section class="panel panel--faq" id="faq" aria-labelledby="faq-title">
+        <div class="panel__header">
+          <h2 id="faq-title">Frequently screamed questions</h2>
+          <p class="muted">We logged the top questions from last year’s survivors. Tap to reveal answers.</p>
+        </div>
+        <div class="accordion" id="faqList"></div>
+      </section>
+
+      <section class="panel panel--register" id="register" aria-labelledby="register-title">
+        <div class="panel__header">
+          <h2 id="register-title">Apply for the Trials</h2>
+          <p class="muted">Submit your squad details. Slots are reviewed manually to ensure we only accept the worst taste profiles.</p>
+        </div>
+        <form class="form" id="registerForm">
+          <label for="team">Team name</label>
+          <input id="team" name="team" required placeholder="Team bitterness" />
+          <label for="captain">Captain email</label>
+          <input id="captain" name="captain" type="email" required placeholder="captain@yuckers.dev" />
+          <label for="size">Squad size</label>
+          <input id="size" name="size" type="number" min="1" max="6" value="3" />
+          <label for="pitch">Why should we let you in?</label>
+          <textarea id="pitch" name="pitch" rows="4" minlength="30" required placeholder="Share your training regimen and worst tasting accomplishments."></textarea>
+          <div class="form__foot">
+            <label class="checkbox"><input type="checkbox" required /> I promise to drink every sample provided.</label>
+            <button class="btn" type="submit">Send application</button>
+          </div>
+        </form>
+        <p class="muted" id="registerNote">Applications reviewed weekly by the Yuck Trials council.</p>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>&copy; <span id="year"></span> Yuck Trials. Crafted by the Yuck endurance bureau.</p>
+      <div class="footer__links">
+        <a href="#faq">Survivor FAQ</a>
+        <a href="#register">Apply</a>
+        <a href="mailto:trials@yuck.tilde">Email the bureau</a>
+      </div>
+    </footer>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <noscript><p class="noscript">Enable JavaScript to track the countdown and log your squad.</p></noscript>
+  <script src="index.js" type="module"></script>
+</body>
+</html>

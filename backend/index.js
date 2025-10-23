@@ -2,6 +2,7 @@
 const express = require('express');
 const app = express();
 const path = require('path');
+const fs = require('fs');
 require('dotenv').config();
 // optional CORS so frontend served from different origin can call this backend in dev
 try{ const cors = require('cors'); app.use(cors()); }catch(e){ /* cors not installed yet */ }
@@ -14,10 +15,46 @@ const stripe = require('stripe')(STRIPE_KEY);
 
 app.use(express.json());
 
+function parseFlag(name){
+  const long = `--${name}`;
+  const args = process.argv.slice(2);
+  for(let i=0;i<args.length;i++){
+    const current = args[i];
+    if(current === long){
+      const next = args[i+1];
+      if(next && !next.startsWith('--')) return next;
+    }
+    if(current.startsWith(`${long}=`)){
+      return current.slice(long.length + 1);
+    }
+  }
+  return null;
+}
+
+function resolveFrontendDir(){
+  const repoRoot = path.join(__dirname, '..');
+  const directFlag = parseFlag('frontend-dir') || parseFlag('frontend');
+  const manual = process.env.FRONTEND_DIR || directFlag;
+  if(manual){
+    const candidate = path.isAbsolute(manual) ? manual : path.join(repoRoot, manual);
+    if(fs.existsSync(candidate)) return candidate;
+    console.warn('Requested frontend directory not found:', candidate);
+  }
+  const mockupCandidate = parseFlag('mockup') || process.env.MOCKUP || process.env.MOCKUP_ID;
+  if(mockupCandidate){
+    const safeName = String(mockupCandidate).replace(/[^a-zA-Z0-9_-]/g, '');
+    const candidate = path.join(repoRoot, 'src', 'mockups', safeName);
+    if(fs.existsSync(candidate)) return candidate;
+    console.warn(`Mockup directory "${safeName}" was not found at ${candidate}. Falling back to default.`);
+  }
+  const fallback = path.join(repoRoot, 'src', 'mockups', '1');
+  if(fs.existsSync(fallback)) return fallback;
+  return null;
+}
+
 // Serve static frontend from repo (if running backend as single server)
-const frontDir = path.join(__dirname, '..', 'src', 'mockups', '1');
-const fs = require('fs');
-if (fs.existsSync(frontDir)){
+const frontDir = resolveFrontendDir();
+if (frontDir){
   app.use(express.static(frontDir));
   // serve background assets (videos/posters)
   const assetsDir = path.join(__dirname, '..', 'src', 'assets');
@@ -33,6 +70,8 @@ if (fs.existsSync(frontDir)){
     res.sendFile(path.join(frontDir,'index.html'));
   });
   console.log('Serving frontend from', frontDir);
+}else{
+  console.warn('No frontend directory configured; static mockup assets will not be served.');
 }
 
 app.post('/create-checkout-session', async (req, res) => {
