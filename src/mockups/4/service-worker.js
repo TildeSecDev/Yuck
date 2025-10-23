@@ -1,10 +1,13 @@
-const CACHE = 'yuck-field-shell-v1';
+const CACHE = 'yuck-field-shell-v2';
 const OFFLINE = [
   './',
   './index.html',
   './index.css',
   './index.js',
-  './manifest.json'
+  './manifest.json',
+  '/assets/images/background-image.png',
+  '/assets/yuck-demo-supplement/Supplement.png',
+  '/assets/videos/Natural Supplement Clip.gif'
 ];
 
 self.addEventListener('install', event => {

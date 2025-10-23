@@ -140,6 +140,34 @@ body {
   z-index: 2;
 }
 
+.hero__banner{
+  position:absolute;
+  left:0; right:0; top:0;
+  height:80px;
+  overflow:hidden;
+  opacity:0.22;
+  filter: contrast(120%);
+}
+.hero__banner img{
+  width:120%;
+  min-width:1024px;
+  height:100%;
+  object-fit:cover;
+  transform: translateX(-10%);
+}
+
+.product-watermark{
+  position:absolute;
+  right:-20px;
+  bottom:-30px;
+  width:200px;
+  height:auto;
+  transform: rotate(-12deg);
+  opacity:0.18;
+  filter: drop-shadow(0 18px 32px rgba(0,0,0,0.5));
+  pointer-events:none;
+}
+
 .label {
   font-size: 0.8rem;
   text-transform: uppercase;

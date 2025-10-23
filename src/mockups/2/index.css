@@ -159,6 +159,15 @@ body {
   pointer-events: none;
 }
 
+.hero::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:url('/assets/images/background-image.png') center/cover no-repeat;
+  opacity:0.06;
+  pointer-events:none;
+}
+
 .hero__copy {
   position: relative;
   z-index: 2;
@@ -268,6 +277,27 @@ body {
   align-items: center;
   justify-content: center;
   gap: 28px;
+}
+
+.product-shot{
+  width: 220px;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 18px 38px rgba(0,0,0,0.45));
+}
+
+.sticker-gif{
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  transform: rotate(-8deg);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.4);
+  border: 3px solid rgba(255,255,255,0.08);
+  pointer-events: none;
 }
 
 .beaker {

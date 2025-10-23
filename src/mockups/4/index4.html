@@ -236,7 +236,7 @@ function setActiveRoute(path){
    We'll persist "brave souls" in localStorage and animate increments.
 ---------------------------------------------------------*/
 const COUNTER_KEY = 'yuck_brave_counter';
-if(!localStorage.getItem(COUNTER_KEY)) localStorage.setItem(COUNTER_KEY', '427'); // seed
+if(!localStorage.getItem(COUNTER_KEY)) localStorage.setItem(COUNTER_KEY, '427'); // seed
 
 function getCounter(){ return parseInt(localStorage.getItem(COUNTER_KEY) || '0', 10); }
 function bumpCounter(n=1){

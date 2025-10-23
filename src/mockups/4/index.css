@@ -28,6 +28,14 @@ html[data-theme='light'] {
   box-sizing: border-box;
 }
 
+.sr-only{
+  position:absolute !important;
+  width:1px;height:1px;
+  padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0,0,0,0);
+  white-space:nowrap;border:0;
+}
+
 body {
   margin: 0;
   min-height: 100vh;
@@ -50,6 +58,21 @@ html[data-theme='light'] body {
   display: flex;
   flex-direction: column;
   gap: 28px;
+  position: relative;
+}
+
+.app::before{
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url('/assets/images/background-image.png');
+  background-repeat: no-repeat;
+  background-position: 100% -40px;
+  background-size: 520px auto;
+  opacity: 0.08;
+  filter: contrast(110%) saturate(120%);
+  z-index: 0;
 }
 
 .header {
@@ -65,6 +88,7 @@ html[data-theme='light'] body {
   top: 24px;
   z-index: 60;
   backdrop-filter: blur(18px);
+  z-index: 2;
 }
 
 .brand {
@@ -189,6 +213,8 @@ html[data-theme='light'] .toggle {
   display: flex;
   flex-direction: column;
   gap: 28px;
+  position: relative;
+  z-index: 1;
 }
 
 .panel {
@@ -204,6 +230,8 @@ html[data-theme='light'] .toggle {
 .hero {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: clamp(20px, 3vw, 36px);
+  position: relative;
+  overflow: hidden;
 }
 
 .hero__copy {
@@ -255,6 +283,52 @@ html[data-theme='light'] .toggle {
   display: flex;
   flex-direction: column;
   gap: 14px;
+}
+
+/* Ticker ribbon using GIF */
+.ticker{
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: rgba(255,255,255,0.04);
+}
+.ticker__track{
+  display: inline-flex;
+  align-items: center;
+  gap: 28px;
+  white-space: nowrap;
+  padding: 10px 0;
+  animation: marquee 28s linear infinite;
+}
+.ticker__gif{
+  height: 28px;
+  width: auto;
+  border-radius: 6px;
+  filter: saturate(125%);
+}
+.ticker__text{
+  color: var(--muted);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+@keyframes marquee{
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Hero watermark stamp */
+.hero__stamp{
+  position: absolute;
+  top: -36px;
+  right: -42px;
+  width: 260px;
+  height: auto;
+  transform: rotate(16deg);
+  opacity: 0.16;
+  pointer-events: none;
+  filter: drop-shadow(0 18px 36px rgba(0,0,0,0.5));
 }
 
 .panel__header {
@@ -524,5 +598,16 @@ html[data-theme='light'] .footer {
 
   .report__meta {
     align-items: flex-start;
+  }
+
+  .app::before{
+    background-size: 360px auto;
+    background-position: 110% -20px;
+  }
+
+  .hero__stamp{
+    width: 200px;
+    top: -24px;
+    right: -16px;
   }
 }
