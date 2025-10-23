@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Yuck Field Reports</title>
+  <meta name="description" content="Internal dashboard visualising global Yuck experiments, community sentiment, and inventory data." />
+  <meta name="theme-color" content="#04060f" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2304060f'/%3E%3Ccircle cx='20' cy='24' r='8' fill='%23ff7ab8'/%3E%3Ccircle cx='42' cy='40' r='10' fill='%2300e3d7'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="index.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <div class="brand">
+        <span class="logo">Yuck Field</span>
+        <span class="tag">Live telemetry for the unpalatable movement.</span>
+      </div>
+      <nav class="nav" id="nav">
+        <a href="#overview">Overview</a>
+        <a href="#insights">Insights</a>
+        <a href="#reports">Reports</a>
+        <a href="#signals">Signals</a>
+      </nav>
+      <div class="actions">
+        <button class="btn" id="syncBtn" type="button">
+          <span class="btn__dot" aria-hidden="true"></span>
+          Sync data
+        </button>
+        <button class="toggle" id="themeToggle" type="button" aria-pressed="false">
+          <span class="sr-only">Toggle color theme</span>
+          <span class="toggle__thumb"></span>
+        </button>
+      </div>
+    </header>
+
+    <main class="main" id="main">
+      <section class="panel hero" id="overview" aria-labelledby="overview-title">
+        <div class="hero__copy">
+          <p class="pill">Internal only</p>
+          <h1 id="overview-title">Global taste rejection is trending upward by 36%.</h1>
+          <p class="lede">This control surface shows live community sentiment, batch stability data, and experimental lab reports for the next Yuck product wave.</p>
+          <div class="hero__metrics" role="group" aria-label="Topline metrics">
+            <div>
+              <span class="label">Active experiments</span>
+              <span class="value" id="metricExperiments">28</span>
+            </div>
+            <div>
+              <span class="label">Avg. disgust rating</span>
+              <span class="value" id="metricDisgust">8.7</span>
+            </div>
+            <div>
+              <span class="label">Inventory burn</span>
+              <span class="value" id="metricInventory">62%</span>
+            </div>
+          </div>
+        </div>
+        <aside class="hero__aside" aria-label="Latest anomaly">
+          <h2>Latest anomaly</h2>
+          <p id="anomaly">Fermented rhubarb blend caused unexpected cravings in 12% of testers. Investigate palatability leak.</p>
+          <button class="btn btn--ghost" id="flagBtn" type="button">Flag for escalation</button>
+        </aside>
+      </section>
+
+      <section class="panel" id="insights" aria-labelledby="insights-title">
+        <div class="panel__header">
+          <h2 id="insights-title">Live telemetry snapshots</h2>
+          <p class="muted">Data updates every 90 seconds. Click a card to pin it to the top for leadership review.</p>
+        </div>
+        <div class="grid" id="insightGrid"></div>
+      </section>
+
+      <section class="panel panel--reports" id="reports" aria-labelledby="reports-title">
+        <div class="panel__header">
+          <h2 id="reports-title">Field reports</h2>
+          <p class="muted">Filter by region to surface the latest chaos from our tasting cells.</p>
+        </div>
+        <div class="filters">
+          <button class="chip" data-region="all">All</button>
+          <button class="chip" data-region="americas">Americas</button>
+          <button class="chip" data-region="emea">EMEA</button>
+          <button class="chip" data-region="apac">APAC</button>
+        </div>
+        <div class="report-feed" id="reportFeed"></div>
+      </section>
+
+      <section class="panel panel--signals" id="signals" aria-labelledby="signals-title">
+        <div class="panel__header">
+          <h2 id="signals-title">Signals & automations</h2>
+          <p class="muted">Triggered when sentiment shifts or supply dips below thresholds.</p>
+        </div>
+        <div class="signals-grid" id="signalGrid"></div>
+        <form class="subscribe" id="subscribeForm">
+          <h3>Subscribe to outage alerts</h3>
+          <label for="email">Work email</label>
+          <input id="email" name="email" type="email" required placeholder="agent@yuck.inc" />
+          <button class="btn" type="submit">Subscribe</button>
+        </form>
+        <p class="muted" id="subscribeNote">No outages detected in the last 4 hours.</p>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>&copy; <span id="year"></span> Yuck Command. Internal distribution only.</p>
+      <div class="foot-links">
+        <a href="#overview">Overview</a>
+        <a href="#reports">Reports</a>
+        <a href="mailto:ops@yuck.inc">Ops desk</a>
+      </div>
+    </footer>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <noscript><p class="noscript">Enable JavaScript to monitor live telemetry and subscribe to alerts.</p></noscript>
+  <script src="index.js" type="module"></script>
+</body>
+</html>
