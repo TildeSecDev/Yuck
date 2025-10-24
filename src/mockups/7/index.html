@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Yuck. Lab — The Culture of Clean Chaos</title>
+    <meta
+      name="description"
+      content="Mockup 7 turns Yuck. into an experimental lab where commerce, community, and art collide in a living interface."
+    />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <meta name="theme-color" content="#358646" />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23000000'/%3E%3Ctext x='50%25' y='58%25' font-family='Space Grotesk,Arial,sans-serif' font-size='28' text-anchor='middle' fill='%23CCBB76'%3EY7%3C/text%3E%3C/svg%3E"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="noise"></div>
+    <header class="site-header" data-ambient>
+      <div class="shell">
+        <a class="brand" href="#top">Yuck<span class="dot">.</span> Lab</a>
+        <nav class="primary-nav" aria-label="Primary">
+          <a href="#mix">The Mix</a>
+          <a href="#science">The Science</a>
+          <a href="#movement">The Movement</a>
+          <a href="#community">Community</a>
+          <a href="#shop">Shop</a>
+          <a href="#portfolio">Labs</a>
+        </nav>
+        <button class="btn ghost" data-modal-open="buyModal">Join the Experiment</button>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="heroTitle">
+        <div
+          class="hero-media"
+          role="presentation"
+          style="background-image:url('../../assets/videos/Natural%20Supplement%20Clip.gif')"
+        ></div>
+        <div class="shell hero-content">
+          <p class="eyebrow">Clean chaos. Bottled.</p>
+          <h1 id="heroTitle">This is how clean chaos feels.</h1>
+          <p>
+            Yuck. isn’t another greens powder. It’s an unruly collective of scientists, movers, and poets remixing performance
+            fuel for the culture. The site breathes, glitches, and shifts as you move—because stagnation is the only real toxin.
+          </p>
+          <div class="hero-actions">
+            <button class="btn solid" data-modal-open="buyModal" data-product="Yuck. Starter Ritual">Fuel. Feel. Repeat.</button>
+            <a class="btn link" href="#shop">Walk the lab</a>
+          </div>
+          <dl class="hero-metrics">
+            <div>
+              <dt>Live lab notes</dt>
+              <dd>1,248 today</dd>
+            </div>
+            <div>
+              <dt>Community pulse</dt>
+              <dd>63 BPM</dd>
+            </div>
+            <div>
+              <dt>Trials running</dt>
+              <dd>9 active</dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+
+      <section class="panels" id="mix" data-panels>
+        <div class="panel" data-panel>
+          <h2>The Mix</h2>
+          <p>
+            Microbatch jars drop weekly. Hover to reveal the signatures from creators who prototyped the blend in our shared
+            mixer. Ingredients ripple as you inspect them—chlorophyll, lion’s mane, magnesium—coated in pale gold light.
+          </p>
+          <button class="btn ghost" data-modal-open="buyModal" data-product="Yuck. Ritual Pack">Taste the iteration</button>
+        </div>
+        <div class="panel" id="science" data-panel>
+          <h2>The Science</h2>
+          <p>
+            Scroll and the molecules rewire. Peer-reviewed data, clinical trials, and real-world telemetry all in one. Tap a
+            node to stream our lab cast while a heartbeat bass keeps time.
+          </p>
+          <a class="btn link" href="#portfolio">Read the dossiers</a>
+        </div>
+        <div class="panel" id="movement" data-panel>
+          <h2>The Movement</h2>
+          <p>
+            Weekly Yuck Sessions bring DJs, athletes, and cyber poets into one stream. Sync your wearable to join the pulse and
+            contribute your own lab note. The brand behaves like a living organism.
+          </p>
+          <button class="btn solid" data-modal-open="sessionModal">Reserve a seat</button>
+        </div>
+      </section>
+
+      <section class="community" id="community">
+        <div class="shell">
+          <div class="section-header">
+            <h2>Live Lab Notes</h2>
+            <p>Fuel. Feel. Repeat. Share your findings. Every entry becomes part of the evolving atlas.</p>
+          </div>
+          <div class="community-grid" data-marquee>
+            <article class="note">
+              <p>“Recovery stack + ambient techno = focus unlocked.”</p>
+              <span>@andre.codes</span>
+            </article>
+            <article class="note">
+              <p>“Yuck. Energy before dawn patrol. Felt like neon in my veins.”</p>
+              <span>@marisa.moves</span>
+            </article>
+            <article class="note">
+              <p>“Blended Yuck. Calm with ice + mint. 8 hours deep REM.”</p>
+              <span>@nathan.wav</span>
+            </article>
+            <article class="note">
+              <p>“Lab Session 023: poets + cyclists + glitch artists. More.”</p>
+              <span>@yuck.lab</span>
+            </article>
+            <article class="note">
+              <p>“Shared Mixer recipe: greens + cacao + adaptogens. Uploading soon.”</p>
+              <span>@labrat.lyra</span>
+            </article>
+            <article class="note">
+              <p>“Hydration hack: add 2g pink salt to the Recovery stack. Game changer.”</p>
+              <span>@fluxphysio</span>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="shop" id="shop">
+        <div class="section-header">
+          <h2>Walk the Corridor</h2>
+          <p>Each jar is a portal. Step inside to feel the art, the science, the story.</p>
+        </div>
+        <div class="corridor" aria-label="Product corridor">
+          <article class="jar">
+            <div class="jar-media" style="background-image:url('../../assets/images/yuck-demo-supplement/yuck-demo-supplement.png')"></div>
+            <div class="jar-body">
+              <h3>Yuck. Recovery</h3>
+              <p>For days that taste like iron. Turmeric, tart cherry, magnesium threonate.</p>
+              <button class="btn solid" data-modal-open="buyModal" data-product="Yuck. Recovery">Buy — $68</button>
+            </div>
+          </article>
+          <article class="jar">
+            <div class="jar-media" style="background-image:url('../../assets/images/powder-explosion.png')"></div>
+            <div class="jar-body">
+              <h3>Yuck. Energy</h3>
+              <p>Chlorophyll, matcha caffeine, L-theanine. Cursor streaks chase your motion.</p>
+              <button class="btn solid" data-modal-open="buyModal" data-product="Yuck. Energy">Buy — $64</button>
+            </div>
+          </article>
+          <article class="jar">
+            <div class="jar-media" style="background-image:url('../../assets/images/background-image-title-cutout.png')"></div>
+            <div class="jar-body">
+              <h3>Yuck. Calm</h3>
+              <p>Night mode for your nervous system. Reishi, ashwagandha, blue spirulina.</p>
+              <button class="btn solid" data-modal-open="buyModal" data-product="Yuck. Calm">Subscribe — $59</button>
+            </div>
+          </article>
+        </div>
+        <div class="checkout">
+          <p>Checkout fills your capsule. Watch the vessel complete as you confirm shipping.</p>
+          <button class="btn ghost" data-modal-open="buyModal">Start Checkout</button>
+        </div>
+      </section>
+
+      <section class="portfolio" id="portfolio">
+        <div class="shell">
+          <div class="section-header">
+            <h2>Featured Labs</h2>
+            <p>Where collaborators turn rituals into living portfolios.</p>
+          </div>
+          <div class="labs">
+            <article class="lab-card">
+              <header>
+                <span class="lab-tag">Andre’s Lab</span>
+                <h3>Signal Shielded</h3>
+              </header>
+              <p>
+                Cybersecurity metaphors meet breathwork telemetry. Swipe through intrusion maps layered with EEG waveforms.
+                Andre logs mental performance after each session of Yuck. Focus.
+              </p>
+              <a class="btn link" href="#" aria-label="Open Andre's lab">View dossiers</a>
+            </article>
+            <article class="lab-card">
+              <header>
+                <span class="lab-tag">Marisa’s Lab</span>
+                <h3>Motion Notes</h3>
+              </header>
+              <p>
+                A scrollytelling reel mixing infrared dance stills with recovery data visualized as flowing ribbons. Stream her
+                exclusive tracks while ordering the blend that powers her tour.
+              </p>
+              <a class="btn link" href="#" aria-label="Open Marisa's lab">View mixtape</a>
+            </article>
+            <article class="lab-card">
+              <header>
+                <span class="lab-tag">Community Lab</span>
+                <h3>Shared Mixer</h3>
+              </header>
+              <p>
+                Remix the base formula with digital sliders. Share, clone, and respond to others’ recipes. Popular combos become
+                limited drops in the corridor.
+              </p>
+              <a class="btn link" href="#" aria-label="Open community lab">Remix now</a>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shell">
+        <h2>Join the experiment.</h2>
+        <p>Weekly lab sessions, drop alerts, and access to the Shared Mixer.</p>
+        <form class="signup">
+          <label for="email" class="sr-only">Email</label>
+          <input id="email" type="email" name="email" placeholder="email@cleanchaos.club" required />
+          <button class="btn solid" type="submit">Transmit</button>
+        </form>
+        <div class="footer-links">
+          <a href="https://discord.com" target="_blank" rel="noreferrer">Discord</a>
+          <a href="#">Forum</a>
+          <a href="#">Privacy</a>
+        </div>
+      </div>
+    </footer>
+
+    <div class="modal" id="buyModal" role="dialog" aria-modal="true" aria-hidden="true">
+      <div class="modal-backdrop" data-modal-close></div>
+      <div class="modal-dialog" role="document">
+        <button class="modal-close" type="button" data-modal-close aria-label="Close"></button>
+        <div class="modal-content">
+          <h2>Assemble your capsule</h2>
+          <p class="modal-subhead">Fuel your gut, not your god complex.</p>
+          <form class="modal-form">
+            <label class="field">
+              Product
+              <input type="text" name="product" id="productField" readonly />
+            </label>
+            <label class="field">
+              Quantity
+              <input type="number" min="1" value="1" />
+            </label>
+            <label class="field">
+              Frequency
+              <select>
+                <option>One-time</option>
+                <option>Monthly subscription</option>
+                <option>Every 6 weeks</option>
+              </select>
+            </label>
+            <button class="btn solid" type="submit">Checkout capsule</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="sessionModal" role="dialog" aria-modal="true" aria-hidden="true">
+      <div class="modal-backdrop" data-modal-close></div>
+      <div class="modal-dialog" role="document">
+        <button class="modal-close" type="button" data-modal-close aria-label="Close"></button>
+        <div class="modal-content">
+          <h2>Reserve your Yuck Session</h2>
+          <p>Live every Thursday. DJs, poets, athletes. Clean chaos only.</p>
+          <form class="modal-form">
+            <label class="field">
+              Select a session
+              <select>
+                <option>Session 024 — Breathless (7PM PST)</option>
+                <option>Session 025 — Signal Fire (3PM EST)</option>
+                <option>Session 026 — Low Tide (On-Demand)</option>
+              </select>
+            </label>
+            <button class="btn ghost" type="submit">Hold my slot</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="./app.js" type="module"></script>
+  </body>
+</html>
