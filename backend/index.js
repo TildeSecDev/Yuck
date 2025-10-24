@@ -3,6 +3,10 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const fs = require('fs');
+const crypto = require('crypto');
+const bcrypt = require('bcryptjs');
+const cookieParser = require('cookie-parser');
+const { V3 } = require('paseto');
 require('dotenv').config();
 // optional CORS so frontend served from different origin can call this backend in dev
 try{ const cors = require('cors'); app.use(cors()); }catch(e){ /* cors not installed yet */ }
@@ -14,6 +18,21 @@ if(!STRIPE_KEY){
 const stripe = require('stripe')(STRIPE_KEY);
 
 app.use(express.json());
+app.use(cookieParser());
+
+const isProduction = process.env.NODE_ENV === 'production';
+const PASETO_SECRET = process.env.PASETO_SECRET || 'dev-paseto-secret-change-me';
+const pasetoKey = crypto.createSecretKey(
+  crypto.createHash('sha256').update(PASETO_SECRET).digest()
+);
+const AUTH_COOKIE = 'auth_token';
+const TOKEN_TTL_MS = 1000 * 60 * 30;
+const COOKIE_OPTIONS = {
+  httpOnly: true,
+  sameSite: 'lax',
+  secure: isProduction,
+  path: '/'
+};
 
 function parseFlag(name){
   const long = `--${name}`;
@@ -135,7 +154,90 @@ db.serialize(()=>{
     issued_ts INTEGER NOT NULL,
     used INTEGER DEFAULT 0
   )`);
+  db.run(`CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    email TEXT UNIQUE NOT NULL,
+    password_hash TEXT NOT NULL,
+    created_at INTEGER NOT NULL
+  )`);
 });
+
+function dbGet(sql, params = []) {
+  return new Promise((resolve, reject) => {
+    db.get(sql, params, (err, row) => {
+      if (err) return reject(err);
+      resolve(row);
+    });
+  });
+}
+
+function dbRun(sql, params = []) {
+  return new Promise((resolve, reject) => {
+    db.run(sql, params, function(err) {
+      if (err) return reject(err);
+      resolve({ id: this.lastID, changes: this.changes });
+    });
+  });
+}
+
+async function getUserByEmail(email) {
+  if (!email) return null;
+  const normalized = String(email).trim().toLowerCase();
+  return dbGet('SELECT id, email, password_hash FROM users WHERE email = ?', [normalized]);
+}
+
+async function getUserById(id) {
+  if (!id) return null;
+  return dbGet('SELECT id, email, password_hash FROM users WHERE id = ?', [id]);
+}
+
+async function createUser(email, password) {
+  const sanitizedEmail = String(email).trim().toLowerCase();
+  const passwordHash = await bcrypt.hash(password, 12);
+  const createdAt = Date.now();
+  await dbRun('INSERT INTO users (email, password_hash, created_at) VALUES (?,?,?)', [sanitizedEmail, passwordHash, createdAt]);
+  return getUserByEmail(sanitizedEmail);
+}
+
+async function issueToken(payload) {
+  return V3.encrypt(payload, pasetoKey, { expiresIn: '30m' });
+}
+
+async function decodeToken(token) {
+  return V3.decrypt(token, pasetoKey, {});
+}
+
+async function setAuthCookie(res, user) {
+  const token = await issueToken({ sub: user.id, email: user.email });
+  res.cookie(AUTH_COOKIE, token, { ...COOKIE_OPTIONS, maxAge: TOKEN_TTL_MS });
+}
+
+function clearAuthCookie(res) {
+  res.clearCookie(AUTH_COOKIE, COOKIE_OPTIONS);
+}
+
+async function authenticateRequest(req) {
+  const token = req.cookies?.[AUTH_COOKIE];
+  if (!token) return null;
+  try {
+    const payload = await decodeToken(token);
+    if (!payload?.sub) return null;
+    const user = await getUserById(payload.sub);
+    return user || null;
+  } catch (err) {
+    return null;
+  }
+}
+
+async function requireAuth(req, res, next) {
+  const user = await authenticateRequest(req);
+  if (!user) {
+    clearAuthCookie(res);
+    return res.status(401).json({ error: 'unauthorized' });
+  }
+  req.user = user;
+  return next();
+}
 
 // simple in-memory rate limiter per IP
 const recent = new Map();
@@ -160,6 +262,89 @@ app.post('/api/signup', (req,res)=>{
   db.run('INSERT INTO signups (email, ip, ts) VALUES (?,?,?)', [email, ip, ts], function(err){
     if(err) return res.status(500).json({error:err.message});
     res.json({ok:true, id:this.lastID});
+  });
+});
+
+app.post('/api/auth/signup', async (req, res) => {
+  try {
+    const { email, password } = req.body || {};
+    if (!email || !password) {
+      return res.status(400).json({ error: 'missing_fields' });
+    }
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+      return res.status(400).json({ error: 'invalid_email' });
+    }
+    if (password.length < 8) {
+      return res.status(400).json({ error: 'weak_password' });
+    }
+    const existing = await getUserByEmail(email);
+    if (existing) {
+      return res.status(409).json({ error: 'email_in_use' });
+    }
+    const user = await createUser(email, password);
+    await setAuthCookie(res, user);
+    res.json({ ok: true, user: { id: user.id, email: user.email } });
+  } catch (err) {
+    console.error('Signup failed', err);
+    res.status(500).json({ error: 'server_error' });
+  }
+});
+
+app.post('/api/auth/login', async (req, res) => {
+  try {
+    const { email, password } = req.body || {};
+    if (!email || !password) {
+      return res.status(400).json({ error: 'missing_fields' });
+    }
+    const user = await getUserByEmail(email);
+    if (!user) {
+      return res.status(401).json({ error: 'invalid_credentials' });
+    }
+    const isMatch = await bcrypt.compare(password, user.password_hash);
+    if (!isMatch) {
+      return res.status(401).json({ error: 'invalid_credentials' });
+    }
+    await setAuthCookie(res, user);
+    res.json({ ok: true, user: { id: user.id, email: user.email } });
+  } catch (err) {
+    console.error('Login failed', err);
+    res.status(500).json({ error: 'server_error' });
+  }
+});
+
+app.post('/api/auth/logout', (req, res) => {
+  clearAuthCookie(res);
+  res.json({ ok: true });
+});
+
+app.get('/api/auth/me', async (req, res) => {
+  const user = await authenticateRequest(req);
+  if (!user) {
+    return res.status(401).json({ error: 'unauthorized' });
+  }
+  res.json({ id: user.id, email: user.email });
+});
+
+app.get('/api/dashboard', requireAuth, (req, res) => {
+  res.json({
+    user: { id: req.user.id, email: req.user.email },
+    orders: [
+      { id: 'ord-8612', status: 'Shipped', total: 38.0, placedAt: Date.now() - 1000 * 60 * 60 * 24 * 7 },
+      { id: 'ord-8420', status: 'Processing', total: 55.0, placedAt: Date.now() - 1000 * 60 * 60 * 24 * 2 }
+    ],
+    communityPosts: [
+      { id: 'post-1', title: 'Ride log: Peak District 80km', author: 'Rae', publishedAt: Date.now() - 1000 * 60 * 90 },
+      { id: 'post-2', title: 'Fueling tips for winter training', author: 'Andre', publishedAt: Date.now() - 1000 * 60 * 60 * 5 }
+    ],
+    events: [
+      { id: 'event-1', name: 'January Cold-water Plunge', date: Date.now() + 1000 * 60 * 60 * 24 * 10, location: 'Brighton Seafront' },
+      { id: 'event-2', name: 'Community Gravel Ride', date: Date.now() + 1000 * 60 * 60 * 24 * 30, location: 'Bristol Downs' }
+    ],
+    activities: [
+      { region: 'North', summary: 'Weekly fell running meetups with Coach Simu' },
+      { region: 'London', summary: 'Dawn track sessions every Wednesday, limited spots' },
+      { region: 'Online', summary: 'Live Q&A with team nutritionist next Tuesday' }
+    ]
   });
 });
 // session store for admin auth

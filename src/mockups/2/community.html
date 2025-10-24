@@ -11,7 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="./index.css" />
 </head>
-<body>
+<body class="page-community">
 <header>
   <div class="topbar container">
     <div class="left">
@@ -21,11 +21,11 @@
         <a href="./about.html" data-link>About Us</a>
       </nav>
     </div>
-    <div class="center brand">Yuck<span class="logo-dot">.</span></div>
+    <a class="center brand" href="./index.html" title="Go to landing page">Yuck<span class="logo-dot">.</span></a>
     <div class="right">
-      <a class="icon" href="./index.html#/search" title="Search">🔎</a>
-      <a class="icon" href="./index.html#/account" title="Account">👤</a>
-      <a class="icon" href="./index.html#/cart" title="Cart">👜</a>
+      <button class="icon" type="button" data-overlay="search" title="Search" aria-haspopup="dialog" aria-expanded="false">🔎</button>
+      <button class="icon" type="button" data-action="account" title="Account" aria-haspopup="dialog" aria-expanded="false">👤</button>
+      <button class="icon" type="button" data-overlay="cart" title="Cart" aria-haspopup="true" aria-expanded="false">👜</button>
     </div>
   </div>
 </header>
@@ -34,8 +34,8 @@
   <section class="section">
     <div class="container">
       <span class="badge soft">Join the (actually helpful) crowd</span>
-      <h1 class="mt-12">Community &amp; Ambassadors</h1>
-      <p>We keep bots out and signal in. Pick your platform and drop your email to get a secure invite. Subscribers get auto-access and private channels.</p>
+  <h1 class="mt-12 community-hero-heading">Community &amp; Ambassadors</h1>
+  <p class="community-hero-copy">We keep bots out and signal in. Pick your platform and drop your email to get a secure invite. Subscribers get auto-access and private channels.</p>
       <div class="mt-12" style="display:flex; gap:12px; flex-wrap:wrap">
         <a class="btn green" href="#">Discord</a>
         <a class="btn dark" href="#">Slack</a>
@@ -47,15 +47,17 @@
   <section class="section">
     <div class="container">
       <div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px">
-        <div class="card" style="padding:0; overflow:hidden">
-          <div style="position:relative; padding-top:56.25%">
-            <iframe class="video" src="https://youtu.be/dQw4w9WgXcQ" title="Featured video 1" style="position:absolute; inset:0; width:100%; height:100%; border:0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-          </div>
+        <div class="card video-card">
+          <video controls preload="metadata" poster="../../assets/images/YuckPowder.webp">
+            <source src="../../assets/videos/YTDown.com_YouTube_Running-Video-Free-HD-Video-No-Copyright_Media_se1RDOPvA8Q_001_1080p.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
         </div>
-        <div class="card" style="padding:0; overflow:hidden">
-          <div style="position:relative; padding-top:56.25%">
-            <iframe class="video" src="https://youtu.be/oHg5SJYRHA0" title="Featured video 2" style="position:absolute; inset:0; width:100%; height:100%; border:0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-          </div>
+        <div class="card video-card">
+          <video controls preload="metadata" poster="../../assets/images/Models.png">
+            <source src="../../assets/videos/liftWeights.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
         </div>
       </div>
       <div class="card mt-16" style="padding:16px">
@@ -98,7 +100,7 @@
       <input class="newsletter" type="email" placeholder="Enter your email" />
     </div>
   </div>
-  <div class="container small" style="opacity:.8; margin-top:16px">© <span id="year"></span> Yuck Labs</div>
+  <div class="container small" style="opacity:.8; margin-top:16px">© <span id="year"></span> TildeSec</div>
 </footer>
 
 <script src="./index.js" defer></script>

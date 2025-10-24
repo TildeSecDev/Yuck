@@ -26,11 +26,11 @@
   <a href="./about.html" data-link>About Us</a>
       </nav>
     </div>
-    <div class="center brand">Yuck<span class="logo-dot">.</span></div>
+    <a class="center brand" href="./index.html" title="Go to landing page">Yuck<span class="logo-dot">.</span></a>
     <div class="right">
-  <a class="icon" href="#/search" title="Search">🔎</a>
-  <a class="icon" href="#/account" title="Account">👤</a>
-  <a class="icon" href="#/cart" title="Cart">👜</a>
+      <button class="icon" type="button" data-overlay="search" title="Search" aria-haspopup="dialog" aria-expanded="false">🔎</button>
+      <button class="icon" type="button" data-action="account" title="Account" aria-haspopup="dialog" aria-expanded="false">👤</button>
+      <button class="icon" type="button" data-overlay="cart" title="Cart" aria-haspopup="true" aria-expanded="false">👜</button>
     </div>
   </div>
 </header>
@@ -56,28 +56,28 @@
       <div class="container">
         <h2>Supplements you feel good taking</h2>
         <div class="grid cols-4 mt-16">
-          <a class="card" href="#/product/op-16">
+          <a class="card" href="#/product/op-16" data-product="op-16">
             <div class="img" style="background-image:url('../../assets/yuck-demo-supplement/Supplement.png')"></div>
             <div class="body">
               <div>Yuck. Original Single</div>
               <div class="price">£40.00</div>
             </div>
           </a>
-          <a class="card" href="#/product/wp-01">
+          <a class="card" href="#/product/wp-01" data-product="wp-01">
             <div class="img" style="background-image:url('../../assets/yuck-demo-supplement/MultipleSupplement.png')"></div>
             <div class="body">
               <div>Yuck. Original Multipack x3</div>
               <div class="price">£55.00</div>
             </div>
           </a>
-          <a class="card" href="#/product/cp-01">
+          <a class="card" href="#/product/cp-01" data-product="cp-01">
             <div class="img" style="background-image:url('../../assets/yuck-demo-supplement/SourSupplement.png')"></div>
             <div class="body">
               <div>Yuck. Original Sour</div>
               <div class="price">£40.00</div>
             </div>
           </a>
-          <a class="card" href="#/product/cm-01">
+          <a class="card" href="#/product/cm-01" data-product="cm-01">
             <div class="img" style="background-image:url('../../assets/images/YuckPowder.webp')"></div>
             <div class="body">
               <div>Yuck. Original Spiced</div>
@@ -105,17 +105,17 @@
       <div class="container" style="display:grid; gap:32px; grid-template-columns:1fr 1fr; align-items:center">
         <div>
           <h2>Everything you need. Nothing you don’t.</h2>
-          <p>Y-01 is an all-in-one whole-food supplement. If you’re an endurance athlete or just keeping active, this is an easy, honest recovery formula.</p>
+          <p>Yuck. is an all-in-one whole-food supplement. If you’re an endurance athlete or just keeping active, this is an easy, honest recovery formula.</p>
           <a class="btn green mt-16" href="#/product/op-16">Shop Natural Protein</a>
         </div>
-        <div class="round" style="background:#ecebe4; aspect-ratio:4/3; background-image:url('../../assets/images/powder-explosion.png'); background-size:cover; background-position:center"></div>
+        <div class="round" style="background:#ecebe4; aspect-ratio:4/3; background-image:url('../../assets/images/YuckPowder.webp'); background-size:cover; background-position:center"></div>
       </div>
     </section>
   </div>
 
   <!-- ===================== SHOP (All products) ===================== -->
   <div id="page-shop" class="page">
-    <section class="panel" style="min-height:42vh; background:url('../../assets/images/Models.png') center/cover no-repeat;">
+  <section class="panel" style="min-height:42vh; --panel-image:url('../../assets/images/Models.png');">
       <div class="inner container">
         <h2>All products</h2>
       </div>
@@ -123,10 +123,33 @@
     <section class="section">
       <div class="container">
         <div class="grid cols-4">
-          <a class="card" href="#/product/op-16"><div class="img" style="background-image:url('../../assets/yuck-demo-supplement/Supplement.png')"></div><div class="body"><div>Yuck. Original Single</div><div class="price">£40.00</div></div></a>
-          <a class="card" href="#/product/wp-01"><div class="img" style="background-image:url('../../assets/yuck-demo-supplement/MultipleSupplement.png')"></div><div class="body"><div>Yuck. Original Multipack x3</div><div class="price">£55.00</div></div></a>
-          <a class="card" href="#/product/cp-01"><div class="img" style="background-image:url('../../assets/yuck-demo-supplement/SourSupplement.png')"></div><div class="body"><div>Yuck. Original Sour</div><div class="price">£40.00</div></div></a>
-          <a class="card" href="#/product/cm-01"><div class="img" style="background-image:url('../../assets/images/YuckPowder.webp')"></div><div class="body"><div>Yuck. Original Spiced</div><div class="price">£38.00</div></div></a>
+          <a class="card" href="#/product/op-16" data-product="op-16"><div class="img" style="background-image:url('../../assets/yuck-demo-supplement/Supplement.png')"></div><div class="body"><div>Yuck. Original Single</div><div class="price">£40.00</div></div></a>
+          <a class="card" href="#/product/wp-01" data-product="wp-01"><div class="img" style="background-image:url('../../assets/yuck-demo-supplement/MultipleSupplement.png')"></div><div class="body"><div>Yuck. Original Multipack x3</div><div class="price">£55.00</div></div></a>
+          <a class="card" href="#/product/cp-01" data-product="cp-01"><div class="img" style="background-image:url('../../assets/yuck-demo-supplement/SourSupplement.png')"></div><div class="body"><div>Yuck. Original Sour</div><div class="price">£40.00</div></div></a>
+          <a class="card" href="#/product/cm-01" data-product="cm-01"><div class="img" style="background-image:url('../../assets/images/YuckPowder.webp')"></div><div class="body"><div>Yuck. Original Spiced</div><div class="price">£38.00</div></div></a>
+        </div>
+      </div>
+    </section>
+    <section id="shop-detail" class="section shop-detail" hidden>
+      <div class="container">
+        <div class="shop-detail__empty" id="shop-detail-empty">Select a product to see more details here.</div>
+        <div class="shop-detail__content" id="shop-detail-content" hidden>
+          <div class="shop-detail__media">
+            <div class="shop-detail__image" id="shop-detail-image" role="img" aria-label=""></div>
+          </div>
+          <div class="shop-detail__info">
+            <div class="badge soft" id="shop-detail-badge">Product spotlight</div>
+            <h3 id="shop-detail-title"></h3>
+            <p id="shop-detail-copy"></p>
+            <div class="shop-detail__price">
+              <span class="strike" id="shop-detail-price-original"></span>
+              <span class="shop-detail__price-current" id="shop-detail-price-current"></span>
+            </div>
+            <div class="shop-detail__actions">
+              <button class="btn dark" type="button" data-action="add-to-cart">Add to cart</button>
+              <a class="btn green" href="#/product/op-16" id="shop-detail-view">View full details</a>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -152,7 +175,7 @@
           <p><strong>All-in-one, whole-food recovery supplement.</strong></p>
           <p class="small">Best for: recovery, immune support, cognitive function. Natural, organic, real-food ingredients.</p>
 
-          <div class="mt-12"><span class="strike">£40.00</span> <span id="pd-price" style="font-weight:900">£32.00</span></div>
+          <div class="mt-12"><span class="strike" id="pd-original">£40.00</span> <span id="pd-price" style="font-weight:900">£32.00</span></div>
 
           <h3 class="mt-16" style="font-family:Inter, sans-serif; font-size:1rem; text-transform:uppercase; letter-spacing:.06em">Select quantity</h3>
           <div class="qty-row">
@@ -179,7 +202,7 @@
 
           <div class="buybar mt-16">
             <div style="margin-right:auto; font-weight:800" id="buyPrice">£32.00</div>
-            <button class="btn dark">Add to cart</button>
+            <button class="btn dark" type="button" id="addToCartBtn">Add to cart</button>
             <button class="btn green">Buy now</button>
           </div>
         </div>
@@ -222,7 +245,7 @@
       <input class="newsletter" type="email" placeholder="Enter your email" />
     </div>
   </div>
-  <div class="container small" style="opacity:.8; margin-top:16px">© <span id="year"></span> Yuck Labs</div>
+  <div class="container small" style="opacity:.8; margin-top:16px">© <span id="year"></span> TildeSec</div>
 </footer>
 
 <script src="./index.js" defer></script>

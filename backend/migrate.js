@@ -22,6 +22,12 @@ db.serialize(()=>{
     issued_ts INTEGER NOT NULL,
     used INTEGER DEFAULT 0
   )`);
+  db.run(`CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    email TEXT UNIQUE NOT NULL,
+    password_hash TEXT NOT NULL,
+    created_at INTEGER NOT NULL
+  )`);
   console.log('Migration complete. DB at', DB_PATH);
   db.close();
 });
