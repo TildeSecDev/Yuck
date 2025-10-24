@@ -1,0 +1,20 @@
+{
+  "name": "Yuck. Performance Fuel",
+  "short_name": "Yuck",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#050505",
+  "theme_color": "#ff5f1f",
+  "icons": [
+    {
+      "src": "https://fav.farm/🔥.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "https://fav.farm/⚡️.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}
