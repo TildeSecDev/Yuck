@@ -133,7 +133,7 @@ nav a.active, nav a:hover {
   content: "";
   position: absolute;
   inset: 0;
-  background: url('/assets/images/background-image.png') center/cover no-repeat;
+  background: url('/assets/images/Models.png') center/cover no-repeat;
   opacity: 0.06;
   pointer-events: none;
   z-index: 0;
@@ -142,8 +142,8 @@ nav a.active, nav a:hover {
 .hero::after{
   content: "";
   position: absolute;
+  background: url('/assets/images/Models.png') center/cover no-repeat;
   inset: 0;
-  background: radial-gradient(circle at 70% 20%, rgba(140,255,218,0.12), transparent 60%), linear-gradient(to top, rgba(0,0,0,.35), rgba(0,0,0,.05));
   pointer-events: none;
   z-index: 0;
 }
@@ -205,7 +205,13 @@ nav a.active, nav a:hover {
 }
 
 /* ===================== PRODUCT GRID ===================== */
-.section { padding: 56px 0; background: #fff; }
+.section {
+  padding: 56px 0;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.84), rgba(255, 255, 255, 0.88)),
+    url("../../assets/images/powder-explosion.png") center/contain no-repeat,
+    url("../../assets/images/YuckPowder.webp") center/cover no-repeat;
+}
 .section.alt { background: var(--cream); }
 .section h2 { font-size: clamp(1.8rem, 3vw, 2.4rem); margin: 0 0 10px; }
 .grid { display: grid; gap: 28px; }

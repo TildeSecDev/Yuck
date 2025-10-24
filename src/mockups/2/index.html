@@ -7,7 +7,7 @@
 <meta name="description" content="Yuck. All-natural workout powder. One-time purchase or subscription. Join the community." />
 <meta name="theme-color" content="#000000" />
 <link rel="manifest" href="./manifest.webmanifest" />
-<link rel="icon" type="image/svg+xml" href="./icons/icon-192.svg" />
+<link rel="icon" type="image/png" href="../../assets/images/background-image-title-cutout.png" />
 
 <!-- Fonts: serif for headings, sans for UI/body -->
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
@@ -21,16 +21,16 @@
   <div class="topbar container">
     <div class="left">
       <nav>
-        <a href="#/shop" data-link>Shop ▾</a>
-  <a href="#/community" data-link>Community</a>
-        <a href="#/about" data-link>About Us</a>
+  <a href="#/shop" data-link>Shop ▾</a>
+  <a href="./community.html" data-link>Community</a>
+  <a href="./about.html" data-link>About Us</a>
       </nav>
     </div>
     <div class="center brand">Yuck<span class="logo-dot">.</span></div>
     <div class="right">
-      <a class="icon" href="#/search" title="Search">🔎</a>
-      <a class="icon" href="#/account" title="Account">👤</a>
-      <a class="icon" href="#/cart" title="Cart">👜</a>
+  <a class="icon" href="#/search" title="Search">🔎</a>
+  <a class="icon" href="#/account" title="Account">👤</a>
+  <a class="icon" href="#/cart" title="Cart">👜</a>
     </div>
   </div>
 </header>
@@ -46,45 +46,41 @@
         <h1>Training is hard,<br/>nutrition shouldn’t be.</h1>
         <p>Natural, real-food ingredients that support recovery, resilience, and daily performance.</p>
         <div class="mt-16">
-          <a class="btn solid" href="#/product/op-16">Try Y-01 “Organic Protein”</a>
+          <a class="btn solid" href="#/product/op-16">Buy Yuck. Today</a>
         </div>
       </div>
     </section>
 
     <!-- Product Grid -->
-    <section class="section">
+    <section class="section" id="product_lineup">
       <div class="container">
         <h2>Supplements you feel good taking</h2>
         <div class="grid cols-4 mt-16">
-          <!-- card 1 -->
           <a class="card" href="#/product/op-16">
             <div class="img" style="background-image:url('../../assets/yuck-demo-supplement/Supplement.png')"></div>
             <div class="body">
-              <div>Y-01™ Organic Protein + Recovery Blend</div>
+              <div>Yuck. Original Single</div>
               <div class="price">£40.00</div>
             </div>
           </a>
-          <!-- card 2 -->
           <a class="card" href="#/product/wp-01">
             <div class="img" style="background-image:url('../../assets/yuck-demo-supplement/MultipleSupplement.png')"></div>
             <div class="body">
-              <div>WP-01™ Organic Whey Protein</div>
+              <div>Yuck. Original Multipack x3</div>
               <div class="price">£55.00</div>
             </div>
           </a>
-          <!-- card 3 -->
           <a class="card" href="#/product/cp-01">
             <div class="img" style="background-image:url('../../assets/yuck-demo-supplement/SourSupplement.png')"></div>
             <div class="body">
-              <div>CP-01™ Collagen Peptides</div>
+              <div>Yuck. Original Sour</div>
               <div class="price">£40.00</div>
             </div>
           </a>
-          <!-- card 4 -->
           <a class="card" href="#/product/cm-01">
-            <div class="img" style="background-image:url('../../assets/images/plasticbag.png')"></div>
+            <div class="img" style="background-image:url('../../assets/images/YuckPowder.webp')"></div>
             <div class="body">
-              <div>CM-01™ Creatine Monohydrate</div>
+              <div>Yuck. Original Spiced</div>
               <div class="price">£38.00</div>
             </div>
           </a>
@@ -93,8 +89,11 @@
     </section>
 
     <!-- Cinematic product panel -->
-  <section class="panel" style="background:url('../../assets/images/background-image-title.png') center/cover no-repeat;">
-      <div class="inner container">
+    <section class="panel" style="position:relative; overflow:hidden; min-height:42vh;">
+      <video class="bg-video" autoplay muted loop playsinline preload="auto" tabindex="-1" aria-hidden="true" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
+        <source src="../../assets/videos/YTDown.com_YouTube_Running-Video-Free-HD-Video-No-Copyright_Media_se1RDOPvA8Q_001_1080p.mp4" type="video/mp4">
+      </video>
+      <div class="inner container" style="position:relative; z-index:1;">
         <span class="badge soft">All Products</span>
         <h2 class="mt-12">No proprietary blends. No mystery formulas.<br/>What’s in it is on the label.</h2>
         <div class="mt-16"><a class="btn dark" href="#/shop">Shop Natural Protein</a></div>
@@ -109,14 +108,14 @@
           <p>Y-01 is an all-in-one whole-food supplement. If you’re an endurance athlete or just keeping active, this is an easy, honest recovery formula.</p>
           <a class="btn green mt-16" href="#/product/op-16">Shop Natural Protein</a>
         </div>
-  <div class="round" style="background:#ecebe4; aspect-ratio:4/3; background-image:url('../../assets/images/powder-explosion.png'); background-size:cover; background-position:center"></div>
+        <div class="round" style="background:#ecebe4; aspect-ratio:4/3; background-image:url('../../assets/images/powder-explosion.png'); background-size:cover; background-position:center"></div>
       </div>
     </section>
   </div>
 
   <!-- ===================== SHOP (All products) ===================== -->
   <div id="page-shop" class="page">
-  <section class="panel" style="min-height:42vh; background:url('../../assets/images/background-image-title-cutout.png') center/cover no-repeat;">
+    <section class="panel" style="min-height:42vh; background:url('../../assets/images/Models.png') center/cover no-repeat;">
       <div class="inner container">
         <h2>All products</h2>
       </div>
@@ -124,11 +123,10 @@
     <section class="section">
       <div class="container">
         <div class="grid cols-4">
-          <!-- Repeat the same product cards -->
-          <a class="card" href="#/product/op-16"><div class="img" style="background-image:url('../../assets/yuck-demo-supplement/Supplement.png')"></div><div class="body"><div>Y-01™ Organic Protein + Recovery Blend</div><div class="price">£40.00</div></div></a>
-          <a class="card" href="#/product/wp-01"><div class="img" style="background-image:url('../../assets/yuck-demo-supplement/MultipleSupplement.png')"></div><div class="body"><div>WP-01™ Organic Whey Protein</div><div class="price">£55.00</div></div></a>
-          <a class="card" href="#/product/cp-01"><div class="img" style="background-image:url('../../assets/yuck-demo-supplement/SourSupplement.png')"></div><div class="body"><div>CP-01™ Collagen Peptides</div><div class="price">£40.00</div></div></a>
-          <a class="card" href="#/product/cm-01"><div class="img" style="background-image:url('../../assets/images/plasticbag.png')"></div><div class="body"><div>CM-01™ Creatine Monohydrate</div><div class="price">£38.00</div></div></a>
+          <a class="card" href="#/product/op-16"><div class="img" style="background-image:url('../../assets/yuck-demo-supplement/Supplement.png')"></div><div class="body"><div>Yuck. Original Single</div><div class="price">£40.00</div></div></a>
+          <a class="card" href="#/product/wp-01"><div class="img" style="background-image:url('../../assets/yuck-demo-supplement/MultipleSupplement.png')"></div><div class="body"><div>Yuck. Original Multipack x3</div><div class="price">£55.00</div></div></a>
+          <a class="card" href="#/product/cp-01"><div class="img" style="background-image:url('../../assets/yuck-demo-supplement/SourSupplement.png')"></div><div class="body"><div>Yuck. Original Sour</div><div class="price">£40.00</div></div></a>
+          <a class="card" href="#/product/cm-01"><div class="img" style="background-image:url('../../assets/images/YuckPowder.webp')"></div><div class="body"><div>Yuck. Original Spiced</div><div class="price">£38.00</div></div></a>
         </div>
       </div>
     </section>
@@ -138,7 +136,6 @@
   <div id="page-product" class="page">
     <section class="product-detail">
       <div class="container pd-grid">
-        <!-- Gallery -->
         <div class="pd-gallery">
           <div class="pd-image" id="pd-main" style="background-image:url('../../assets/yuck-demo-supplement/Supplement.png')"></div>
           <div class="pd-thumbs">
@@ -148,10 +145,9 @@
           </div>
         </div>
 
-        <!-- Info -->
         <div class="pd-info">
-          <div class="badge soft" id="pd-breadcrumb">All products ▸ Y-01</div>
-          <h1 id="pd-title">Y-01™ Organic Protein + Recovery Blend</h1>
+          <div class="badge soft" id="pd-breadcrumb">All products ▸ Yuck. Original Single</div>
+          <h1 id="pd-title">Yuck. Original Single</h1>
           <div class="rating">★★★★★ <span style="color:#333; font-weight:600">26 reviews</span></div>
           <p><strong>All-in-one, whole-food recovery supplement.</strong></p>
           <p class="small">Best for: recovery, immune support, cognitive function. Natural, organic, real-food ingredients.</p>
@@ -166,7 +162,7 @@
 
           <h3 class="mt-16" style="font-family:Inter, sans-serif; font-size:1rem; text-transform:uppercase; letter-spacing:.06em">Select frequency</h3>
           <div class="toggle" role="tablist">
-            <button class="active" id="subBtn" role="tab" aria-selected="true">Subscribe & Save</button>
+            <button class="active" id="subBtn" role="tab" aria-selected="true">Subscribe &amp; Save</button>
             <button id="oneBtn" role="tab" aria-selected="false">One-Time Purchase</button>
           </div>
           <div id="subBox" class="mt-12">
@@ -191,63 +187,6 @@
     </section>
   </div>
 
-  <!-- ===================== ABOUT ===================== -->
-  <div id="page-about" class="page">
-  <section class="panel" style="background:url('../../assets/images/background-image-title-cutout-large.png') center/cover no-repeat;">
-      <div class="inner container">
-        <span class="badge soft">Fuelled by Nature™</span>
-        <h2 class="mt-12">We’re a small team working hard to make great products the right way.</h2>
-      </div>
-    </section>
-  <section class="panel" style="background:url('../../assets/images/background-image-title.png') center/cover no-repeat; min-height:58vh">
-      <div class="inner container">
-        <h2>A simple choice</h2>
-        <p>We love to train — and we know recovery matters. We were tired of drinks full of artificial flavoring and seed oils. So we made our own real-food recovery that makes fuelling better a simple choice.</p>
-      </div>
-    </section>
-  </div>
-
-  <!-- COMMUNITY -->
-  <div id="page-community" class="page">
-    <section class="section">
-      <div class="container">
-        <span class="badge soft">Join the (actually helpful) crowd</span>
-        <h2 class="mt-12">Community & Ambassadors</h2>
-        <p>We keep bots out and signal in. Pick your platform and drop your email to get a secure invite. Subscribers get auto-access and private channels.</p>
-        <div class="mt-12" style="display:flex; gap:12px; flex-wrap:wrap">
-          <a class="btn green" href="#">Discord</a>
-          <a class="btn dark" href="#">Slack</a>
-          <a class="btn" style="background:linear-gradient(135deg, var(--rust), var(--cream)); border-color:transparent; color:#111" href="#">Instagram</a>
-        </div>
-      </div>
-    </section>
-    <section class="section">
-      <div class="container">
-        <div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px">
-          <div class="card" style="padding:0; overflow:hidden">
-            <div style="position:relative; padding-top:56.25%">
-              <iframe class="video" src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ" title="Featured video 1" style="position:absolute; inset:0; width:100%; height:100%; border:0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-            </div>
-          </div>
-          <div class="card" style="padding:0; overflow:hidden">
-            <div style="position:relative; padding-top:56.25%">
-              <iframe class="video" src="https://www.youtube-nocookie.com/embed/oHg5SJYRHA0" title="Featured video 2" style="position:absolute; inset:0; width:100%; height:100%; border:0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-            </div>
-          </div>
-        </div>
-        <div class="card mt-16" style="padding:16px">
-          <h3 style="margin:0 0 8px">Why gated?</h3>
-          <p>We use invite links + basic verification to keep discussion high-signal. Ambassadors get early samples and voting power on future blends.</p>
-          <ul>
-            <li>Private channels for subscribers</li>
-            <li>Launch votes + training logs</li>
-            <li>Discounts for verified ambassadors</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-  </div>
-
   <!-- (Optional stub pages for header icons) -->
   <div id="page-search" class="page"><section class="section"><div class="container"><h2>Search</h2><p>Search UI placeholder.</p></div></section></div>
   <div id="page-account" class="page"><section class="section"><div class="container"><h2>Account</h2><p>Login/Sign-up placeholder.</p></div></section></div>
@@ -260,8 +199,7 @@
   <div class="container footer-grid">
     <div>
       <div class="foot-logo">Yuck<span class="logo-dot">.</span></div>
-      <div class="mt-12 small">Certified (placeholder)</div>
-      <div class="mt-8 small">Organic (placeholder)</div>
+      <img src="../../assets/images/background-image-title-cutout.png" alt="Background title cutout" style="max-width:160px; display:block; margin-top:12px;" />
     </div>
     <div>
       <strong>SUPPORT</strong>
@@ -270,11 +208,11 @@
     </div>
     <div>
       <strong>MENU</strong>
-      <div class="mt-8"><a href="#/search">Search</a></div>
-      <div><a href="#/about">About us</a></div>
-      <div><a href="#/story">No mile wasted™</a></div>
-      <div><a href="#/shop">Shop</a></div>
-      <div><a href="#">Shipping & returns</a></div>
+  <div class="mt-8"><a href="#/search">Search</a></div>
+      <div><a href="./about.html">About us</a></div>
+      <div><a href="./about.html#story">Built by TildeSec™</a></div>
+  <div><a href="#/shop">Shop</a></div>
+      <div><a href="#">Shipping &amp; returns</a></div>
       <div><a href="#">Terms of Service</a></div>
       <div><a href="#">Privacy Policy</a></div>
     </div>

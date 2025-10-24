@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>About Yuck — Honest Workout Fuel</title>
+<meta name="description" content="Meet the team behind Yuck. Learn how we craft honest workout fuel with real ingredients." />
+<meta name="theme-color" content="#000000" />
+<link rel="manifest" href="./manifest.webmanifest" />
+<link rel="icon" type="image/png" href="../../assets/images/background-image-title-cutout.png" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./index.css" />
+</head>
+<body>
+<header>
+  <div class="topbar container">
+    <div class="left">
+      <nav>
+        <a href="./index.html#/shop" data-link>Shop ▾</a>
+        <a href="./community.html" data-link>Community</a>
+        <a href="./about.html" data-link class="active" aria-current="page">About Us</a>
+      </nav>
+    </div>
+    <div class="center brand">Yuck<span class="logo-dot">.</span></div>
+    <div class="right">
+      <a class="icon" href="./index.html#/search" title="Search">🔎</a>
+      <a class="icon" href="./index.html#/account" title="Account">👤</a>
+      <a class="icon" href="./index.html#/cart" title="Cart">👜</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="panel" id="story" style="background:url('../../assets/images/background-image-title-cutout-large.png') center/cover no-repeat;">
+    <div class="inner container">
+      <span class="badge soft">Fuelled by Nature™</span>
+      <h1 class="mt-12">We’re a small team working hard to make great products the right way.</h1>
+      <p class="mt-12">Yuck started as a garage experiment shared between training partners who wanted performance fuel without synthetic fillers. Today we remain independent, sourcing ingredients directly from growers and sharing the entire process in the open.</p>
+    </div>
+  </section>
+
+<section class="panel" style="min-height:58vh; position:relative; overflow:hidden;">
+    <video autoplay muted loop playsinline style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:-1;">
+        <source src="../../assets/videos/liftWeights.mp4" type="video/mp4" />
+        <!-- fallback content -->
+    </video>
+    <div class="inner container">
+      <h2>A simple choice</h2>
+      <p>We love to train — and we know recovery matters. We were tired of drinks full of artificial flavoring and seed oils. So we made our own real-food recovery that keeps fuelling better a simple choice.</p>
+      <p>Each batch is tested in-house and with our community labs, ensuring transparency from sourcing to mixing. No proprietary blends, no shortcuts.</p>
+      <div class="mt-16"><a class="btn green" href="./index.html#/shop">Shop Natural Protein</a></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container footer-grid">
+    <div>
+      <div class="foot-logo">Yuck<span class="logo-dot">.</span></div>
+      <img src="../../assets/images/background-image-title-cutout.png" alt="Background title cutout" style="max-width:160px; display:block; margin-top:12px;" />
+    </div>
+    <div>
+      <strong>SUPPORT</strong>
+      <div class="small mt-8">hello@yuck.example</div>
+      <div class="small">0203 000 0000</div>
+    </div>
+    <div>
+      <strong>MENU</strong>
+      <div class="mt-8"><a href="./index.html#/search">Search</a></div>
+      <div><a href="./about.html" aria-current="page">About us</a></div>
+      <div><a href="./about.html#story">Built by TildeSec™</a></div>
+      <div><a href="./index.html#/shop">Shop</a></div>
+      <div><a href="#">Shipping & returns</a></div>
+      <div><a href="#">Terms of Service</a></div>
+      <div><a href="#">Privacy Policy</a></div>
+    </div>
+    <div>
+      <strong>Yuck Journal</strong>
+      <p class="small">Stories of adventure, sport, endurance, nutrition, and expeditions — field notes delivered to your inbox.</p>
+      <input class="newsletter" type="email" placeholder="Enter your email" />
+    </div>
+  </div>
+  <div class="container small" style="opacity:.8; margin-top:16px">© <span id="year"></span> Yuck Labs</div>
+</footer>
+
+<script src="./index.js" defer></script>
+</body>
+</html>

@@ -7,48 +7,58 @@ if ('serviceWorker' in navigator) {
 
 /* ===================== MINI ROUTER ===================== */
 const routes = {
-  '#/home':'page-home',
-  '#/shop':'page-shop',
-  '#/about':'page-about',
-  '#/community':'page-community',
-  '#/product/op-16':'page-product',
-  '#/product/wp-01':'page-product',
-  '#/product/cp-01':'page-product',
-  '#/product/cm-01':'page-product',
-  '#/search':'page-search',
-  '#/account':'page-account',
-  '#/cart':'page-cart',
+  '#/home': 'page-home',
+  '#/shop': 'page-shop',
+  '#/product/op-16': 'page-product',
+  '#/product/wp-01': 'page-product',
+  '#/product/cp-01': 'page-product',
+  '#/product/cm-01': 'page-product',
+  '#/search': 'page-search',
+  '#/account': 'page-account',
+  '#/cart': 'page-cart'
 };
 
-function render(){
-  const hash = location.hash || '#/home';
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  const pageId = routes[hash] || 'page-home';
-  document.getElementById(pageId).classList.add('active');
+const pages = document.querySelectorAll('.page');
 
-  // nav active
-  document.querySelectorAll('header nav a').forEach(a=>{
-    a.classList.toggle('active', a.getAttribute('href')===hash);
+function render() {
+  const hash = location.hash || '#/home';
+  pages.forEach(p => p.classList.remove('active'));
+  const pageId = routes[hash] || 'page-home';
+  const pageEl = document.getElementById(pageId);
+  if (pageEl) {
+    pageEl.classList.add('active');
+  }
+
+  document.querySelectorAll('header nav a').forEach(a => {
+    const linkHash = new URL(a.href, window.location.href).hash;
+    a.classList.toggle('active', linkHash && linkHash === hash);
   });
 
-  // seed product detail title based on route
-  if (pageId==='page-product'){
+  if (pageId === 'page-product') {
     const map = {
-      '#/product/op-16': ['Y-01™ Organic Protein + Recovery Blend', '../../assets/yuck-demo-supplement/Supplement.png', '£32.00','All products ▸ Y-01'],
-      '#/product/wp-01': ['WP-01™ Organic Whey Protein', '../../assets/yuck-demo-supplement/MultipleSupplement.png', '£55.00','All products ▸ WP-01'],
-      '#/product/cp-01': ['CP-01™ Collagen Peptides', '../../assets/yuck-demo-supplement/SourSupplement.png', '£40.00','All products ▸ CP-01'],
-      '#/product/cm-01': ['CM-01™ Creatine Monohydrate', '../../assets/images/plasticbag.png', '£38.00','All products ▸ CM-01']
+      '#/product/op-16': ['Yuck. Original Single', '../../assets/yuck-demo-supplement/Supplement.png', '£32.00', 'All products ▸ Yuck. Original Single'],
+      '#/product/wp-01': ['Yuck. Original Multipack x3', '../../assets/yuck-demo-supplement/MultipleSupplement.png', '£55.00', 'All products ▸ Yuck. Original Multipack x3'],
+      '#/product/cp-01': ['Yuck. Original Sour', '../../assets/yuck-demo-supplement/SourSupplement.png', '£40.00', 'All products ▸ Yuck. Original Sour'],
+      '#/product/cm-01': ['Yuck. Original Spiced', '../../assets/images/YuckPowder.webp', '£38.00', 'All products ▸ Yuck. Original Spiced']
     };
-    const [title,img,price,crumb] = map[hash] || map['#/product/op-16'];
-    document.getElementById('pd-title').textContent = title;
-    document.getElementById('pd-price').textContent = price;
-    document.getElementById('buyPrice').textContent = price;
-    document.getElementById('pd-breadcrumb').textContent = crumb;
-    document.getElementById('pd-main').style.backgroundImage = `url('${img}')`;
+    const [title, img, price, crumb] = map[hash] || map['#/product/op-16'];
+    const titleEl = document.getElementById('pd-title');
+    const priceEl = document.getElementById('pd-price');
+    const buyPriceEl = document.getElementById('buyPrice');
+    const crumbEl = document.getElementById('pd-breadcrumb');
+    const mainImage = document.getElementById('pd-main');
+    if (titleEl) titleEl.textContent = title;
+    if (priceEl) priceEl.textContent = price;
+    if (buyPriceEl) buyPriceEl.textContent = price;
+    if (crumbEl) crumbEl.textContent = crumb;
+    if (mainImage) mainImage.style.backgroundImage = `url('${img}')`;
   }
 }
-window.addEventListener('hashchange', render);
-render();
+
+if (pages.length) {
+  window.addEventListener('hashchange', render);
+  render();
+}
 
 /* ===================== PRODUCT DETAIL INTERACTIONS ===================== */
 document.querySelectorAll('.pd-thumbs div').forEach(t=>{

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Yuck Community & Ambassadors</title>
+<meta name="description" content="Join the Yuck community and ambassadors. Request access to private channels, events, and launch votes." />
+<meta name="theme-color" content="#000000" />
+<link rel="manifest" href="./manifest.webmanifest" />
+<link rel="icon" type="image/png" href="../../assets/images/background-image-title-cutout.png" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./index.css" />
+</head>
+<body>
+<header>
+  <div class="topbar container">
+    <div class="left">
+      <nav>
+        <a href="./index.html#/shop" data-link>Shop ▾</a>
+        <a href="./community.html" data-link class="active" aria-current="page">Community</a>
+        <a href="./about.html" data-link>About Us</a>
+      </nav>
+    </div>
+    <div class="center brand">Yuck<span class="logo-dot">.</span></div>
+    <div class="right">
+      <a class="icon" href="./index.html#/search" title="Search">🔎</a>
+      <a class="icon" href="./index.html#/account" title="Account">👤</a>
+      <a class="icon" href="./index.html#/cart" title="Cart">👜</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="section">
+    <div class="container">
+      <span class="badge soft">Join the (actually helpful) crowd</span>
+      <h1 class="mt-12">Community &amp; Ambassadors</h1>
+      <p>We keep bots out and signal in. Pick your platform and drop your email to get a secure invite. Subscribers get auto-access and private channels.</p>
+      <div class="mt-12" style="display:flex; gap:12px; flex-wrap:wrap">
+        <a class="btn green" href="#">Discord</a>
+        <a class="btn dark" href="#">Slack</a>
+        <a class="btn" style="background:linear-gradient(135deg, var(--rust), var(--cream)); border-color:transparent; color:#111" href="#">Instagram</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px">
+        <div class="card" style="padding:0; overflow:hidden">
+          <div style="position:relative; padding-top:56.25%">
+            <iframe class="video" src="https://youtu.be/dQw4w9WgXcQ" title="Featured video 1" style="position:absolute; inset:0; width:100%; height:100%; border:0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          </div>
+        </div>
+        <div class="card" style="padding:0; overflow:hidden">
+          <div style="position:relative; padding-top:56.25%">
+            <iframe class="video" src="https://youtu.be/oHg5SJYRHA0" title="Featured video 2" style="position:absolute; inset:0; width:100%; height:100%; border:0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+      <div class="card mt-16" style="padding:16px">
+        <h2 style="margin:0 0 8px">Why gated?</h2>
+        <p>We use invite links + basic verification to keep discussion high-signal. Ambassadors gain early samples and voting power on future blends.</p>
+        <ul>
+          <li>Private channels for subscribers</li>
+          <li>Launch votes + training logs</li>
+          <li>Discounts for verified ambassadors</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container footer-grid">
+    <div>
+      <div class="foot-logo">Yuck<span class="logo-dot">.</span></div>
+      <img src="../../assets/images/background-image-title-cutout.png" alt="Background title cutout" style="max-width:160px; display:block; margin-top:12px;" />
+    </div>
+    <div>
+      <strong>SUPPORT</strong>
+      <div class="small mt-8">hello@yuck.example</div>
+      <div class="small">0203 000 0000</div>
+    </div>
+    <div>
+      <strong>MENU</strong>
+      <div class="mt-8"><a href="./index.html#/search">Search</a></div>
+      <div><a href="./about.html">About us</a></div>
+      <div><a href="./about.html#story">Built by TildeSec™</a></div>
+      <div><a href="./index.html#/shop">Shop</a></div>
+      <div><a href="#">Shipping & returns</a></div>
+      <div><a href="#">Terms of Service</a></div>
+      <div><a href="#">Privacy Policy</a></div>
+    </div>
+    <div>
+      <strong>Yuck Journal</strong>
+      <p class="small">Stories of adventure, sport, endurance, nutrition, and expeditions — field notes delivered to your inbox.</p>
+      <input class="newsletter" type="email" placeholder="Enter your email" />
+    </div>
+  </div>
+  <div class="container small" style="opacity:.8; margin-top:16px">© <span id="year"></span> Yuck Labs</div>
+</footer>
+
+<script src="./index.js" defer></script>
+</body>
+</html>

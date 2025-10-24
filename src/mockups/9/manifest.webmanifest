@@ -1,0 +1,21 @@
+{
+  "name": "Yuck. Light Lab Portfolio",
+  "short_name": "Yuck 9",
+  "description": "A light-themed PWA merging the calm nature of mockup 6 with the experimental lab energy of mockup 7.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#EFF9E8",
+  "theme_color": "#658C6E",
+  "icons": [
+    {
+      "src": "https://fav.farm/🌿.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "https://fav.farm/✨.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}

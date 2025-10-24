@@ -9,16 +9,24 @@
     "start:mockup3": "node index.js --mockup=3",
     "start:mockup4": "node index.js --mockup=4",
     "start:mockup5": "node index.js --mockup=5",
+    "start:mockup6": "node index.js --mockup=6",
+    "start:mockup7": "node index.js --mockup=7",
+    "start:mockup8": "node index.js --mockup=8",
+    "start:mockup9": "node index.js --mockup=9",
     "migrate": "node migrate.js",
     "cli": "node cli.js"
   },
   "dependencies": {
+    "connect-sqlite3": "^0.9.0",
     "cors": "^2.8.5",
-    "dotenv": "^16.0.0",
-    "express": "^4.18.2",
-    "sqlite3": "^5.1.7",
-    "stripe": "^12.0.0",
+    "dotenv": "^16.6.1",
+    "express": "^4.21.2",
     "express-session": "^1.17.3",
-    "connect-sqlite3": "^0.9.0"
-  }
+    "sqlite3": "^5.1.7",
+    "stripe": "^12.18.0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }

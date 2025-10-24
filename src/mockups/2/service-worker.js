@@ -2,6 +2,8 @@ const CACHE = 'yuck-m2-v1';
 const ASSETS = [
   './',
   './index.html',
+  './about.html',
+  './community.html',
   './manifest.webmanifest',
   './icons/icon-192.svg',
   './icons/icon-512.svg'
@@ -28,10 +30,10 @@ self.addEventListener('fetch', (event) => {
       fetch(req)
         .then((resp) => {
           const copy = resp.clone();
-          caches.open(CACHE).then((cache) => cache.put('./index.html', copy)).catch(() => {});
+          caches.open(CACHE).then((cache) => cache.put(req, copy)).catch(() => {});
           return resp;
         })
-        .catch(() => caches.match('./index.html'))
+        .catch(() => caches.match(req).then((match) => match || caches.match('./index.html')))
     );
     return;
   }

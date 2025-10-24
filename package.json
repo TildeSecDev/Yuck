@@ -1,0 +1,15 @@
+{
+  "name": "yuck",
+  "version": "1.0.0",
+  "description": "Prototype site for the \"Yuck\" natural workout powder. This repo contains a static mockup under `src/mockups/1` and a demo backend for Stripe checkout in `backend/`.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
