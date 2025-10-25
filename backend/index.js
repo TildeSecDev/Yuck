@@ -208,7 +208,7 @@ async function decodeToken(token) {
 }
 
 async function setAuthCookie(res, user) {
-  const token = await issueToken({ sub: user.id, email: user.email });
+  const token = await issueToken({ sub: String(user.id), email: user.email });
   res.cookie(AUTH_COOKIE, token, { ...COOKIE_OPTIONS, maxAge: TOKEN_TTL_MS });
 }
 
@@ -221,8 +221,9 @@ async function authenticateRequest(req) {
   if (!token) return null;
   try {
     const payload = await decodeToken(token);
-    if (!payload?.sub) return null;
-    const user = await getUserById(payload.sub);
+    const userId = payload?.sub ? Number(payload.sub) : null;
+    if (!userId) return null;
+    const user = await getUserById(userId);
     return user || null;
   } catch (err) {
     return null;

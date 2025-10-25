@@ -39,31 +39,30 @@
     </div>
   </section>
 
-  <section class="section alt">
+  <section class="section profile-section alt">
+    <div class="container">
+      <h2>Profile</h2>
+      <div class="dashboard-profile" id="dashboard-profile"></div>
+    </div>
+  </section>
+
+  <section class="section">
     <div class="container">
       <h2>Your orders</h2>
-      <div class="grid" id="dashboard-orders" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px;"></div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container">
-      <h2>Community posts</h2>
-      <div class="grid" id="dashboard-posts" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px;"></div>
+      <div class="dashboard-orders" id="dashboard-orders"></div>
     </div>
   </section>
 
   <section class="section alt">
-    <div class="container">
-      <h2>Events &amp; drops</h2>
-      <div class="grid" id="dashboard-events" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px;"></div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container">
-      <h2>Area-based activities</h2>
-      <div class="grid" id="dashboard-activities" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px;"></div>
+    <div class="container dashboard-columns">
+      <div class="dashboard-column">
+        <h2>Community posts</h2>
+        <div class="dashboard-stack" id="dashboard-posts"></div>
+      </div>
+      <div class="dashboard-column">
+        <h2>Events &amp; drops</h2>
+        <div class="dashboard-stack" id="dashboard-events"></div>
+      </div>
     </div>
   </section>
 </main>
