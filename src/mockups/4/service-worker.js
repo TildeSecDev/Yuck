@@ -1,9 +1,19 @@
-const CACHE = 'yuck-single-shell-v6';
+const CACHE = 'yuck-multipage-shell-v1';
 const OFFLINE = [
   './',
   './index.html',
-  './index.css',
+  './community.html',
+  './about.html',
+  './styles/base.css',
+  './styles/product.css',
+  './styles/community.css',
+  './styles/about.css',
+  './styles/base.css?v=5.0.0',
+  './styles/product.css?v=5.0.0',
+  './styles/community.css?v=5.0.0',
+  './styles/about.css?v=5.0.0',
   './index.js',
+  './index.js?v=5.0.0',
   './manifest.json',
   '/assets/images/powder-explosion.png',
   '/assets/images/background-image.png',

@@ -1,0 +1,24 @@
+/* About page specific overrides */
+
+.page--about .hero{padding:42px clamp(20px, 4vw, 52px)}
+.page--about .hero__content{max-width:640px}
+.page--about .hero__highlights{display:none}
+
+.panel--about .panel-grid{gap:22px}
+.team-grid{display:grid;gap:18px}
+.team-card{padding:24px;border-radius:14px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);box-shadow:0 12px 26px rgba(0,0,0,0.26)}
+.team-card h3{margin:0 0 8px;font-size:1.05rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold)}
+.team-card p{margin:0;color:rgba(239,249,232,0.88)}
+
+.panel--support{display:flex;flex-direction:column;gap:18px;background:linear-gradient(120deg, rgba(101,140,110,0.22), rgba(4,6,15,0.82))}
+.panel--support .cta-row{flex-wrap:wrap}
+.panel--support .btn{box-shadow:0 12px 28px rgba(0,0,0,0.28)}
+
+@media (min-width:900px){
+	.panel--about .panel-grid{grid-template-columns:repeat(3, 1fr)}
+	.team-grid{grid-template-columns:repeat(3, 1fr)}
+}
+
+@media (max-width:720px){
+	.team-grid{grid-template-columns:1fr}
+}

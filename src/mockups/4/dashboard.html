@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Yuck Account Dashboard</title>
+  <meta name="description" content="See your Yuck orders, crews, and activity in one place." />
+  <meta name="theme-color" content="#04060f" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%2304060f'/%3E%3Ctext x='50%25' y='58%25' font-size='28' text-anchor='middle' fill='%23FFFFFF' font-family='system-ui, sans-serif'%3EY%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="styles/base.css?v=5.0.0" />
+  <link rel="stylesheet" href="styles/account.css?v=5.0.0" />
+  <script defer src="index.js?v=5.0.0"></script>
+</head>
+<body class="page page--dashboard" data-page="dashboard">
+  <div class="stage" id="app" aria-live="polite">
+    <header class="topbar" role="banner">
+      <button class="topbar__account" type="button" data-open-account data-account-state="auth">My account</button>
+      <div class="brand">YUCK.</div>
+      <button class="icon topbar__support" type="button" data-open-support aria-label="Open support modal">?</button>
+    </header>
+
+    <div class="bg-base" aria-hidden="true"></div>
+    <div class="bg" aria-hidden="true"></div>
+    <div class="bg-cutout" aria-hidden="true"></div>
+
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero__shade" aria-hidden="true"></div>
+      <div class="hero__content">
+        <p class="kicker">Account</p>
+        <h1 id="hero-title">Your Yuck dashboard</h1>
+        <p class="sub">Review recent orders, stay synced with the crews you follow, and get ahead of upcoming events.</p>
+        <ul class="hero__highlights">
+          <li>Secure session powered by Paseto tokens</li>
+          <li>Order history synced from the Yuck backend</li>
+          <li>Communities and events seeded from your activity</li>
+        </ul>
+      </div>
+    </section>
+
+    <main class="panels panels--dashboard">
+      <section class="panel">
+        <h2>Welcome back</h2>
+        <p class="dashboard-intro">We pulled your latest account details so you can pick up where you left off.</p>
+        <p class="dashboard-status" id="dashboardStatus">Loading your account...</p>
+        <div class="dashboard-actions">
+          <button class="btn" type="button" data-dashboard-action="refresh">Refresh data</button>
+          <button class="btn btn--ghost" type="button" data-dashboard-action="logout">Log out</button>
+        </div>
+      </section>
+
+      <section class="panel dashboard-card" id="dashboardOrders">
+        <h3>Orders</h3>
+        <p class="dashboard-empty">No orders yet. Place your first order to see it here.</p>
+        <ul class="dashboard-list" hidden></ul>
+      </section>
+
+      <section class="panel dashboard-card" id="dashboardCommunities">
+        <h3>Communities</h3>
+        <p class="dashboard-empty">Join a crew to see it in your dashboard.</p>
+        <ul class="dashboard-list" hidden></ul>
+      </section>
+
+      <section class="panel dashboard-card" id="dashboardEvents">
+        <h3>Events</h3>
+        <p class="dashboard-empty">We will drop upcoming sessions once you join a crew.</p>
+        <ul class="dashboard-list" hidden></ul>
+      </section>
+
+      <section class="panel dashboard-card" id="dashboardActivity">
+        <h3>Community activity</h3>
+        <p class="dashboard-empty">No activity logged yet. Check back soon.</p>
+        <ul class="dashboard-list" hidden></ul>
+      </section>
+    </main>
+
+    <footer class="footer" role="contentinfo">
+      <div class="copy">© <span id="year"></span> Yuck. Built by TildeSec.</div>
+      <nav class="footer-nav" aria-label="Secondary">
+        <a href="index.html" data-nav="product">Product</a>
+        <a href="community.html" data-nav="community">Community</a>
+        <a href="about.html" data-nav="about">About</a>
+        <a href="dashboard.html" data-nav="dashboard" aria-current="page">Account</a>
+      </nav>
+      <div class="icons" aria-label="Social">
+        <a href="#" aria-label="Discord" class="icon" rel="noopener">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false" fill="currentColor">
+            <path d="M20.317 4.369A19.791 19.791 0 0 0 16.558 3c-.2.347-.43.81-.589 1.177a18.27 18.27 0 0 0-7.938 0A7.516 7.516 0 0 0 7.442 3a19.736 19.736 0 0 0-3.761 1.369C1.211 8.103.53 12.713.877 17.262A19.93 19.93 0 0 0 7.3 19.5c.3-.412.566-.852.793-1.315a12.84 12.84 0 0 1-1.247-.6c.106-.08.21-.164.31-.25 2.407 1.123 5.022 1.123 7.43 0 .102.088.207.172.312.251-.402.232-.825.43-1.266.591.226.463.492.903.793 1.315a19.9 19.9 0 0 0 6.425-2.238c.42-5.338-.716-9.902-1.54-12.175ZM8.725 14.236c-.905 0-1.644-.84-1.644-1.872 0-1.033.73-1.873 1.644-1.873.915 0 1.654.84 1.644 1.873 0 1.032-.73 1.872-1.644 1.872Zm6.55 0c-.906 0-1.645-.84-1.645-1.872 0-1.033.73-1.873 1.645-1.873.914 0 1.644.84 1.644 1.873 0 1.032-.73 1.872-1.644 1.872Z"/>
+          </svg>
+        </a>
+        <a href="#" aria-label="TikTok" class="icon" rel="noopener">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false" fill="currentColor">
+            <path d="M20 8.7a6.7 6.7 0 0 1-4-1.3v6.6a5.7 5.7 0 1 1-5.7-5.7c.2 0 .5 0 .7.1v2.4a3.3 3.3 0 1 0 2.6 3.2V2h2.4a6.7 6.7 0 0 0 4 4v2.7Z"/>
+          </svg>
+        </a>
+        <a href="#" aria-label="Instagram" class="icon" rel="noopener">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false" fill="currentColor">
+            <path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm0-5c3 0 3.4 0 4.6.1 1.2.1 2 .2 2.7.5.7.3 1.3.6 1.9 1.2.6.6.9 1.2 1.2 1.9.3.7.5 1.5.5 2.7.1 1.2.1 1.6.1 4.6s0 3.4-.1 4.6c-.1 1.2-.2 2-.5 2.7-.3.7-.6 1.3-1.2 1.9-.6.6-1.2.9-1.9 1.2-.7.3-1.5 .5-2.7.5-1.2.1-1.6.1-4.6.1s-3.4 0-4.6-.1c-1.2-.1-2-.2-2.7-.5a5.1 5.1 0 0 1-1.9-1.2c-.6-.6-.9-1.2-1.2-1.9-.3-.7-.5-1.5-.5-2.7C2 15.4 2 15 2 12s0-3.4.1-4.6c.1-1.2.2-2 .5-2.7.3-.7.6-1.3 1.2-1.9A5.1 5.1 0 0 1 5 1.7c.7-.3 1.5-.5 2.7-.5C8.9 1 9.3 1 12 1Z"/>
+          </svg>
+        </a>
+      </div>
+    </footer>
+
+    <div class="modal" id="accountModal" role="dialog" aria-modal="true" aria-labelledby="accountTitle" hidden>
+      <div class="modal__backdrop" data-modal-close></div>
+      <div class="modal__content modal__content--account" role="document">
+        <button class="modal__close" aria-label="Close" data-modal-close>&times;</button>
+        <div class="account-modal">
+          <header class="account-modal__header">
+            <h2 id="accountTitle">Access your account</h2>
+            <p class="account-modal__sub">Update credentials, view orders, and manage communities.</p>
+          </header>
+          <div class="account-modal__tabs" role="tablist" aria-label="Account">
+            <button class="account-modal__tab is-active" type="button" id="accountLoginTab" data-account-tab="login" role="tab" aria-selected="true" aria-controls="accountLoginView">Log in</button>
+            <button class="account-modal__tab" type="button" id="accountSignupTab" data-account-tab="signup" role="tab" aria-selected="false" aria-controls="accountSignupView">Sign up</button>
+          </div>
+          <div class="account-modal__views">
+            <section class="account-modal__view" id="accountLoginView" data-account-view="login" role="tabpanel" aria-labelledby="accountLoginTab" tabindex="0">
+              <form id="accountLoginForm" class="account-modal__form" data-account-form="login">
+                <div class="field">
+                  <label for="accountLoginEmail">Email</label>
+                  <input type="email" id="accountLoginEmail" name="email" autocomplete="email" required />
+                </div>
+                <div class="field">
+                  <label for="accountLoginPassword">Password</label>
+                  <input type="password" id="accountLoginPassword" name="password" autocomplete="current-password" minlength="6" required />
+                </div>
+                <input type="hidden" name="_subject" value="YUCK Account Login" />
+                <input type="hidden" name="_captcha" value="false" />
+                <button class="btn" type="submit">Log in</button>
+              </form>
+            </section>
+            <section class="account-modal__view" id="accountSignupView" data-account-view="signup" role="tabpanel" aria-labelledby="accountSignupTab" hidden tabindex="0">
+              <form id="accountSignupForm" class="account-modal__form" data-account-form="signup">
+                <div class="field">
+                  <label for="accountSignupEmail">Email</label>
+                  <input type="email" id="accountSignupEmail" name="email" autocomplete="email" required />
+                </div>
+                <div class="field">
+                  <label for="accountSignupPassword">Password</label>
+                  <input type="password" id="accountSignupPassword" name="password" autocomplete="new-password" minlength="8" required />
+                </div>
+                <input type="hidden" name="_subject" value="YUCK Account Signup" />
+                <input type="hidden" name="_captcha" value="false" />
+                <button class="btn" type="submit">Create account</button>
+                <p class="account-modal__hint">FormSubmit handles confirmations while our backend secures your session.</p>
+              </form>
+            </section>
+          </div>
+          <p class="account-modal__error" id="accountError" role="alert" hidden></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="supportModal" role="dialog" aria-modal="true" aria-labelledby="supportTitle" hidden>
+      <div class="modal__backdrop" data-modal-close></div>
+      <div class="modal__content modal__content--join" role="document">
+        <button class="modal__close" aria-label="Close" data-modal-close>&times;</button>
+        <h2 id="supportTitle">Contact or support</h2>
+        <p class="modal__sub">Tell us what you need and how to reach you.</p>
+        <div class="join-layout">
+          <form id="supportForm" class="join-form" action="https://formsubmit.co/hello@yuck.example" method="POST">
+            <input type="text" name="name" placeholder="Your name" />
+            <input type="email" name="email" placeholder="you@email.com" required />
+            <input type="text" name="topic" placeholder="Topic (order, partnership, question)" />
+            <textarea name="message" rows="4" placeholder="Your message"></textarea>
+            <input type="hidden" name="_next" id="supportNext" value="" />
+            <input type="hidden" name="_subject" value="YUCK Support" />
+            <input type="hidden" name="_captcha" value="false" />
+            <div class="actions">
+              <button class="btn" id="supportSubmit">Send</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="intro" aria-hidden="true"></div>
+  </div>
+
+  <script async defer src="https://platform.instagram.com/en_US/embeds.js"></script>
+</body>
+</html>

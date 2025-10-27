@@ -53,11 +53,19 @@ body{margin:0;background:var(--black);color:var(--white);font-family: system-ui,
 }
 .topbar .brand{font-weight:900;letter-spacing:0.08em}
 
-.bg-base{position:absolute;inset:0;background:url('/assets/images/background-image-title-cutout.png') center/contain no-repeat;z-index:0}
+.bg-base{
+  position:absolute;
+  inset:0;
+  background: url('/assets/images/background-image-title-cutout.png') center/contain no-repeat;
+  z-index:0;
+  transition: background-image .25s ease, background-size .25s ease, background-position .25s ease, z-index .01s;
+  background-repeat: no-repeat;
+}
+
 .bg{position:absolute;inset:0;background:url('/assets/images/powder-explosion.png') center/cover no-repeat;z-index:1;opacity:0.25;transition:opacity .4s ease}
 .bg-cutout{
   position:absolute;
-  inset:0;
+  inset:25%;
   top: -180px;
   background:url('/assets/images/background-image-title-cutout-large.png') center/cover no-repeat;
   z-index:1;
