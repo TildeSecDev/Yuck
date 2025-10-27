@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Yuck — Product Lineup</title>
+  <meta name="description" content="Explore the full Yuck lineup, from everyday recovery blends to limited seasonal drops." />
+  <meta name="theme-color" content="#e7efe6" />
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%232c4b39'/%3E%3Ctext x='50%25' y='58%25' font-family='Manrope,Arial,sans-serif' font-size='28' text-anchor='middle' fill='%23f4f0e6'%3EY6%3C/text%3E%3C/svg%3E" />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Fraunces:opsz,wght@14..144,500;14..144,600;14..144,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles/base.css" />
+  <link rel="stylesheet" href="./styles/pages.css" />
+  <link rel="stylesheet" href="./styles/products.css" />
+  <link rel="stylesheet" href="./styles/support.css" />
+</head>
+<body data-page="products">
+  <div class="grain"></div>
+  <header class="site-header" data-reveal>
+    <div class="shell header-inner">
+      <a class="brand" href="index.html" aria-label="Yuck home">
+        Yuck<span class="dot">.</span>
+        <span class="tag">Field-Tested Fuel</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primaryNav">
+        <span class="menu-icon" aria-hidden="true"></span>
+        <span class="sr-only">Toggle navigation</span>
+      </button>
+      <nav id="primaryNav" class="primary-nav" aria-label="Primary">
+        <a href="index.html" data-nav="home">Home</a>
+        <a href="products.html" data-nav="products">Products</a>
+        <a href="experience.html" data-nav="experience">Experience</a>
+        <a href="community.html" data-nav="community">Community</a>
+        <a href="research.html" data-nav="research">Research</a>
+        <a href="about.html" data-nav="about">About</a>
+        <a href="support.html" data-nav="support">Support</a>
+      </nav>
+      <div class="header-actions">
+        <button class="btn ghost" data-modal-open="buyModal">Shop</button>
+        <button class="btn solid install" id="installBtn" disabled>Install App</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="catalog-hero section">
+      <div class="shell">
+        <span class="badge">Lineup</span>
+        <h1>Whole-ingredient fuel for every training block.</h1>
+        <p class="lead">We stripped the hype to focus on balanced macronutrients, lab verification, and blends that taste bright without the synthetic burn.</p>
+        <div class="product-filters" data-product-filter>
+          <button class="btn outline is-active" type="button" data-filter="all">All products</button>
+          <button class="btn outline" type="button" data-filter="recovery">Recovery</button>
+          <button class="btn outline" type="button" data-filter="strength">Strength</button>
+          <button class="btn outline" type="button" data-filter="endurance">Endurance</button>
+          <button class="btn outline" type="button" data-filter="limited">Limited</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section products">
+      <div class="shell">
+        <div class="catalog-grid">
+          <article class="catalog-card" data-product-category="recovery,endurance">
+            <div class="catalog-card__media" style="background-image:url('../../assets/yuck-demo-supplement/Supplement.png')"></div>
+            <div class="catalog-card__body">
+              <h3>Y-01&trade; Organic Protein + Recovery</h3>
+              <p>Daily shake with balanced macros, adaptogens, and electrolytes gathered from our field notebooks.</p>
+              <ul>
+                <li>24g protein · 6g BCAAs</li>
+                <li>Electrolyte ratio tuned from club ride feedback</li>
+                <li>Light citrus finish keeps palate fresh</li>
+              </ul>
+            </div>
+            <div class="catalog-card__meta">
+              <span>£32.00</span>
+              <button class="btn outline" data-modal-open="buyModal" data-product="Y-01™ Organic Protein">Add to bag</button>
+            </div>
+          </article>
+
+          <article class="catalog-card" data-product-category="strength,recovery">
+            <div class="catalog-card__media" style="background-image:url('../../assets/yuck-demo-supplement/MultipleSupplement.png')"></div>
+            <div class="catalog-card__body">
+              <h3>WP-01&trade; Organic Whey</h3>
+              <p>Small-batch whey from grass-fed herds, micro-filtered for clean absorption and zero filler aftertaste.</p>
+              <ul>
+                <li>26g protein per scoop</li>
+                <li>No soy, gums, or artificial sweeteners</li>
+                <li>Supports post-lift rebound without heaviness</li>
+              </ul>
+            </div>
+            <div class="catalog-card__meta">
+              <span>£55.00</span>
+              <button class="btn outline" data-modal-open="buyModal" data-product="WP-01™ Organic Whey">Add to bag</button>
+            </div>
+          </article>
+
+          <article class="catalog-card" data-product-category="recovery,limited">
+            <div class="catalog-card__media" style="background-image:url('../../assets/yuck-demo-supplement/SourSupplement.png')"></div>
+            <div class="catalog-card__body">
+              <h3>CP-01&trade; Collagen Peptides</h3>
+              <p>Bright, tart blend to reinforce joints and connective tissues—launched after repeated community requests.</p>
+              <ul>
+                <li>Hydrolyzed type I & III collagen</li>
+                <li>Fortified with vitamin C and magnesium</li>
+                <li>Seasonal sour guava profile</li>
+              </ul>
+            </div>
+            <div class="catalog-card__meta">
+              <span>£40.00</span>
+              <button class="btn outline" data-modal-open="buyModal" data-product="CP-01™ Collagen Peptides">Add to bag</button>
+            </div>
+          </article>
+
+          <article class="catalog-card" data-product-category="strength">
+            <div class="catalog-card__media" style="background-image:url('../../assets/images/plasticbag/transparent_plastic_wrap_isolated_on_background.jpg')"></div>
+            <div class="catalog-card__body">
+              <h3>CM-01&trade; Creatine Monohydrate</h3>
+              <p>Single-ingredient stack essential, third-party tested for purity and sized for 90-day training blocks.</p>
+              <ul>
+                <li>Micronized for fast dissolve</li>
+                <li>Unflavoured and stack-friendly</li>
+                <li>Batch certified by Lab 11 partners</li>
+              </ul>
+            </div>
+            <div class="catalog-card__meta">
+              <span>£38.00</span>
+              <button class="btn outline" data-modal-open="buyModal" data-product="CM-01™ Creatine Monohydrate">Add to bag</button>
+            </div>
+          </article>
+
+          <article class="catalog-card" data-product-category="endurance,limited">
+            <div class="catalog-card__media" style="background-image:url('../../assets/images/Trolley/trolley%20item.png')"></div>
+            <div class="catalog-card__body">
+              <h3>GL-01&trade; Gel Flight Pack</h3>
+              <p>Travel-ready gels with slow-release carbs and mineral blend designed with our ultracycling crews.</p>
+              <ul>
+                <li>Four stage carbohydrate matrix</li>
+                <li>Sea salt + potassium mix to offset sweat loss</li>
+                <li>Reusable pouch lowers classroom waste</li>
+              </ul>
+            </div>
+            <div class="catalog-card__meta">
+              <span>£28.00</span>
+              <button class="btn outline" data-modal-open="buyModal" data-product="GL-01™ Gel Flight Pack">Add to bag</button>
+            </div>
+          </article>
+
+          <article class="catalog-card" data-product-category="recovery,limited">
+            <div class="catalog-card__media" style="background-image:url('../../assets/images/plasticbag/transparent_plastic_wrap_isolated_on_background.jpg')"></div>
+            <div class="catalog-card__body">
+              <h3>NT-01&trade; Night Tea Ritual</h3>
+              <p>Chamomile-forward tea with tart cherry and L-theanine to support deep recovery without sluggish mornings.</p>
+              <ul>
+                <li>Organic botanicals sourced from cooperative farms</li>
+                <li>Built-in steep guide on every sachet</li>
+                <li>Limited winter drop</li>
+              </ul>
+            </div>
+            <div class="catalog-card__meta">
+              <span>£24.00</span>
+              <button class="btn outline" data-modal-open="buyModal" data-product="NT-01™ Night Tea Ritual">Add to bag</button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section product-highlights">
+      <div class="shell">
+        <header class="section-head">
+          <span class="badge">Field data</span>
+          <h2>Blends evolve with every field note we collect.</h2>
+          <p class="lead">Quarterly recalibrations ensure the formulas track real-world training loads. Each change ships with transparent lab reports.</p>
+        </header>
+        <div class="product-highlights__grid">
+          <article>
+            <h3>Seasonal palette shifts</h3>
+            <p>We rotate flavour accents to reflect what athletes crave in each season—brighter citrus during summer heat, warmer spice in autumn blocks.</p>
+          </article>
+          <article>
+            <h3>Verified ingredient sourcing</h3>
+            <p>Every bag lists origin farms and lab IDs. Scan the QR code on-pack to view batch-specific analysis from Lab 11.</p>
+          </article>
+          <article>
+            <h3>Bundles built on routines</h3>
+            <p>Starter, build, and peak bundles combine protein, creatine, and recovery aids. Adjust cadence inside the modal without losing your cart.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section support">
+      <div class="shell support-grid">
+        <div class="support-copy reveal">
+          <span class="badge">Need guidance?</span>
+          <h2>Match blends to your training goals.</h2>
+          <p>Tell us how you train and we will draft a suggested stack with timing, hydration, and pairing notes.</p>
+          <form id="supportForm" autocomplete="off" novalidate>
+            <div class="form-row">
+              <label class="form-field">
+                <span>Name</span>
+                <input type="text" name="name" placeholder="Your name" />
+              </label>
+              <label class="form-field">
+                <span>Email</span>
+                <input type="email" name="email" placeholder="you@domain.com" required />
+              </label>
+            </div>
+            <label class="form-field">
+              <span>Training focus</span>
+              <select name="topic">
+                <option>General fitness</option>
+                <option>Strength block</option>
+                <option>Endurance build</option>
+                <option>Race taper</option>
+              </select>
+            </label>
+            <label class="form-field">
+              <span>Notes</span>
+              <textarea name="message" rows="4" placeholder="Tell us how you train."></textarea>
+            </label>
+            <button class="btn solid" type="submit">Ask for a plan</button>
+            <p id="supportMsg" class="form-hint" role="status"></p>
+          </form>
+        </div>
+        <aside class="support-card reveal">
+          <h3>Popular bundles</h3>
+          <ul>
+            <li>Starter Pack · Y-01 + CM-01 + shaker</li>
+            <li>Strength Track · WP-01 + CM-01 + NT-01</li>
+            <li>Endurance Kit · GL-01 + Y-01 + electrolyte boosters</li>
+          </ul>
+          <button class="btn outline" data-modal-open="buyModal">Build bundle in modal</button>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="shell footer-grid">
+      <div>
+        <div class="brand">Yuck<span class="dot">.</span></div>
+        <p>© <span id="year"></span> Yuck Labs. Results earned in dusty gyms, cold studios, and early runs.</p>
+      </div>
+      <div>
+        <strong>Navigation</strong>
+        <a href="products.html">Products</a>
+        <a href="community.html">Community</a>
+        <a href="research.html">Research</a>
+        <a href="support.html">Support</a>
+      </div>
+      <div>
+        <strong>Resources</strong>
+        <a href="experience.html">Experience</a>
+        <a href="about.html">About</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+      </div>
+      <div>
+        <strong>Newsletter</strong>
+        <form id="newsletterForm" autocomplete="off" novalidate>
+          <input type="email" name="email" placeholder="you@domain.com" required />
+          <button class="btn solid" type="submit">Join</button>
+        </form>
+        <p id="newsletterMsg" class="form-hint" role="status"></p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="modal" id="buyModal" role="dialog" aria-modal="true" aria-labelledby="buyTitle" hidden>
+    <div class="modal-backdrop" data-modal-close></div>
+    <div class="modal-content" role="document">
+      <button class="modal-close" type="button" data-modal-close aria-label="Close">×</button>
+      <h2 id="buyTitle">Build your pack</h2>
+      <p class="modal-sub">Pick a product, choose pack size, set delivery frequency.</p>
+      <form id="buyForm" novalidate>
+        <label class="form-field">
+          <span>Product</span>
+          <select id="buyProduct" name="product">
+            <option value="Y-01™ Organic Protein" data-price="32">Y-01™ Organic Protein</option>
+            <option value="WP-01™ Organic Whey" data-price="55">WP-01™ Organic Whey</option>
+            <option value="CP-01™ Collagen Peptides" data-price="40">CP-01™ Collagen Peptides</option>
+            <option value="CM-01™ Creatine Monohydrate" data-price="38">CM-01™ Creatine Monohydrate</option>
+            <option value="GL-01™ Gel Flight Pack" data-price="28">GL-01™ Gel Flight Pack</option>
+            <option value="NT-01™ Night Tea Ritual" data-price="24">NT-01™ Night Tea Ritual</option>
+          </select>
+        </label>
+        <label class="form-field">
+          <span>Delivery</span>
+          <select id="buyFrequency" name="frequency">
+            <option value="4">Every 4 weeks</option>
+            <option value="6">Every 6 weeks</option>
+            <option value="8">Every 8 weeks</option>
+          </select>
+        </label>
+        <div class="form-row">
+          <label class="form-field">
+            <span>Quantity</span>
+            <div class="qty">
+              <button type="button" class="qty-btn" data-qty="-1" aria-label="Decrease quantity">−</button>
+              <input type="number" id="buyQty" name="quantity" min="1" value="1" inputmode="numeric" />
+              <button type="button" class="qty-btn" data-qty="1" aria-label="Increase quantity">+</button>
+            </div>
+          </label>
+          <label class="form-field">
+            <span>Total</span>
+            <div class="total" id="buyTotal">£32.00</div>
+          </label>
+        </div>
+        <div class="form-actions">
+          <button class="btn solid" type="submit">Add to cart</button>
+          <button class="btn ghost" type="button" data-modal-close>Close</button>
+        </div>
+        <p id="buyMsg" class="form-hint" role="status"></p>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal" id="joinModal" role="dialog" aria-modal="true" aria-labelledby="joinTitle" hidden>
+    <div class="modal-backdrop" data-modal-close></div>
+    <div class="modal-content" role="document">
+      <button class="modal-close" type="button" data-modal-close aria-label="Close">×</button>
+      <h2 id="joinTitle">Join the community</h2>
+      <p class="modal-sub">Choose channels, drop your email, and we'll send the invite.</p>
+      <form id="joinModalForm" autocomplete="off" novalidate>
+        <label class="form-field">
+          <span>Email</span>
+          <input type="email" name="email" placeholder="you@domain.com" required />
+        </label>
+        <fieldset class="choice-grid">
+          <legend>Channels</legend>
+          <label><input type="checkbox" name="channel" value="Discord" checked /> Discord</label>
+          <label><input type="checkbox" name="channel" value="Slack" /> Slack</label>
+          <label><input type="checkbox" name="channel" value="Instagram" /> Instagram</label>
+        </fieldset>
+        <div class="form-actions">
+          <button class="btn solid" type="submit">Request invite</button>
+        </div>
+        <p id="joinModalMsg" class="form-hint" role="status"></p>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal" id="supportModal" role="dialog" aria-modal="true" aria-labelledby="supportTitle" hidden>
+    <div class="modal-backdrop" data-modal-close></div>
+    <div class="modal-content" role="document">
+      <button class="modal-close" type="button" data-modal-close aria-label="Close">×</button>
+      <h2 id="supportTitle">Support</h2>
+      <p class="modal-sub">Give us a few details and we'll reply within 24 hours.</p>
+      <form id="supportModalForm" autocomplete="off" novalidate>
+        <div class="form-row">
+          <label class="form-field">
+            <span>Name</span>
+            <input type="text" name="name" placeholder="Your name" />
+          </label>
+          <label class="form-field">
+            <span>Email</span>
+            <input type="email" name="email" placeholder="you@domain.com" required />
+          </label>
+        </div>
+        <label class="form-field">
+          <span>Topic</span>
+          <input type="text" name="topic" placeholder="Order, subscription, partnership" />
+        </label>
+        <label class="form-field">
+          <span>Message</span>
+          <textarea name="message" rows="4" placeholder="How can we help?"></textarea>
+        </label>
+        <div class="form-actions">
+          <button class="btn solid" type="submit">Send</button>
+          <button class="btn ghost" type="button" data-modal-close>Close</button>
+        </div>
+        <p id="supportModalMsg" class="form-hint" role="status"></p>
+      </form>
+    </div>
+  </div>
+
+  <script src="./scripts/core.js" defer></script>
+  <script src="./scripts/products.js" defer></script>
+  <script src="./scripts/support.js" defer></script>
+</body>
+</html>
