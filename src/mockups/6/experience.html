@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Yuck — Product Lineup</title>
-  <meta name="description" content="Explore the full Yuck lineup, from everyday recovery blends to limited seasonal drops." />
+  <title>Yuck — Experience Flows</title>
+  <meta name="description" content="Explore how the Yuck experience keeps shoppers, members, and support requests flowing without friction." />
   <meta name="theme-color" content="#e7efe6" />
   <link rel="manifest" href="./manifest.webmanifest" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%232c4b39'/%3E%3Ctext x='50%25' y='58%25' font-family='Manrope,Arial,sans-serif' font-size='28' text-anchor='middle' fill='%23f4f0e6'%3EY6%3C/text%3E%3C/svg%3E" />
@@ -13,10 +13,10 @@
   <link rel="stylesheet" href="./styles/base.css" />
   <link rel="stylesheet" href="./styles/auth.css" />
   <link rel="stylesheet" href="./styles/pages.css" />
-  <link rel="stylesheet" href="./styles/products.css" />
+  <link rel="stylesheet" href="./styles/experience.css" />
   <link rel="stylesheet" href="./styles/support.css" />
 </head>
-<body data-page="products">
+<body data-page="experience">
   <div class="grain"></div>
   <header class="site-header" data-reveal>
     <div class="shell header-inner">
@@ -45,195 +45,156 @@
   </header>
 
   <main>
-    <section class="catalog-hero section">
+    <section class="page-hero">
       <div class="shell">
-        <span class="badge">Lineup</span>
-        <h1>Whole-ingredient fuel for every training block.</h1>
-        <p class="lead">We stripped the hype to focus on balanced macronutrients, lab verification, and blends that taste bright without the synthetic burn.</p>
-        <div class="product-filters" data-product-filter>
-          <button class="btn outline is-active" type="button" data-filter="all">All products</button>
-          <button class="btn outline" type="button" data-filter="recovery">Recovery</button>
-          <button class="btn outline" type="button" data-filter="strength">Strength</button>
-          <button class="btn outline" type="button" data-filter="endurance">Endurance</button>
-          <button class="btn outline" type="button" data-filter="limited">Limited</button>
+        <div class="page-hero__headline reveal">
+          <span class="badge">Experience</span>
+          <h1>Flow through every task without losing cadence.</h1>
+          <p>
+            We mapped each pathway—browse, buy, join, and ask for help—so athletes can stay focused on their training. Panels, modals,
+            and transitions all move at your pace.
+          </p>
+          <div class="hero-actions">
+            <button class="btn solid" data-modal-open="buyModal">Test the buy modal</button>
+            <button class="btn ghost" data-modal-open="supportModal">Talk to support</button>
+            <button class="btn link" data-modal-open="accountModal">Access account</button>
+          </div>
+          <ul class="page-hero__meta">
+            <li>Over 6K journeys replayed to smooth friction points.</li>
+            <li>Animations respectful of recovery—no sudden flashes.</li>
+            <li>Single overlay handles cart, community, and support.</li>
+          </ul>
+        </div>
+        <div class="page-hero__media reveal">
+          <img src="../../assets/images/yuck-demo-supplement/yuck-demo-supplement.png" alt="Preview of the Yuck modal-first checkout flow" loading="lazy" />
         </div>
       </div>
     </section>
 
-    <section class="section products">
-      <div class="shell">
-        <div class="catalog-grid">
-          <article class="catalog-card" data-product-category="recovery,endurance">
-            <div class="catalog-card__media" style="background-image:url('../../assets/yuck-demo-supplement/Supplement.png')"></div>
-            <div class="catalog-card__body">
-              <h3>Y-01&trade; Organic Protein + Recovery</h3>
-              <p>Daily shake with balanced macros, adaptogens, and electrolytes gathered from our field notebooks.</p>
-              <ul>
-                <li>24g protein · 6g BCAAs</li>
-                <li>Electrolyte ratio tuned from club ride feedback</li>
-                <li>Light citrus finish keeps palate fresh</li>
-              </ul>
-            </div>
-            <div class="catalog-card__meta">
-              <span>£32.00</span>
-              <button class="btn outline" data-modal-open="buyModal" data-product="Y-01™ Organic Protein">Add to bag</button>
-            </div>
-          </article>
-
-          <article class="catalog-card" data-product-category="strength,recovery">
-            <div class="catalog-card__media" style="background-image:url('../../assets/yuck-demo-supplement/MultipleSupplement.png')"></div>
-            <div class="catalog-card__body">
-              <h3>WP-01&trade; Organic Whey</h3>
-              <p>Small-batch whey from grass-fed herds, micro-filtered for clean absorption and zero filler aftertaste.</p>
-              <ul>
-                <li>26g protein per scoop</li>
-                <li>No soy, gums, or artificial sweeteners</li>
-                <li>Supports post-lift rebound without heaviness</li>
-              </ul>
-            </div>
-            <div class="catalog-card__meta">
-              <span>£55.00</span>
-              <button class="btn outline" data-modal-open="buyModal" data-product="WP-01™ Organic Whey">Add to bag</button>
-            </div>
-          </article>
-
-          <article class="catalog-card" data-product-category="recovery,limited">
-            <div class="catalog-card__media" style="background-image:url('../../assets/yuck-demo-supplement/SourSupplement.png')"></div>
-            <div class="catalog-card__body">
-              <h3>CP-01&trade; Collagen Peptides</h3>
-              <p>Bright, tart blend to reinforce joints and connective tissues—launched after repeated community requests.</p>
-              <ul>
-                <li>Hydrolyzed type I & III collagen</li>
-                <li>Fortified with vitamin C and magnesium</li>
-                <li>Seasonal sour guava profile</li>
-              </ul>
-            </div>
-            <div class="catalog-card__meta">
-              <span>£40.00</span>
-              <button class="btn outline" data-modal-open="buyModal" data-product="CP-01™ Collagen Peptides">Add to bag</button>
-            </div>
-          </article>
-
-          <article class="catalog-card" data-product-category="strength">
-            <div class="catalog-card__media" style="background-image:url('../../assets/images/plasticbag/transparent_plastic_wrap_isolated_on_background.jpg')"></div>
-            <div class="catalog-card__body">
-              <h3>CM-01&trade; Creatine Monohydrate</h3>
-              <p>Single-ingredient stack essential, third-party tested for purity and sized for 90-day training blocks.</p>
-              <ul>
-                <li>Micronized for fast dissolve</li>
-                <li>Unflavoured and stack-friendly</li>
-                <li>Batch certified by Lab 11 partners</li>
-              </ul>
-            </div>
-            <div class="catalog-card__meta">
-              <span>£38.00</span>
-              <button class="btn outline" data-modal-open="buyModal" data-product="CM-01™ Creatine Monohydrate">Add to bag</button>
-            </div>
-          </article>
-
-          <article class="catalog-card" data-product-category="endurance,limited">
-            <div class="catalog-card__media" style="background-image:url('../../assets/images/Trolley/trolley%20item.png')"></div>
-            <div class="catalog-card__body">
-              <h3>GL-01&trade; Gel Flight Pack</h3>
-              <p>Travel-ready gels with slow-release carbs and mineral blend designed with our ultracycling crews.</p>
-              <ul>
-                <li>Four stage carbohydrate matrix</li>
-                <li>Sea salt + potassium mix to offset sweat loss</li>
-                <li>Reusable pouch lowers classroom waste</li>
-              </ul>
-            </div>
-            <div class="catalog-card__meta">
-              <span>£28.00</span>
-              <button class="btn outline" data-modal-open="buyModal" data-product="GL-01™ Gel Flight Pack">Add to bag</button>
-            </div>
-          </article>
-
-          <article class="catalog-card" data-product-category="recovery,limited">
-            <div class="catalog-card__media" style="background-image:url('../../assets/images/plasticbag/transparent_plastic_wrap_isolated_on_background.jpg')"></div>
-            <div class="catalog-card__body">
-              <h3>NT-01&trade; Night Tea Ritual</h3>
-              <p>Chamomile-forward tea with tart cherry and L-theanine to support deep recovery without sluggish mornings.</p>
-              <ul>
-                <li>Organic botanicals sourced from cooperative farms</li>
-                <li>Built-in steep guide on every sachet</li>
-                <li>Limited winter drop</li>
-              </ul>
-            </div>
-            <div class="catalog-card__meta">
-              <span>£24.00</span>
-              <button class="btn outline" data-modal-open="buyModal" data-product="NT-01™ Night Tea Ritual">Add to bag</button>
-            </div>
-          </article>
+    <section class="section experience" id="flow">
+      <div class="shell experience-grid">
+        <div class="experience-copy reveal">
+          <span class="badge">Layered flow</span>
+          <h2>Everything lives inside a calm overlay.</h2>
+          <p class="lead">
+            Toggle between shopping, community updates, and support without reloads. Your selections persist until you confirm,
+            so you can experiment with bundles while staying on the same page.
+          </p>
+          <div class="experience-actions">
+            <button class="btn solid" data-modal-open="buyModal">Open the buy flow</button>
+            <button class="btn ghost" data-modal-open="joinModal">Join community</button>
+            <button class="btn outline" data-modal-open="supportModal">Escalate to support</button>
+          </div>
+        </div>
+        <div class="journey reveal" data-stepper>
+          <div class="step-buttons" role="tablist" aria-label="Experience">
+            <button class="step-btn is-active" type="button" role="tab" aria-selected="true" data-step="shop">Shop</button>
+            <button class="step-btn" type="button" role="tab" aria-selected="false" data-step="community">Community</button>
+            <button class="step-btn" type="button" role="tab" aria-selected="false" data-step="support">Support</button>
+          </div>
+          <div class="step-panels">
+            <article class="step-panel is-active" id="experience-step-shop" data-step-panel="shop">
+              <h3>Dynamic pricing checks and inventory safety.</h3>
+              <p>
+                Watch totals update as you adjust frequency and stack size. Low-inventory warnings surface inline, keeping the experience
+                inside the modal.
+              </p>
+            </article>
+            <article class="step-panel" id="experience-step-community" data-step-panel="community" hidden>
+              <h3>Community pulse without leaving your context.</h3>
+              <p>
+                The same overlay surfaces Discord pulses, session RSVPs, and invite-only drops. Preferences stick thanks to local storage.
+              </p>
+            </article>
+            <article class="step-panel" id="experience-step-support" data-step-panel="support" hidden>
+              <h3>Escalate smoothly when you need a human.</h3>
+              <p>
+                Inline support captures context, then hands off to the backend for ticket creation—no typing the same story twice.
+              </p>
+            </article>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="section product-highlights">
-      <div class="shell">
-        <header class="section-head">
-          <span class="badge">Field data</span>
-          <h2>Blends evolve with every field note we collect.</h2>
-          <p class="lead">Quarterly recalibrations ensure the formulas track real-world training loads. Each change ships with transparent lab reports.</p>
+    <section class="section">
+      <div class="shell flow-map">
+        <header class="section-head reveal">
+          <span class="badge">Journey map</span>
+          <h2>Built around real-world training rhythms.</h2>
+          <p class="lead">Each card pairs a user moment with the surfaces that support it inside the modal stack.</p>
         </header>
-        <div class="product-highlights__grid">
-          <article>
-            <h3>Seasonal palette shifts</h3>
-            <p>We rotate flavour accents to reflect what athletes crave in each season—brighter citrus during summer heat, warmer spice in autumn blocks.</p>
+        <div class="flow-map__row reveal">
+          <article class="flow-card">
+            <h3>Morning prep</h3>
+            <p>Open the app during a warm-up, add recovery to cart, and queue up the week’s Discord programming.</p>
           </article>
-          <article>
-            <h3>Verified ingredient sourcing</h3>
-            <p>Every bag lists origin farms and lab IDs. Scan the QR code on-pack to view batch-specific analysis from Lab 11.</p>
+          <article class="flow-card">
+            <h3>Mid-session check</h3>
+            <p>Pause at the aid station—support tab remembers your notes and prompts a hydration follow-up.</p>
           </article>
-          <article>
-            <h3>Bundles built on routines</h3>
-            <p>Starter, build, and peak bundles combine protein, creatine, and recovery aids. Adjust cadence inside the modal without losing your cart.</p>
+          <article class="flow-card">
+            <h3>Cooldown reflection</h3>
+            <p>Log feedback on flavor tests and share a quick clip to the community feed without leaving the modal.</p>
+          </article>
+        </div>
+        <div class="flow-map__row reveal">
+          <article class="flow-card">
+            <h3>Coach review</h3>
+            <p>Coaches view athlete carts, adjust timing, and drop in lab notes that sync to the research hub.</p>
+          </article>
+          <article class="flow-card">
+            <h3>Support follow-through</h3>
+            <p>Support reps receive a complete activity log from the modal, so resolutions happen on the first reply.</p>
+          </article>
+          <article class="flow-card">
+            <h3>Retention &amp; rewards</h3>
+            <p>Micro-interactions nudge subscriptions at the right cadence, tied to actual training cycles.</p>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="section support">
+    <section class="section support" id="handoff">
       <div class="shell support-grid">
         <div class="support-copy reveal">
-          <span class="badge">Need guidance?</span>
-          <h2>Match blends to your training goals.</h2>
-          <p>Tell us how you train and we will draft a suggested stack with timing, hydration, and pairing notes.</p>
-          <form id="supportForm" autocomplete="off" novalidate>
-            <div class="form-row">
-              <label class="form-field">
-                <span>Name</span>
-                <input type="text" name="name" placeholder="Your name" />
-              </label>
-              <label class="form-field">
-                <span>Email</span>
-                <input type="email" name="email" placeholder="you@domain.com" required />
-              </label>
-            </div>
-            <label class="form-field">
-              <span>Training focus</span>
-              <select name="topic">
-                <option>General fitness</option>
-                <option>Strength block</option>
-                <option>Endurance build</option>
-                <option>Race taper</option>
-              </select>
-            </label>
-            <label class="form-field">
-              <span>Notes</span>
-              <textarea name="message" rows="4" placeholder="Tell us how you train."></textarea>
-            </label>
-            <button class="btn solid" type="submit">Ask for a plan</button>
-            <p id="supportMsg" class="form-hint" role="status"></p>
-          </form>
+          <span class="badge">Human handoff</span>
+          <h2>Seamless switch from modal to specialist.</h2>
+          <p>
+            When the overlay can’t solve it, the npm backend takes over—issuing invites, setting auth cookies, and syncing ticket updates
+            back into the UI so you never lose the thread.
+          </p>
+          <div class="contact-tabs" role="tablist">
+            <button class="btn is-active" type="button" data-support-toggle="contactLive">Live support</button>
+            <button class="btn" type="button" data-support-toggle="contactLabs">Lab updates</button>
+            <button class="btn" type="button" data-support-toggle="contactWholesale">Wholesale</button>
+          </div>
+          <div class="contact-options">
+            <article class="contact-card" id="contactLive" data-support-panel>
+              <h3>Live support</h3>
+              <p>Weekdays 08:00–18:00 GMT. Average reply time is under seven minutes.</p>
+              <button class="btn solid" data-modal-open="supportModal">Open support modal</button>
+            </article>
+            <article class="contact-card" id="contactLabs" data-support-panel hidden>
+              <h3>Lab updates</h3>
+              <p>Batch verification, new blend requests, and sensory tests all route to Lab 11 via secure handoff.</p>
+              <a class="btn ghost" href="research.html">See current tests</a>
+            </article>
+            <article class="contact-card" id="contactWholesale" data-support-panel hidden>
+              <h3>Wholesale</h3>
+              <p>Studios and clubs can manage orders directly in the modal with co-branded assets ready to deploy.</p>
+              <a class="btn link" href="support.html">Get the wholesale guide</a>
+            </article>
+          </div>
         </div>
         <aside class="support-card reveal">
-          <h3>Popular bundles</h3>
+          <h3>Modal metrics</h3>
           <ul>
-            <li>Starter Pack · Y-01 + CM-01 + shaker</li>
-            <li>Strength Track · WP-01 + CM-01 + NT-01</li>
-            <li>Endurance Kit · GL-01 + Y-01 + electrolyte boosters</li>
+            <li>96% task completion inside overlays.</li>
+            <li>42% faster subscription setup versus legacy page flow.</li>
+            <li>Support satisfaction holding steady at 4.9★.</li>
           </ul>
-          <button class="btn outline" data-modal-open="buyModal">Build bundle in modal</button>
+          <p>We refresh these numbers weekly using the same database powering the backend auth endpoints.</p>
         </aside>
       </div>
     </section>
@@ -243,7 +204,7 @@
     <div class="shell footer-grid">
       <div>
         <div class="brand">Yuck<span class="dot">.</span></div>
-        <p>© <span id="year"></span> Yuck Labs. Results earned in dusty gyms, cold studios, and early runs.</p>
+        <p>© <span id="year"></span> Yuck Labs. Modal-first experiences tuned with real athlete feedback.</p>
       </div>
       <div>
         <strong>Navigation</strong>
@@ -276,7 +237,7 @@
       <button class="modal-close" type="button" data-modal-close aria-label="Close">×</button>
       <header class="account-modal__header">
         <h2 id="accountTitle">Access your Yuck account</h2>
-        <p class="modal-sub account-modal__sub">Log in to track orders and crews, or create an account with our npm backend.</p>
+        <p class="modal-sub account-modal__sub">Log in to manage orders and crews, or create an account with our npm backend.</p>
       </header>
       <div class="account-modal__tabs" role="tablist" aria-label="Account actions">
         <button class="account-modal__tab is-active" type="button" id="accountLoginTab" data-account-tab="login" role="tab" aria-selected="true" aria-controls="accountLoginView">Log in</button>
@@ -428,7 +389,7 @@
 
   <script src="./scripts/core.js" defer></script>
   <script src="./scripts/auth.js" defer></script>
-  <script src="./scripts/products.js" defer></script>
+  <script src="./scripts/experience.js" defer></script>
   <script src="./scripts/support.js" defer></script>
 </body>
 </html>

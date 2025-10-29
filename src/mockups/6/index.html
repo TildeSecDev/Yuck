@@ -9,7 +9,9 @@
   <link rel="manifest" href="./manifest.webmanifest" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%232c4b39'/%3E%3Ctext x='50%25' y='58%25' font-family='Manrope,Arial,sans-serif' font-size='28' text-anchor='middle' fill='%23f4f0e6'%3EY6%3C/text%3E%3C/svg%3E" />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Fraunces:opsz,wght@14..144,500;14..144,600;14..144,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles/normalize.css" />
   <link rel="stylesheet" href="./styles/base.css" />
+  <link rel="stylesheet" href="./styles/auth.css" />
   <link rel="stylesheet" href="./styles/pages.css" />
   <link rel="stylesheet" href="./styles/home.css" />
   <link rel="stylesheet" href="./styles/products.css" />
@@ -42,13 +44,14 @@
       </nav>
       <div class="header-actions">
         <button class="btn ghost" data-modal-open="buyModal">Shop</button>
-        <button class="btn solid install" id="installBtn" disabled>Install App</button>
+        <button class="btn solid" data-modal-open="accountModal">Log in / Sign up</button>
       </div>
     </div>
   </header>
 
   <main>
     <section class="hero" id="hero">
+      <video class="hero__bg" src="../../assets/videos/YTDown.com_YouTube_Running-Video-Free-HD-Video-No-Copyright_Media_se1RDOPvA8Q_001_1080p.mp4" autoplay muted loop playsinline aria-hidden="true"></video>
       <div class="shell hero-grid">
         <div class="hero-copy reveal">
           <span class="eyebrow">No hype. All signal.</span>
@@ -79,19 +82,19 @@
         <div class="hero-stage reveal" data-scene-switcher>
           <div class="stage-backdrop"></div>
           <div class="scene-buttons" role="tablist" aria-label="Brand highlights">
-            <button class="scene-btn is-active" type="button" role="tab" aria-selected="true" data-scene="craft">
-              Craft
+            <button class="scene-btn is-active" type="button" role="tab" aria-selected="true" data-scene="product">
+              Product
             </button>
             <button class="scene-btn" type="button" role="tab" aria-selected="false" data-scene="community">
               Community
             </button>
-            <button class="scene-btn" type="button" role="tab" aria-selected="false" data-scene="flow">
-              Flow
+            <button class="scene-btn" type="button" role="tab" aria-selected="false" data-scene="find">
+              Find Your Yuck.
             </button>
           </div>
           <div class="scene-panels">
-            <article class="scene is-active" id="scene-craft" data-scene-panel="craft">
-              <div class="scene-media" style="background-image:url('../../assets/images/powder-explosion.png')"></div>
+            <article class="scene is-active" id="scene-product" data-scene-panel="product">
+              <div class="scene-media" style="background-image:url('../../assets/images/YuckPowder.webp')"></div>
               <div class="scene-body">
                 <h2>Whole ingredients, soft gradients.</h2>
                 <p>
@@ -101,7 +104,7 @@
               </div>
             </article>
             <article class="scene" id="scene-community" data-scene-panel="community" hidden>
-              <div class="scene-media" style="background-image:url('../../assets/images/background-image-title-cutout.png')"></div>
+              <div class="scene-media" style="background-image:url('../../assets/images/Models.png')"></div>
               <div class="scene-body">
                 <h2>Signal-rich spaces.</h2>
                 <p>
@@ -110,21 +113,20 @@
                 </p>
               </div>
             </article>
-            <article class="scene" id="scene-flow" data-scene-panel="flow" hidden>
-              <div class="scene-media" style="background-image:url('../../assets/images/yuck-demo-supplement/yuck-demo-supplement.png')"></div>
+            <article class="scene" id="scene-find" data-scene-panel="find" hidden>
+              <div class="scene-media">
+                <video src="../../assets/videos/liftWeights.mp4" autoplay muted loop playsinline></video>
+              </div>
               <div class="scene-body">
-                <h2>Modal-first journey.</h2>
+                <h2>Find your Yuck.</h2>
                 <p>
-                  Shop, join, or ask for help in a single overlay. Motion cues stay subtle—think breathing panels and gentle
-                  parallax that respects recovery days.
+                  Sample athletic rituals, switch blends, and lock in guidance without leaving the overlay. The film tracks a full
+                  rep cycle so you can feel the pacing before you ever mix a scoop.
                 </p>
               </div>
             </article>
           </div>
         </div>
-      </div>
-      <div class="hero-scroll" aria-hidden="true">
-        <span>Scroll to explore</span>
       </div>
     </section>
 
@@ -461,6 +463,54 @@
     </div>
   </footer>
 
+  <div class="modal" id="accountModal" role="dialog" aria-modal="true" aria-labelledby="accountTitle" hidden>
+    <div class="modal-backdrop" data-modal-close></div>
+    <div class="modal-content account-modal" role="document">
+      <button class="modal-close" type="button" data-modal-close aria-label="Close">×</button>
+      <header class="account-modal__header">
+        <h2 id="accountTitle">Access your Yuck account</h2>
+        <p class="modal-sub account-modal__sub">Log in to manage orders and crews, or create an account to sync across our npm backend.</p>
+      </header>
+      <div class="account-modal__tabs" role="tablist" aria-label="Account actions">
+        <button class="account-modal__tab is-active" type="button" id="accountLoginTab" data-account-tab="login" role="tab" aria-selected="true" aria-controls="accountLoginView">Log in</button>
+        <button class="account-modal__tab" type="button" id="accountSignupTab" data-account-tab="signup" role="tab" aria-selected="false" aria-controls="accountSignupView">Sign up</button>
+      </div>
+      <div class="account-modal__views">
+        <section class="account-modal__view" id="accountLoginView" data-account-view="login" role="tabpanel" aria-labelledby="accountLoginTab">
+          <form id="accountLoginForm" data-account-form="login" novalidate>
+            <label class="form-field">
+              <span>Email</span>
+              <input type="email" name="email" autocomplete="email" required placeholder="you@domain.com" />
+            </label>
+            <label class="form-field">
+              <span>Password</span>
+              <input type="password" name="password" autocomplete="current-password" required placeholder="Enter password" />
+            </label>
+            <button class="btn solid" type="submit">Log in</button>
+          </form>
+        </section>
+        <section class="account-modal__view" id="accountSignupView" data-account-view="signup" role="tabpanel" aria-labelledby="accountSignupTab" hidden>
+          <form id="accountSignupForm" data-account-form="signup" novalidate>
+            <label class="form-field">
+              <span>Email</span>
+              <input type="email" name="email" autocomplete="email" required placeholder="you@domain.com" />
+            </label>
+            <label class="form-field">
+              <span>Password</span>
+              <input type="password" name="password" autocomplete="new-password" minlength="8" required placeholder="Create a password" />
+            </label>
+            <label class="form-field honeypot">Leave blank<input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+            <button class="btn solid" type="submit">Create account</button>
+            <p class="account-modal__hint">We confirm via FormSubmit and issue secure cookies from the repo’s Node backend.</p>
+          </form>
+        </section>
+      </div>
+      <p class="account-modal__status" id="accountStatus" role="status"></p>
+      <p class="account-modal__error" id="accountError" role="alert" hidden></p>
+      <p class="account-modal__fineprint">We send confirmations with <a href="https://formsubmit.co" target="_blank" rel="noreferrer">FormSubmit</a> and maintain sessions through the npm backend bundled with this project.</p>
+    </div>
+  </div>
+
   <div class="modal" id="buyModal" role="dialog" aria-modal="true" aria-labelledby="buyTitle" hidden>
     <div class="modal-backdrop" data-modal-close></div>
     <div class="modal-content" role="document">
@@ -568,6 +618,7 @@
   </div>
 
   <script src="./scripts/core.js" defer></script>
+  <script src="./scripts/auth.js" defer></script>
   <script src="./scripts/home.js" defer></script>
   <script src="./scripts/products.js" defer></script>
   <script src="./scripts/experience.js" defer></script>

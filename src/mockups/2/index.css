@@ -173,7 +173,15 @@ a.icon {
   z-index: 0;
 }
 
-.hero .wrap { position: relative; z-index: 2; }
+.hero .wrap {
+  position: relative;
+  z-index: 2;
+  /* Use the Models image as the background for the hero content wrapper */
+  background: url('/assets/images/Models.png') center/cover no-repeat;
+  border-radius: 16px;
+  /* Maintain existing spacing via container padding; add subtle overlay for readability */
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
 
 .badge {
   display: inline-block;

@@ -1,13 +1,30 @@
 .hero {
-  padding-top: clamp(4rem, 12vw, 8rem);
+  padding-top: 0;
   padding-bottom: clamp(4rem, 6vw, 6rem);
+  position: relative;
+  z-index: 0;
+  background-color: #fff;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.6;
+  pointer-events: none;
+  z-index: -1;
 }
 
 .hero-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
   gap: clamp(2.5rem, 6vw, 5rem);
-  align-items: center;
+  align-items: start;
+}
+
+.hero-copy {
+  display: flex;
+  flex-direction: column;
 }
 
 .hero-copy h1 {
@@ -18,7 +35,7 @@
 
 .hero-copy p {
   color: var(--muted);
-  max-width: 32ch;
+  margin: 0;
 }
 
 .eyebrow {
@@ -42,7 +59,7 @@
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
-  margin: 1.75rem 0;
+  margin: 1rem 0 0;
 }
 
 .hero-metrics {
@@ -51,6 +68,8 @@
   gap: 1rem;
   font-size: 0.85rem;
   color: var(--muted);
+  margin-top: auto;
+  padding-top: 1.5rem;
 }
 
 .hero-metrics dd {
@@ -67,11 +86,14 @@
 .hero-stage {
   position: relative;
   border-radius: var(--radius-lg);
-  padding: 2.5rem;
+  padding: clamp(2rem, 5vw, 2.35rem);
   background: linear-gradient(155deg, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.35));
   box-shadow: var(--shadow);
   overflow: hidden;
   isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .stage-backdrop {
@@ -109,10 +131,15 @@
 }
 
 .scene-panels {
-  margin-top: 2rem;
+  position: relative;
+  margin-top: 0;
+  overflow: hidden;
+  min-height: clamp(16rem, 32vw, 22rem);
 }
 
 .scene {
+  position: absolute;
+  inset: 0;
   display: grid;
   gap: 1.5rem;
   grid-template-columns: minmax(0, 1fr);
@@ -120,21 +147,34 @@
   opacity: 0;
   transform: translateY(12px);
   transition: opacity var(--transition), transform var(--transition);
+  pointer-events: none;
+  visibility: hidden;
 }
 
 .scene.is-active {
+  position: relative;
   opacity: 1;
   transform: none;
+  pointer-events: auto;
+  visibility: visible;
 }
 
 .scene-media {
   position: relative;
-  padding-top: 65%;
+  padding-top: 55%;
   border-radius: var(--radius-md);
   background-size: cover;
   background-position: center;
   box-shadow: 0 25px 40px rgba(44, 75, 57, 0.18);
   overflow: hidden;
+}
+
+.scene-media video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .scene-body h2 {
@@ -198,7 +238,7 @@
 
 @media (max-width: 900px) {
   .hero {
-    padding-top: 5rem;
+    padding-top: 0;
   }
 
   .hero-grid {

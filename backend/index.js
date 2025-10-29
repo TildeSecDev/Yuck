@@ -50,6 +50,17 @@ function parseFlag(name){
   return null;
 }
 
+function parseMockupsArg(){
+  const args = process.argv.slice(2);
+  for(const a of args){
+    const m = /^mockups?:(\d+)$/.exec(a);
+    if(m){
+      return m[1];
+    }
+  }
+  return null;
+}
+
 function resolveFrontendDir(){
   const repoRoot = path.join(__dirname, '..');
   const directFlag = parseFlag('frontend-dir') || parseFlag('frontend');
@@ -59,7 +70,7 @@ function resolveFrontendDir(){
     if(fs.existsSync(candidate)) return candidate;
     console.warn('Requested frontend directory not found:', candidate);
   }
-  const mockupCandidate = parseFlag('mockup') || process.env.MOCKUP || process.env.MOCKUP_ID;
+  const mockupCandidate = parseFlag('mockup') || parseMockupsArg() || process.env.MOCKUP || process.env.MOCKUP_ID;
   if(mockupCandidate){
     const safeName = String(mockupCandidate).replace(/[^a-zA-Z0-9_-]/g, '');
     const candidate = path.join(repoRoot, 'src', 'mockups', safeName);

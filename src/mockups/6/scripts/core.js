@@ -1,5 +1,4 @@
 (function(){
-  const installState = { deferredPrompt: null };
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const openModals = new Set();
   const focusableSelector = 'a,button,input,select,textarea,[tabindex]:not([tabindex="-1"])';
@@ -12,15 +11,8 @@
     }
   }
 
-  window.addEventListener('beforeinstallprompt', (event)=>{
-    event.preventDefault();
-    installState.deferredPrompt = event;
-    enableInstallButton();
-  });
-
   ready(()=>{
     registerServiceWorker();
-    setupInstallButton();
     setupNavigation();
     setupReveal();
     setupModals();
@@ -34,29 +26,6 @@
     if(!('serviceWorker' in navigator)) return;
     window.addEventListener('load', ()=>{
       navigator.serviceWorker.register('./service-worker.js').catch(()=>{});
-    });
-  }
-
-  function enableInstallButton(){
-    const btn = document.getElementById('installBtn');
-    if(!btn) return;
-    const hasPrompt = Boolean(installState.deferredPrompt);
-    btn.disabled = !hasPrompt;
-    btn.classList.toggle('ready', hasPrompt);
-  }
-
-  function setupInstallButton(){
-    const btn = document.getElementById('installBtn');
-    if(!btn) return;
-    enableInstallButton();
-    btn.addEventListener('click', async ()=>{
-      if(!installState.deferredPrompt) return;
-      installState.deferredPrompt.prompt();
-      await installState.deferredPrompt.userChoice.catch(()=>{});
-      installState.deferredPrompt = null;
-      btn.disabled = true;
-      btn.classList.remove('ready');
-      btn.textContent = 'Installed';
     });
   }
 
@@ -195,9 +164,12 @@
   }
 
   function setupForms(){
-    handleSimpleForm('#newsletterForm', '#newsletterMsg', 'Subscribed!');
-    handleSimpleForm('#joinModalForm', '#joinModalMsg', 'Invite requested.');
-    handleSimpleForm('#supportModalForm', '#supportModalMsg', 'Message received. We will reply soon.');
+  handleSimpleForm('#newsletterForm', '#newsletterMsg', 'Subscribed!');
+  handleSimpleForm('#joinModalForm', '#joinModalMsg', 'Invite requested.');
+  handleSimpleForm('#supportModalForm', '#supportModalMsg', 'Message received. We will reply soon.');
+  handleSimpleForm('#researchForm', '#researchMsg', 'Request received. We will reach out soon.');
+  handleSimpleForm('#aboutSupportForm', '#aboutSupportMsg', 'Thanks! We will reply shortly.');
+  handleSimpleForm('#supportInlineForm', '#supportInlineMsg', 'Message received. We will reply within 24 hours.');
 
     const joinForm = document.getElementById('joinForm');
     if(joinForm){

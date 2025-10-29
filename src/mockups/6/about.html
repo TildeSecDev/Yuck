@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Yuck — Product Lineup</title>
-  <meta name="description" content="Explore the full Yuck lineup, from everyday recovery blends to limited seasonal drops." />
+  <title>Yuck — About</title>
+  <meta name="description" content="Meet the team behind Yuck, explore the timeline, and see how the crew keeps the brand grounded." />
   <meta name="theme-color" content="#e7efe6" />
   <link rel="manifest" href="./manifest.webmanifest" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%232c4b39'/%3E%3Ctext x='50%25' y='58%25' font-family='Manrope,Arial,sans-serif' font-size='28' text-anchor='middle' fill='%23f4f0e6'%3EY6%3C/text%3E%3C/svg%3E" />
@@ -13,10 +13,9 @@
   <link rel="stylesheet" href="./styles/base.css" />
   <link rel="stylesheet" href="./styles/auth.css" />
   <link rel="stylesheet" href="./styles/pages.css" />
-  <link rel="stylesheet" href="./styles/products.css" />
-  <link rel="stylesheet" href="./styles/support.css" />
+  <link rel="stylesheet" href="./styles/about.css" />
 </head>
-<body data-page="products">
+<body data-page="about">
   <div class="grain"></div>
   <header class="site-header" data-reveal>
     <div class="shell header-inner">
@@ -45,160 +44,96 @@
   </header>
 
   <main>
-    <section class="catalog-hero section">
+    <section class="page-hero">
       <div class="shell">
-        <span class="badge">Lineup</span>
-        <h1>Whole-ingredient fuel for every training block.</h1>
-        <p class="lead">We stripped the hype to focus on balanced macronutrients, lab verification, and blends that taste bright without the synthetic burn.</p>
-        <div class="product-filters" data-product-filter>
-          <button class="btn outline is-active" type="button" data-filter="all">All products</button>
-          <button class="btn outline" type="button" data-filter="recovery">Recovery</button>
-          <button class="btn outline" type="button" data-filter="strength">Strength</button>
-          <button class="btn outline" type="button" data-filter="endurance">Endurance</button>
-          <button class="btn outline" type="button" data-filter="limited">Limited</button>
+        <div class="page-hero__headline reveal">
+          <span class="badge">About</span>
+          <h1>Small crew. Big loops with the community.</h1>
+          <p>
+            Yuck began as a kitchen experiment and grew into a distributed studio. We stay independent, iterate in public, and let
+            the athletes guide every release.
+          </p>
+          <div class="hero-actions">
+            <button class="btn solid" data-modal-open="accountModal">Meet the team</button>
+            <button class="btn ghost" data-modal-open="supportModal">Book a session</button>
+            <a class="btn link" href="research.html">See our research</a>
+          </div>
+          <ul class="page-hero__meta">
+            <li>Headquartered in Manchester with global satellite labs.</li>
+            <li>100% bootstrapped, backed by community pre-orders.</li>
+            <li>npm backend + FormSubmit keep direct lines fast.</li>
+          </ul>
         </div>
       </div>
     </section>
 
-    <section class="section products">
-      <div class="shell">
-        <div class="catalog-grid">
-          <article class="catalog-card" data-product-category="recovery,endurance">
-            <div class="catalog-card__media" style="background-image:url('../../assets/yuck-demo-supplement/Supplement.png')"></div>
-            <div class="catalog-card__body">
-              <h3>Y-01&trade; Organic Protein + Recovery</h3>
-              <p>Daily shake with balanced macros, adaptogens, and electrolytes gathered from our field notebooks.</p>
-              <ul>
-                <li>24g protein · 6g BCAAs</li>
-                <li>Electrolyte ratio tuned from club ride feedback</li>
-                <li>Light citrus finish keeps palate fresh</li>
-              </ul>
-            </div>
-            <div class="catalog-card__meta">
-              <span>£32.00</span>
-              <button class="btn outline" data-modal-open="buyModal" data-product="Y-01™ Organic Protein">Add to bag</button>
-            </div>
-          </article>
-
-          <article class="catalog-card" data-product-category="strength,recovery">
-            <div class="catalog-card__media" style="background-image:url('../../assets/yuck-demo-supplement/MultipleSupplement.png')"></div>
-            <div class="catalog-card__body">
-              <h3>WP-01&trade; Organic Whey</h3>
-              <p>Small-batch whey from grass-fed herds, micro-filtered for clean absorption and zero filler aftertaste.</p>
-              <ul>
-                <li>26g protein per scoop</li>
-                <li>No soy, gums, or artificial sweeteners</li>
-                <li>Supports post-lift rebound without heaviness</li>
-              </ul>
-            </div>
-            <div class="catalog-card__meta">
-              <span>£55.00</span>
-              <button class="btn outline" data-modal-open="buyModal" data-product="WP-01™ Organic Whey">Add to bag</button>
-            </div>
-          </article>
-
-          <article class="catalog-card" data-product-category="recovery,limited">
-            <div class="catalog-card__media" style="background-image:url('../../assets/yuck-demo-supplement/SourSupplement.png')"></div>
-            <div class="catalog-card__body">
-              <h3>CP-01&trade; Collagen Peptides</h3>
-              <p>Bright, tart blend to reinforce joints and connective tissues—launched after repeated community requests.</p>
-              <ul>
-                <li>Hydrolyzed type I & III collagen</li>
-                <li>Fortified with vitamin C and magnesium</li>
-                <li>Seasonal sour guava profile</li>
-              </ul>
-            </div>
-            <div class="catalog-card__meta">
-              <span>£40.00</span>
-              <button class="btn outline" data-modal-open="buyModal" data-product="CP-01™ Collagen Peptides">Add to bag</button>
-            </div>
-          </article>
-
-          <article class="catalog-card" data-product-category="strength">
-            <div class="catalog-card__media" style="background-image:url('../../assets/images/plasticbag/transparent_plastic_wrap_isolated_on_background.jpg')"></div>
-            <div class="catalog-card__body">
-              <h3>CM-01&trade; Creatine Monohydrate</h3>
-              <p>Single-ingredient stack essential, third-party tested for purity and sized for 90-day training blocks.</p>
-              <ul>
-                <li>Micronized for fast dissolve</li>
-                <li>Unflavoured and stack-friendly</li>
-                <li>Batch certified by Lab 11 partners</li>
-              </ul>
-            </div>
-            <div class="catalog-card__meta">
-              <span>£38.00</span>
-              <button class="btn outline" data-modal-open="buyModal" data-product="CM-01™ Creatine Monohydrate">Add to bag</button>
-            </div>
-          </article>
-
-          <article class="catalog-card" data-product-category="endurance,limited">
-            <div class="catalog-card__media" style="background-image:url('../../assets/images/Trolley/trolley%20item.png')"></div>
-            <div class="catalog-card__body">
-              <h3>GL-01&trade; Gel Flight Pack</h3>
-              <p>Travel-ready gels with slow-release carbs and mineral blend designed with our ultracycling crews.</p>
-              <ul>
-                <li>Four stage carbohydrate matrix</li>
-                <li>Sea salt + potassium mix to offset sweat loss</li>
-                <li>Reusable pouch lowers classroom waste</li>
-              </ul>
-            </div>
-            <div class="catalog-card__meta">
-              <span>£28.00</span>
-              <button class="btn outline" data-modal-open="buyModal" data-product="GL-01™ Gel Flight Pack">Add to bag</button>
-            </div>
-          </article>
-
-          <article class="catalog-card" data-product-category="recovery,limited">
-            <div class="catalog-card__media" style="background-image:url('../../assets/images/plasticbag/transparent_plastic_wrap_isolated_on_background.jpg')"></div>
-            <div class="catalog-card__body">
-              <h3>NT-01&trade; Night Tea Ritual</h3>
-              <p>Chamomile-forward tea with tart cherry and L-theanine to support deep recovery without sluggish mornings.</p>
-              <ul>
-                <li>Organic botanicals sourced from cooperative farms</li>
-                <li>Built-in steep guide on every sachet</li>
-                <li>Limited winter drop</li>
-              </ul>
-            </div>
-            <div class="catalog-card__meta">
-              <span>£24.00</span>
-              <button class="btn outline" data-modal-open="buyModal" data-product="NT-01™ Night Tea Ritual">Add to bag</button>
-            </div>
-          </article>
+    <section class="section about" id="story">
+      <div class="shell about-grid">
+        <div class="about-copy reveal">
+          <span class="badge">Timeline</span>
+          <h2>The journey to Mockup 6.</h2>
+          <p>
+            From messy origins to polished overlays, each iteration layered a new learning. Scroll through the timeline—the observer
+            highlights key beats as you go.
+          </p>
+          <ul class="timeline">
+            <li><strong>2023</strong> — First blends launch with a barebones Shopify build.</li>
+            <li><strong>2024</strong> — Mockup 2 introduces community-first storytelling.</li>
+            <li><strong>2025</strong> — Modal architecture debuts, powered by the Node backend.</li>
+            <li><strong>2025 Q3</strong> — Lab partners onboard to validate every batch.</li>
+            <li><strong>Today</strong> — Mockup 6 orchestrates the full experience layer.</li>
+          </ul>
         </div>
+        <aside class="about-card reveal">
+          <h3>Why we exist</h3>
+          <p>
+            We build nutrition that respects training blocks, recovery windows, and mental space. Calm interfaces, transparent data,
+            and authentic community loops keep us accountable.
+          </p>
+          <button class="btn ghost" data-modal-open="joinModal">Join the conversation</button>
+        </aside>
       </div>
     </section>
 
-    <section class="section product-highlights">
+    <section class="section" id="team">
       <div class="shell">
-        <header class="section-head">
-          <span class="badge">Field data</span>
-          <h2>Blends evolve with every field note we collect.</h2>
-          <p class="lead">Quarterly recalibrations ensure the formulas track real-world training loads. Each change ships with transparent lab reports.</p>
+        <header class="section-head reveal">
+          <span class="badge">Crew</span>
+          <h2>People keeping Yuck grounded.</h2>
+          <p class="lead">Designers, formulators, and operators all sharing the same calendar and playbook.</p>
         </header>
-        <div class="product-highlights__grid">
-          <article>
-            <h3>Seasonal palette shifts</h3>
-            <p>We rotate flavour accents to reflect what athletes crave in each season—brighter citrus during summer heat, warmer spice in autumn blocks.</p>
+        <div class="team-grid">
+          <article class="team-card reveal">
+            <img src="../../assets/images/Trolley/Trolley%20item.png" alt="Portrait of Mo, co-founder" loading="lazy" />
+            <h3>Mo Atkinson</h3>
+            <p>Co-founder &amp; Head Formulator. Swaps between lab days and trail miles.</p>
           </article>
-          <article>
-            <h3>Verified ingredient sourcing</h3>
-            <p>Every bag lists origin farms and lab IDs. Scan the QR code on-pack to view batch-specific analysis from Lab 11.</p>
+          <article class="team-card reveal">
+            <img src="../../assets/images/plasticbag/plasticbag.png" alt="Portrait of Lina, design lead" loading="lazy" />
+            <h3>Lina Brooks</h3>
+            <p>Design Lead. Keeps motion subtle and the brand grounded in nature.</p>
           </article>
-          <article>
-            <h3>Bundles built on routines</h3>
-            <p>Starter, build, and peak bundles combine protein, creatine, and recovery aids. Adjust cadence inside the modal without losing your cart.</p>
+          <article class="team-card reveal">
+            <img src="../../assets/images/yuck-demo-supplement/yuck-demo-supplement.png" alt="Portrait of Theo, operations" loading="lazy" />
+            <h3>Theo Singh</h3>
+            <p>Operations. Balances logistics with an obsession for honest suppliers.</p>
+          </article>
+          <article class="team-card reveal">
+            <img src="../../assets/images/yuck-demo-supplement/Supplement.png" alt="Portrait of Ava, community" loading="lazy" />
+            <h3>Ava Price</h3>
+            <p>Community Steward. Hosts Discord pulses and filters every field report.</p>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="section support">
+    <section class="section support" id="work-with-us">
       <div class="shell support-grid">
         <div class="support-copy reveal">
-          <span class="badge">Need guidance?</span>
-          <h2>Match blends to your training goals.</h2>
-          <p>Tell us how you train and we will draft a suggested stack with timing, hydration, and pairing notes.</p>
-          <form id="supportForm" autocomplete="off" novalidate>
+          <span class="badge">Work with us</span>
+          <h2>Bring Yuck to your city.</h2>
+          <p>Pitch a pop-up lab, a community ride, or a research project. We read every submission.</p>
+          <form id="aboutSupportForm" autocomplete="off" novalidate>
             <div class="form-row">
               <label class="form-field">
                 <span>Name</span>
@@ -210,30 +145,21 @@
               </label>
             </div>
             <label class="form-field">
-              <span>Training focus</span>
-              <select name="topic">
-                <option>General fitness</option>
-                <option>Strength block</option>
-                <option>Endurance build</option>
-                <option>Race taper</option>
-              </select>
+              <span>Idea</span>
+              <textarea name="message" rows="4" placeholder="Tell us about your idea."></textarea>
             </label>
-            <label class="form-field">
-              <span>Notes</span>
-              <textarea name="message" rows="4" placeholder="Tell us how you train."></textarea>
-            </label>
-            <button class="btn solid" type="submit">Ask for a plan</button>
-            <p id="supportMsg" class="form-hint" role="status"></p>
+            <button class="btn solid" type="submit">Submit</button>
+            <p id="aboutSupportMsg" class="form-hint" role="status"></p>
           </form>
         </div>
         <aside class="support-card reveal">
-          <h3>Popular bundles</h3>
+          <h3>Ways we collaborate</h3>
           <ul>
-            <li>Starter Pack · Y-01 + CM-01 + shaker</li>
-            <li>Strength Track · WP-01 + CM-01 + NT-01</li>
-            <li>Endurance Kit · GL-01 + Y-01 + electrolyte boosters</li>
+            <li>Shared research protocols with labs and universities.</li>
+            <li>Community kits for events and retail takeovers.</li>
+            <li>Content drops aligned with athlete schedules.</li>
           </ul>
-          <button class="btn outline" data-modal-open="buyModal">Build bundle in modal</button>
+          <button class="btn outline" data-modal-open="supportModal">Open full support modal</button>
         </aside>
       </div>
     </section>
@@ -243,7 +169,7 @@
     <div class="shell footer-grid">
       <div>
         <div class="brand">Yuck<span class="dot">.</span></div>
-        <p>© <span id="year"></span> Yuck Labs. Results earned in dusty gyms, cold studios, and early runs.</p>
+        <p>© <span id="year"></span> Yuck Labs. Community-powered nutrition with transparent loops.</p>
       </div>
       <div>
         <strong>Navigation</strong>
@@ -276,7 +202,7 @@
       <button class="modal-close" type="button" data-modal-close aria-label="Close">×</button>
       <header class="account-modal__header">
         <h2 id="accountTitle">Access your Yuck account</h2>
-        <p class="modal-sub account-modal__sub">Log in to track orders and crews, or create an account with our npm backend.</p>
+        <p class="modal-sub account-modal__sub">Log in to manage orders and crews, or create an account with our npm backend.</p>
       </header>
       <div class="account-modal__tabs" role="tablist" aria-label="Account actions">
         <button class="account-modal__tab is-active" type="button" id="accountLoginTab" data-account-tab="login" role="tab" aria-selected="true" aria-controls="accountLoginView">Log in</button>
@@ -428,7 +354,7 @@
 
   <script src="./scripts/core.js" defer></script>
   <script src="./scripts/auth.js" defer></script>
-  <script src="./scripts/products.js" defer></script>
+  <script src="./scripts/about.js" defer></script>
   <script src="./scripts/support.js" defer></script>
 </body>
 </html>

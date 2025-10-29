@@ -200,7 +200,7 @@ a:focus {
   top: 0;
   z-index: 20;
   backdrop-filter: blur(18px);
-  background: rgba(244, 247, 243, 0.82);
+  background: rgb(135 135 135 / 82%);
   box-shadow: 0 12px 32px rgba(42, 68, 53, 0.08);
 }
 
@@ -243,6 +243,7 @@ a:focus {
   gap: 1.35rem;
   font-size: 0.95rem;
   transition: max-height var(--transition), opacity var(--transition);
+  background: rgb(135 135 135 / 82%);
 }
 
 .primary-nav a {
@@ -324,10 +325,6 @@ a:focus {
   display: flex;
   gap: 0.75rem;
   align-items: center;
-}
-
-.install.ready {
-  background: linear-gradient(135deg, var(--accent-bright), var(--accent));
 }
 
 form {

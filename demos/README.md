@@ -8,7 +8,7 @@ Each session uses Playwright to start the static server (`npm run start mockups:
 
 ## Mockup 2
 
-* Served from: http://127.0.0.1:4802/
+* Served from: http://127.0.0.1:4242/
 * Screenshot: `mockup-2.png` (generated artifact)
 * Recording: `mockup-2.webm` (generated artifact)
 * Actions:
@@ -29,7 +29,7 @@ Each session uses Playwright to start the static server (`npm run start mockups:
 
 ## Mockup 4
 
-* Served from: http://127.0.0.1:4804/
+* Served from: http://127.0.0.1:4242/
 * Screenshot: `mockup-4.png` (generated artifact)
 * Recording: `mockup-4.webm` (generated artifact)
 * Actions:
@@ -53,7 +53,7 @@ Each session uses Playwright to start the static server (`npm run start mockups:
 
 ## Mockup 6
 
-* Served from: http://127.0.0.1:4806/
+* Served from: http://127.0.0.1:4242/
 * Screenshot: `mockup-6.png` (generated artifact)
 * Recording: `mockup-6.webm` (generated artifact)
 * Actions:
@@ -77,7 +77,7 @@ Each session uses Playwright to start the static server (`npm run start mockups:
 
 ## Mockup 8
 
-* Served from: http://127.0.0.1:4808/
+* Served from: http://127.0.0.1:4242/
 * Screenshot: `mockup-8.png` (generated artifact)
 * Recording: `mockup-8.webm` (generated artifact)
 * Actions:

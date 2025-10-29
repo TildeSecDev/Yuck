@@ -59,8 +59,32 @@
   line-height: 1;
 }
 
+.cta-grid {
+  display: grid;
+  gap: clamp(1.5rem, 5vw, 3rem);
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  align-items: start;
+}
+
+.cta-form {
+  background: var(--surface-strong);
+  border-radius: var(--radius-md);
+  padding: clamp(1.75rem, 4vw, 2.25rem);
+  box-shadow: var(--shadow);
+  display: grid;
+  gap: 1rem;
+}
+
+.cta-form .btn {
+  justify-self: start;
+}
+
 @media (max-width: 900px) {
   .page-hero .shell {
+    grid-template-columns: 1fr;
+  }
+
+  .cta-grid {
     grid-template-columns: 1fr;
   }
 }

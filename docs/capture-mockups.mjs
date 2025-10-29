@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import { chromium } from 'playwright';
 import { spawn } from 'child_process';
+import net from 'net';
 import { once } from 'events';
 import fs from 'fs/promises';
 import path from 'path';
@@ -21,22 +22,24 @@ function log(message) {
   process.stdout.write(`[capture] ${message}\n`);
 }
 
-function startServer(mockupId) {
-  const port = 4800 + Number(mockupId);
-  const child = spawn('npm', ['run', 'start', `mockups:${mockupId}`], {
+const CAPTURE_PORT = parseInt(process.env.CAPTURE_PORT || '4242', 10);
+
+async function startServer(mockupId) {
+  // Launch the backend on a fixed port (4242 by default) and point it at the selected mockup
+  const child = spawn('node', ['backend/index.js', '--mockup', String(mockupId)], {
     cwd: repoRoot,
-    env: { ...process.env, PORT: String(port), HOST: '127.0.0.1' },
+    env: { ...process.env, PORT: String(CAPTURE_PORT), HOST: '127.0.0.1' },
     stdio: ['ignore', 'pipe', 'pipe']
   });
 
   const readyPromise = new Promise((resolve, reject) => {
-    let ready = false;
+    let listening = false;
     const onData = data => {
       const text = data.toString();
       process.stdout.write(`[mockup:${mockupId}] ${text}`);
-      if (!ready && /Serving mockups\//.test(text)) {
-        ready = true;
-        resolve({ port });
+      if (!listening && /Yuck backend demo listening on\s+\d+/.test(text)) {
+        listening = true;
+        resolve({ port: CAPTURE_PORT });
       }
     };
     child.stdout.on('data', onData);
@@ -44,7 +47,7 @@ function startServer(mockupId) {
       process.stderr.write(`[mockup:${mockupId}] ${data}`);
     });
     child.once('exit', code => {
-      if (!ready) {
+      if (!listening) {
         reject(new Error(`Mockup ${mockupId} server exited early with code ${code}`));
       }
     });
@@ -54,7 +57,7 @@ function startServer(mockupId) {
   return {
     ready: readyPromise,
     process: child,
-    port
+    port: CAPTURE_PORT
   };
 }
 
@@ -81,7 +84,14 @@ async function tryClick(mockupId, page, steps, locator, description, options = {
     if (await target.count() === 0) {
       throw new Error('element not found');
     }
-    await target.click({ ...options });
+    // Ensure target is scrolled into view within any scrollable ancestor before clicking
+    try {
+      await target.scrollIntoViewIfNeeded();
+    } catch {
+      // ignore if scrolling is not applicable
+    }
+    const visible = await target.isVisible().catch(() => false);
+    await target.click({ force: visible ? false : true, ...options });
     await page.waitForTimeout(400);
   });
 }
@@ -92,8 +102,20 @@ async function tryFill(mockupId, page, steps, locator, value, description) {
     if (await input.count() === 0) {
       throw new Error('input not found');
     }
-    await input.fill('');
-    await input.type(value, { delay: 40 });
+    // Try normal fill, fall back to programmatic set if not visible
+    const visible = await input.isVisible().catch(() => false);
+    if (visible) {
+      await input.fill('');
+      await input.type(value, { delay: 40 });
+    } else {
+      await input.evaluate((el, v) => {
+        try { el.value = ''; } catch {}
+        el.focus && el.focus();
+        el.value = v;
+        el.dispatchEvent(new Event('input', { bubbles: true }));
+        el.dispatchEvent(new Event('change', { bubbles: true }));
+      }, value);
+    }
     await page.waitForTimeout(300);
   });
 }
@@ -136,10 +158,21 @@ async function runScenario(mockupId, page, baseUrl, steps) {
       await tryClick(mockupId, page, steps, '#accountLoginForm button[type="submit"]', 'Submitted login form');
       await tryPress(mockupId, page, steps, 'Escape', 'Closed account modal');
       await tryClick(mockupId, page, steps, '[data-open-support]', 'Opened support modal');
+      // Wait for support modal to be visible and interactive
+      await page.locator('#supportModal:not([hidden])').waitFor({ timeout: 3000 }).catch(() => {});
       await tryFill(mockupId, page, steps, '#supportForm input[name="email"]', 'supporter@yuck.example', 'Provided support email');
-      await tryClick(mockupId, page, steps, '#supportSubmit', 'Sent support message');
+      await safeAction(mockupId, steps, 'Sent support message', async () => {
+        await page.evaluate(() => {
+          const form = document.querySelector('#supportForm');
+          if (!form) throw new Error('form not found');
+          if (typeof form.requestSubmit === 'function') form.requestSubmit(); else form.submit();
+        });
+        await page.waitForTimeout(400);
+      });
       await tryPress(mockupId, page, steps, 'Escape', 'Closed support modal');
       await tryClick(mockupId, page, steps, '[data-action="primary"]', 'Initiated Get Yuck CTA');
+      // Wait for buy modal to be visible before interacting
+      await page.locator('#buyModal:not([hidden])').waitFor({ timeout: 3000 }).catch(() => {});
       await tryClick(mockupId, page, steps, '#buyForm button[type="submit"]', 'Added pack via modal');
       await tryClick(mockupId, page, steps, '#buyModal .modal__close', 'Closed buy modal');
       await tryClick(mockupId, page, steps, 'a.btn[href="community.html"]', 'Viewed community page');
@@ -178,9 +211,21 @@ async function runScenario(mockupId, page, baseUrl, steps) {
   }
 }
 
+async function ensureReadyForScreenshot(mockupId, page) {
+  // Give network a moment and scroll to top for a consistent hero capture
+  try { await page.waitForLoadState('networkidle', { timeout: 2000 }); } catch {}
+  await page.evaluate(() => window.scrollTo(0, 0));
+  // Wait for a key element to be visible per mockup where needed
+  if (mockupId === '4') {
+    await page.locator('.hero__content').first().waitFor({ state: 'visible', timeout: 2500 }).catch(() => {});
+    // Ensure app reveal animation completed
+    await page.locator('#app.is-ready').waitFor({ timeout: 2000 }).catch(() => {});
+  }
+}
+
 for (const mockupId of mockupIds) {
   log(`Starting capture for mockup ${mockupId}`);
-  const server = startServer(mockupId);
+  const server = await startServer(mockupId);
   let serverReady;
   try {
     serverReady = await server.ready;
@@ -196,10 +241,13 @@ for (const mockupId of mockupIds) {
     recordVideo: { dir: tempVideoDir, size: { width: 1280, height: 720 } }
   });
   const page = await context.newPage();
+  // Block external form submissions (FormSubmit) to keep the flow on the same page
+  await page.route('https://formsubmit.co/**', route => route.abort());
   const steps = [];
 
   try {
-    await runScenario(mockupId, page, baseUrl, steps);
+  await runScenario(mockupId, page, baseUrl, steps);
+  await ensureReadyForScreenshot(mockupId, page);
     const screenshotPath = path.join(demosDir, `mockup-${mockupId}.png`);
     await page.screenshot({ path: screenshotPath, fullPage: true });
     steps.push(`Saved screenshot to ${path.relative(repoRoot, screenshotPath)}`);

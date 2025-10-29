@@ -65,6 +65,14 @@
   margin-top: 0;
 }
 
+.contact-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
 [data-support-panel] {
   transition: opacity var(--transition), transform var(--transition);
 }
