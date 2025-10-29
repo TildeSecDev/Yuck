@@ -17,3 +17,8 @@ backend/.env
 
 # macOS noise
 .DS_Store
+
+# Demo capture artifacts
+/demos/*.png
+/demos/*.webm
+/demos/.tmp/
