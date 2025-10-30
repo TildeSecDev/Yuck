@@ -4,8 +4,11 @@
     else{ document.addEventListener('DOMContentLoaded', fn, { once: true }); }
   });
 
+  let catalogCards = [];
+
   ready(()=>{
     initProductTilt('.product-card');
+    setupCatalogAccordion();
     setupProductFilters();
   });
 
@@ -43,12 +46,104 @@
         const value = btn.getAttribute('data-filter');
         buttons.forEach((b)=> b.classList.toggle('is-active', b === btn));
         cards.forEach((card)=>{
-          const categories = (card.getAttribute('data-product-category') || '').split(',');
+          const categories = (card.getAttribute('data-product-category') || '')
+            .split(',')
+            .map((item)=> item.trim())
+            .filter(Boolean);
           const show = value === 'all' || categories.includes(value);
+          if(!show){
+            setCatalogCardExpanded(card, false);
+          }
           card.toggleAttribute('hidden', !show);
           card.style.display = show ? '' : 'none';
         });
       });
     });
+  }
+
+  function setupCatalogAccordion(){
+    catalogCards = Array.from(document.querySelectorAll('.catalog-card'));
+    if(!catalogCards.length) return;
+
+    catalogCards.forEach((card)=>{
+      const details = card.querySelector('.catalog-card__details');
+      if(!details) return;
+
+      const expanded = card.dataset.expanded === 'true';
+      card.dataset.expanded = expanded ? 'true' : 'false';
+      card.setAttribute('role', 'button');
+      card.setAttribute('tabindex', '0');
+      card.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+      details.setAttribute('aria-hidden', expanded ? 'false' : 'true');
+      setCatalogCardExpanded(card, expanded, { immediate: true });
+
+      card.addEventListener('click', handleCatalogCardClick);
+      card.addEventListener('keydown', handleCatalogCardKey);
+    });
+
+    window.addEventListener('resize', handleResize);
+  }
+
+  function handleCatalogCardClick(event){
+    if(event.target.closest('.js-add-to-cart')) return;
+    toggleCatalogCard(event.currentTarget);
+  }
+
+  function handleCatalogCardKey(event){
+    if(event.target.closest('.js-add-to-cart')) return;
+    if(event.key === 'Enter' || event.key === ' '){
+      event.preventDefault();
+      toggleCatalogCard(event.currentTarget);
+    }
+  }
+
+  function toggleCatalogCard(card){
+    const willExpand = card.dataset.expanded !== 'true';
+    catalogCards.forEach((node)=>{
+      if(node !== card){
+        setCatalogCardExpanded(node, false);
+      }
+    });
+    setCatalogCardExpanded(card, willExpand);
+  }
+
+  function setCatalogCardExpanded(card, state, options = {}){
+    const { immediate = false } = options;
+    const expanded = Boolean(state);
+    const details = card.querySelector('.catalog-card__details');
+    if(!details) return;
+
+    const currentState = card.dataset.expanded === 'true';
+    if(!immediate && currentState === expanded){
+      if(expanded){
+        details.style.maxHeight = `${details.scrollHeight}px`;
+      }
+      return;
+    }
+
+    card.dataset.expanded = expanded ? 'true' : 'false';
+    card.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+    details.setAttribute('aria-hidden', expanded ? 'false' : 'true');
+
+    const contentHeight = `${details.scrollHeight}px`;
+    if(immediate){
+      details.style.maxHeight = expanded ? contentHeight : '0px';
+    }else{
+      details.style.maxHeight = expanded ? '0px' : contentHeight;
+      requestAnimationFrame(()=>{
+        details.style.maxHeight = expanded ? contentHeight : '0px';
+      });
+    }
+
+    details.style.opacity = expanded ? '1' : '0';
+    details.style.marginTop = expanded ? '0.75rem' : '0';
+  }
+
+  function handleResize(){
+    const expandedCard = catalogCards.find((card)=> card.dataset.expanded === 'true');
+    if(!expandedCard) return;
+    const details = expandedCard.querySelector('.catalog-card__details');
+    if(!details) return;
+    details.style.maxHeight = `${details.scrollHeight}px`;
   }
 })();

@@ -5,8 +5,75 @@
   });
   const closeModal = window.Yuck?.closeModal;
   const emailPattern = window.Yuck?.emailPattern || /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const STORAGE_KEY = 'yuck-mockup6-auth';
+  const docEl = document.documentElement;
+  let restrictedInitQueued = false;
+
+  let currentAuth = getStoredAuth();
+  applyAuthState(currentAuth);
 
   ready(setupAccountModal);
+
+  function getStoredAuth(){
+    try{
+      return localStorage.getItem(STORAGE_KEY) === '1';
+    }catch(err){
+      return false;
+    }
+  }
+
+  function persistAuth(state){
+    try{
+      if(state) localStorage.setItem(STORAGE_KEY, '1');
+      else localStorage.removeItem(STORAGE_KEY);
+    }catch(err){
+      console.warn('Unable to persist auth flag', err);
+    }
+  }
+
+  function applyAuthState(state){
+    if(state) docEl.setAttribute('data-user-auth', '1');
+    else docEl.removeAttribute('data-user-auth');
+    syncRestrictedElements(state);
+  }
+
+  function setAuthState(state){
+    const normalized = Boolean(state);
+    if(normalized === currentAuth){
+      document.dispatchEvent(new CustomEvent('yuck:auth-change', { detail: { loggedIn: normalized } }));
+      return normalized;
+    }
+    currentAuth = normalized;
+    persistAuth(normalized);
+    applyAuthState(normalized);
+    document.dispatchEvent(new CustomEvent('yuck:auth-change', { detail: { loggedIn: normalized } }));
+    return normalized;
+  }
+
+  function syncRestrictedElements(state){
+    if(document.readyState === 'loading'){
+      if(!restrictedInitQueued){
+        restrictedInitQueued = true;
+        document.addEventListener('DOMContentLoaded', ()=> syncRestrictedElements(currentAuth), { once: true });
+      }
+      return;
+    }
+    const restricted = document.querySelectorAll('[data-auth-only]');
+    restricted.forEach((node)=>{
+      const shouldShow = Boolean(state);
+      if(shouldShow){
+        node.removeAttribute('hidden');
+        node.removeAttribute('aria-hidden');
+      }else{
+        node.setAttribute('hidden', '');
+        node.setAttribute('aria-hidden', 'true');
+      }
+    });
+  }
+
+  function isAuthenticated(){
+    return currentAuth;
+  }
 
   function setupAccountModal(){
     const modal = document.getElementById('accountModal');
@@ -137,6 +204,7 @@
         if(response.ok){
           setError('');
           setStatus(mode === 'signup' ? 'Account created. Welcome aboard!' : 'Signed in. Welcome back!');
+          setAuthState(true);
           if(mode === 'signup'){
             await notifyFormSubmit({ email, mode, fallback: false });
           }
@@ -155,11 +223,13 @@
         if(response.status === 401){
           setStatus('');
           setError('We could not find that email and password combo.');
+          setAuthState(false);
           return;
         }
         if(response.status === 400){
           setStatus('');
           setError(formatValidationError(payload?.error));
+          setAuthState(false);
           return;
         }
   await notifyFormSubmit({ email, mode, fallback: true });
@@ -170,6 +240,7 @@
         await notifyFormSubmit({ email, mode, fallback: true });
         setStatus('We captured your request via FormSubmit. We will follow up shortly.');
         setError('');
+        setAuthState(false);
       }finally{
         setBusy(false);
       }
@@ -187,7 +258,9 @@
             focusFirstField(mode);
           });
         }
-      }
+      },
+      setLoggedIn: setAuthState,
+      isLoggedIn: isAuthenticated
     });
   }
 

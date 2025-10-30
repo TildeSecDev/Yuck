@@ -1,4 +1,4 @@
-const CACHE_NAME = 'yuck-mockup-6-v1';
+const CACHE_NAME = 'yuck-mockup-6-v3';
 const ASSETS = ['.', './', './index.html', './styles.css', './app.js', './manifest.webmanifest'];
 
 self.addEventListener('install', (event) => {

@@ -17,7 +17,7 @@
     setupReveal();
     setupModals();
     setupForms();
-    setupBuyForm();
+    setupCart();
     markActiveNav();
     updateYear();
   });
@@ -78,7 +78,8 @@
 
   function setupModals(){
     document.querySelectorAll('[data-modal-open]').forEach((trigger)=>{
-      trigger.addEventListener('click', ()=>{
+      trigger.addEventListener('click', (event)=>{
+        event.preventDefault();
         const id = trigger.getAttribute('data-modal-open');
         if(!id) return;
         openModal(id, trigger);
@@ -141,17 +142,6 @@
     openModals.add(modal);
     lockScroll();
 
-    if(trigger?.dataset.product){
-      const select = modal.querySelector('#buyProduct');
-      if(select){
-        const match = Array.from(select.options).find((option)=> option.value === trigger.dataset.product);
-        if(match){
-          select.value = match.value;
-          select.dispatchEvent(new Event('change'));
-        }
-      }
-    }
-
     focusTrap(modal);
   }
 
@@ -167,9 +157,6 @@
   handleSimpleForm('#newsletterForm', '#newsletterMsg', 'Subscribed!');
   handleSimpleForm('#joinModalForm', '#joinModalMsg', 'Invite requested.');
   handleSimpleForm('#supportModalForm', '#supportModalMsg', 'Message received. We will reply soon.');
-  handleSimpleForm('#researchForm', '#researchMsg', 'Request received. We will reach out soon.');
-  handleSimpleForm('#aboutSupportForm', '#aboutSupportMsg', 'Thanks! We will reply shortly.');
-  handleSimpleForm('#supportInlineForm', '#supportInlineMsg', 'Message received. We will reply within 24 hours.');
 
     const joinForm = document.getElementById('joinForm');
     if(joinForm){
@@ -240,45 +227,122 @@
     });
   }
 
-  function setupBuyForm(){
-    const form = document.getElementById('buyForm');
-    if(!form) return;
-    const productSelect = document.getElementById('buyProduct');
-    const qtyInput = document.getElementById('buyQty');
-    const totalEl = document.getElementById('buyTotal');
-    const msg = document.getElementById('buyMsg');
+  function setupCart(){
+    // Lightweight cart state persisted in localStorage for the mock demo
+    const storageKey = 'yuck-cart';
+    const currency = new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' });
+    const loadCart = ()=>{
+      try{
+        const raw = localStorage.getItem(storageKey);
+        return raw ? JSON.parse(raw) : [];
+      }catch(_error){
+        return [];
+      }
+    };
+    let cart = loadCart();
 
-    const computeTotal = ()=>{
-      const option = productSelect?.selectedOptions[0];
-      const base = option ? Number(option.dataset.price) : 0;
-      const qty = qtyInput ? Math.max(1, Number(qtyInput.value) || 1) : 1;
-      const total = base * qty;
-      if(qtyInput) qtyInput.value = String(qty);
-      if(totalEl) totalEl.textContent = `£${total.toFixed(2)}`;
+  const cartBody = document.querySelector('[data-cart-body]');
+  const cartTotal = document.querySelector('[data-cart-total]');
+  const cartCounts = document.querySelectorAll('[data-cart-count]');
+  const checkoutButton = document.querySelector('[data-cart-checkout]');
+  const cartToggle = document.querySelector('[data-cart-toggle]');
+
+    const formatCurrency = (value)=> currency.format(value);
+
+    const persist = ()=>{
+      try{
+        localStorage.setItem(storageKey, JSON.stringify(cart));
+      }catch(_error){
+        /* ignore storage failures in demo */
+      }
     };
 
-    productSelect?.addEventListener('change', computeTotal);
-    qtyInput?.addEventListener('change', computeTotal);
-    form.querySelectorAll('.qty-btn').forEach((btn)=>{
-      btn.addEventListener('click', ()=>{
-        if(!qtyInput) return;
-        const delta = Number(btn.dataset.qty) || 0;
-        const next = Math.max(1, Number(qtyInput.value) + delta || 1);
-        qtyInput.value = String(next);
-        computeTotal();
+    const render = ()=>{
+      const total = cart.reduce((sum, item)=> sum + item.price * item.qty, 0);
+      const count = cart.reduce((sum, item)=> sum + item.qty, 0);
+
+      if(cartTotal) cartTotal.textContent = formatCurrency(total);
+      cartCounts.forEach((el)=>{
+        el.textContent = String(count);
+        el.toggleAttribute('data-empty', count === 0);
+      });
+
+      if(!cartBody) return;
+
+      if(!cart.length){
+        cartBody.innerHTML = '<div class="cart-empty">Your cart is currently empty. Explore the lineup to add something great.</div>';
+        return;
+      }
+
+      cartBody.innerHTML = cart.map((item)=>`
+        <article class="cart-item" data-product-id="${item.id}">
+          <img src="${item.image}" alt="${item.name}" />
+          <div class="cart-item-details">
+            <strong>${item.name}</strong>
+            <p class="cart-item-meta">${formatCurrency(item.price)} • Qty ${item.qty}</p>
+            <p class="cart-item-meta">${item.description}</p>
+          </div>
+          <button class="cart-item-remove" type="button" data-cart-remove="${item.id}">Remove</button>
+        </article>
+      `).join('');
+    };
+
+    const addToCart = (product)=>{
+      if(!product?.id) return;
+      const existing = cart.find((item)=> item.id === product.id);
+      if(existing){
+        existing.qty += product.qty || 1;
+      }else{
+        cart.push(Object.assign({ qty: 1 }, product));
+      }
+      persist();
+      render();
+    };
+
+    const removeFromCart = (id)=>{
+      cart = cart.filter((item)=> item.id !== id);
+      persist();
+      render();
+    };
+
+    cartBody?.addEventListener('click', (event)=>{
+      const target = event.target;
+      if(!(target instanceof HTMLElement)) return;
+      const id = target.getAttribute('data-cart-remove');
+      if(!id) return;
+      removeFromCart(id);
+    });
+
+    if(checkoutButton){
+      checkoutButton.addEventListener('click', ()=>{
+        alert('In a production build this would take you to a secure checkout.');
+      });
+    }
+
+    document.querySelectorAll('.js-add-to-cart').forEach((button)=>{
+      button.addEventListener('click', (event)=>{
+        event.preventDefault();
+        const dataset = button.dataset;
+        const product = {
+          id: dataset.productId || dataset.productName || button.textContent?.trim() || String(Date.now()),
+          name: dataset.productName || button.getAttribute('aria-label') || 'Yuck product',
+          price: Number(dataset.productPrice || 0),
+          image: dataset.productImage || '../../assets/images/Trolley/default.png',
+          description: dataset.productDescription || 'Limited release blend straight from the lab.',
+          qty: Number(dataset.productQty || 1)
+        };
+        addToCart(product);
+        openModal('cartModal', cartToggle || button);
       });
     });
 
-    form.addEventListener('submit', (event)=>{
+    cartToggle?.addEventListener('click', (event)=>{
       event.preventDefault();
-      computeTotal();
-      if(msg){
-        msg.textContent = 'Added to cart (demo).';
-        msg.style.color = '#2f6f4e';
-      }
+      render();
+      openModal('cartModal', cartToggle);
     });
 
-    computeTotal();
+    render();
   }
 
   function updateYear(){

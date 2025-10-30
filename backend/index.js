@@ -53,9 +53,16 @@ function parseFlag(name){
 function parseMockupsArg(){
   const args = process.argv.slice(2);
   for(const a of args){
-    const m = /^mockups?:(\d+)$/.exec(a);
-    if(m){
-      return m[1];
+    const patterns = [
+      /^mockups?:(\d+)$/,      // mockups:4 or mockup:4
+      /^run:mockups?(\d+)$/,   // run:mockups4 or run:mockup4 or run:mockups2
+      /^mockups?(\d+)$/,       // mockups4 or mockup4
+      /^mockup(\d+)$/,         // mockup4
+      /^run:mockup(\d+)$/      // run:mockup4
+    ];
+    for(const re of patterns){
+      const m = re.exec(a);
+      if(m) return m[1];
     }
   }
   return null;

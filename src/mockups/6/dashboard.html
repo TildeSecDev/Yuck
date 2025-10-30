@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Yuck — About</title>
-  <meta name="description" content="Meet the team behind Yuck, explore the timeline, and see how the crew keeps the brand grounded." />
+  <title>Yuck — Account Dashboard</title>
+  <meta name="description" content="Keep tabs on orders, deliveries, and community signals in the Yuck account dashboard." />
   <meta name="theme-color" content="#e7efe6" />
   <link rel="manifest" href="./manifest.webmanifest" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%232c4b39'/%3E%3Ctext x='50%25' y='58%25' font-family='Manrope,Arial,sans-serif' font-size='28' text-anchor='middle' fill='%23f4f0e6'%3EY6%3C/text%3E%3C/svg%3E" />
@@ -13,9 +13,10 @@
   <link rel="stylesheet" href="./styles/base.css" />
   <link rel="stylesheet" href="./styles/auth.css" />
   <link rel="stylesheet" href="./styles/pages.css" />
-  <link rel="stylesheet" href="./styles/about.css" />
+  <link rel="stylesheet" href="./styles/dashboard.css" />
+  <link rel="stylesheet" href="./styles/support.css" />
 </head>
-<body data-page="about">
+<body data-page="dashboard">
   <div class="grain"></div>
   <header class="site-header" data-reveal>
     <div class="shell header-inner">
@@ -30,137 +31,132 @@
       <nav id="primaryNav" class="primary-nav" aria-label="Primary">
         <a href="index.html" data-nav="home">Home</a>
         <a href="products.html" data-nav="products">Products</a>
-        <a href="experience.html" data-nav="experience">Experience</a>
         <a href="community.html" data-nav="community">Community</a>
-        <a href="research.html" data-nav="research">Research</a>
-        <a href="about.html" data-nav="about">About</a>
-        <a href="support.html" data-nav="support">Support</a>
+        <a href="dashboard.html" data-nav="dashboard" data-auth-only hidden>Dashboard</a>
       </nav>
       <div class="header-actions">
-        <button class="btn ghost" data-modal-open="buyModal">Shop</button>
+        <button class="cart-button" data-modal-open="cartModal" data-cart-toggle>
+          <span>Cart</span>
+          <span class="cart-count" data-cart-count>0</span>
+        </button>
         <button class="btn solid" data-modal-open="accountModal">Log in / Sign up</button>
       </div>
     </div>
   </header>
 
   <main>
-    <section class="page-hero">
-      <div class="shell">
-        <div class="page-hero__headline reveal">
-          <span class="badge">About</span>
-          <h1>Small crew. Big loops with the community.</h1>
-          <p>
-            Yuck began as a kitchen experiment and grew into a distributed studio. We stay independent, iterate in public, and let
-            the athletes guide every release.
+    <section class="dashboard-hero section">
+      <div class="shell dashboard-hero__layout">
+        <div class="dashboard-hero__copy reveal">
+          <span class="badge">Account</span>
+          <h1>Everything you track, synced in one calm dashboard.</h1>
+          <p class="lead">
+            Manage subscriptions, follow crews, and review lab feedback without fighting noisy UI. Your data lives in a glassy, steady
+            workspace tuned for focus.
           </p>
-          <div class="hero-actions">
-            <button class="btn solid" data-modal-open="accountModal">Meet the team</button>
-            <button class="btn ghost" data-modal-open="supportModal">Book a session</button>
-            <a class="btn link" href="research.html">See our research</a>
-          </div>
-          <ul class="page-hero__meta">
-            <li>Headquartered in Manchester with global satellite labs.</li>
-            <li>100% bootstrapped, backed by community pre-orders.</li>
-            <li>npm backend + FormSubmit keep direct lines fast.</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <section class="section about" id="story">
-      <div class="shell about-grid">
-        <div class="about-copy reveal">
-          <span class="badge">Timeline</span>
-          <h2>The journey to Mockup 6.</h2>
-          <p>
-            From messy origins to polished overlays, each iteration layered a new learning. Scroll through the timeline—the observer
-            highlights key beats as you go.
-          </p>
-          <ul class="timeline">
-            <li><strong>2023</strong> — First blends launch with a barebones Shopify build.</li>
-            <li><strong>2024</strong> — Mockup 2 introduces community-first storytelling.</li>
-            <li><strong>2025</strong> — Modal architecture debuts, powered by the Node backend.</li>
-            <li><strong>2025 Q3</strong> — Lab partners onboard to validate every batch.</li>
-            <li><strong>Today</strong> — Mockup 6 orchestrates the full experience layer.</li>
-          </ul>
-        </div>
-        <aside class="about-card reveal">
-          <h3>Why we exist</h3>
-          <p>
-            We build nutrition that respects training blocks, recovery windows, and mental space. Calm interfaces, transparent data,
-            and authentic community loops keep us accountable.
-          </p>
-          <button class="btn ghost" data-modal-open="joinModal">Join the conversation</button>
-        </aside>
-      </div>
-    </section>
-
-    <section class="section" id="team">
-      <div class="shell">
-        <header class="section-head reveal">
-          <span class="badge">Crew</span>
-          <h2>People keeping Yuck grounded.</h2>
-          <p class="lead">Designers, formulators, and operators all sharing the same calendar and playbook.</p>
-        </header>
-        <div class="team-grid">
-          <article class="team-card reveal">
-            <img src="../../assets/images/Trolley/Trolley%20item.png" alt="Portrait of Mo, co-founder" loading="lazy" />
-            <h3>Mo Atkinson</h3>
-            <p>Co-founder &amp; Head Formulator. Swaps between lab days and trail miles.</p>
-          </article>
-          <article class="team-card reveal">
-            <img src="../../assets/images/plasticbag/plasticbag.png" alt="Portrait of Lina, design lead" loading="lazy" />
-            <h3>Lina Brooks</h3>
-            <p>Design Lead. Keeps motion subtle and the brand grounded in nature.</p>
-          </article>
-          <article class="team-card reveal">
-            <img src="../../assets/images/yuck-demo-supplement/yuck-demo-supplement.png" alt="Portrait of Theo, operations" loading="lazy" />
-            <h3>Theo Singh</h3>
-            <p>Operations. Balances logistics with an obsession for honest suppliers.</p>
-          </article>
-          <article class="team-card reveal">
-            <img src="../../assets/images/yuck-demo-supplement/Supplement.png" alt="Portrait of Ava, community" loading="lazy" />
-            <h3>Ava Price</h3>
-            <p>Community Steward. Hosts Discord pulses and filters every field report.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section support" id="work-with-us">
-      <div class="shell support-grid">
-        <div class="support-copy reveal">
-          <span class="badge">Work with us</span>
-          <h2>Bring Yuck to your city.</h2>
-          <p>Pitch a pop-up lab, a community ride, or a research project. We read every submission.</p>
-          <form id="aboutSupportForm" autocomplete="off" novalidate>
-            <div class="form-row">
-              <label class="form-field">
-                <span>Name</span>
-                <input type="text" name="name" placeholder="Your name" />
-              </label>
-              <label class="form-field">
-                <span>Email</span>
-                <input type="email" name="email" placeholder="you@domain.com" required />
-              </label>
+          <dl class="dashboard-metrics">
+            <div>
+              <dt>Active deliveries</dt>
+              <dd>02</dd>
             </div>
-            <label class="form-field">
-              <span>Idea</span>
-              <textarea name="message" rows="4" placeholder="Tell us about your idea."></textarea>
-            </label>
-            <button class="btn solid" type="submit">Submit</button>
-            <p id="aboutSupportMsg" class="form-hint" role="status"></p>
-          </form>
+            <div>
+              <dt>Crew memberships</dt>
+              <dd>05</dd>
+            </div>
+            <div>
+              <dt>Tests logged</dt>
+              <dd>18</dd>
+            </div>
+          </dl>
+          <div class="dashboard-actions">
+            <button class="btn solid" type="button" data-modal-open="accountModal">Manage account</button>
+            <button class="btn ghost js-add-to-cart" type="button" data-modal-open="cartModal" data-product-id="original-single" data-product-name="Original single" data-product-price="32" data-product-image="../../assets/yuck-demo-supplement/Supplement.png" data-product-description="Flagship organic protein with balanced carbs and electrolytes for daily training.">Build a pack</button>
+          </div>
         </div>
-        <aside class="support-card reveal">
-          <h3>Ways we collaborate</h3>
+        <aside class="dashboard-hero__panel reveal">
+          <header>
+            <h2>Up next</h2>
+            <p>Quick snapshot of the events, drops, and check-ins on your calendar.</p>
+          </header>
           <ul>
-            <li>Shared research protocols with labs and universities.</li>
-            <li>Community kits for events and retail takeovers.</li>
-            <li>Content drops aligned with athlete schedules.</li>
+            <li><strong>Nov 4</strong> — Denver gravel recon ride</li>
+            <li><strong>Nov 9</strong> — London Studio Hinge lab QA</li>
+            <li><strong>Nov 12</strong> — Original single renewal ships</li>
+            <li><strong>Nov 16</strong> — Portland night market pop-up</li>
           </ul>
-          <button class="btn outline" data-modal-open="supportModal">Open full support modal</button>
+          <footer>
+            <button class="btn outline" type="button" data-modal-open="joinModal">Join a crew</button>
+            <button class="btn link" type="button" data-modal-open="supportModal">Message support</button>
+          </footer>
         </aside>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <div class="dashboard-cards">
+          <article class="dashboard-card reveal">
+            <h3>Orders & deliveries</h3>
+            <p>See pending shipments, update delivery windows, and pause subscriptions with one click.</p>
+            <ul>
+              <li>Batch tracking with live status tags</li>
+              <li>Skip, swap, or double-up straight from the card</li>
+              <li>Carbon-neutral shipping data surfaced weekly</li>
+            </ul>
+          </article>
+          <article class="dashboard-card reveal">
+            <h3>Labs & field tests</h3>
+            <p>Log workouts, flavour notes, and sensory feedback to inform the next formulation sprint.</p>
+            <ul>
+              <li>Attach videos, files, and biometrics</li>
+              <li>Flag PRs to share with your squad</li>
+              <li>Auto-syncs with the crew notebooks</li>
+            </ul>
+          </article>
+          <article class="dashboard-card reveal">
+            <h3>Community signals</h3>
+            <p>Follow the crews that keep you accountable and surface the drops that matter most.</p>
+            <ul>
+              <li>Filter by location, discipline, or cadence</li>
+              <li>Instant replays of live sensory rooms</li>
+              <li>Priority alerts for invite-only sessions</li>
+            </ul>
+          </article>
+          <article class="dashboard-card reveal">
+            <h3>Support & resources</h3>
+            <p>Get answers fast, download invoices, or start a partnership thread with the core team.</p>
+            <ul>
+              <li>Secure message history stored per account</li>
+              <li>One-click exports for expenses and wellness teams</li>
+              <li>Partner playbooks ready to share on request</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="dashboard-feed reveal">
+          <div class="dashboard-feed__head">
+            <h2>Recent activity</h2>
+            <button class="btn ghost" type="button" data-dashboard-refresh>Refresh</button>
+          </div>
+          <ul class="dashboard-feed__list">
+            <li class="dashboard-feed__item">
+              <strong>Original single · Renewal confirmed</strong>
+              <span>Processing for delivery on Nov 12 with carbon offset applied.</span>
+            </li>
+            <li class="dashboard-feed__item">
+              <strong>Studio Hinge Lab · Feedback returned</strong>
+              <span>Three sensory notes added to Sour multiple deal prototype.</span>
+            </li>
+            <li class="dashboard-feed__item">
+              <strong>Atlas Run Club · Crew RSVP</strong>
+              <span>Thursday tempo session locked with nine teammates attending.</span>
+            </li>
+            <li class="dashboard-feed__item">
+              <strong>Support · Response posted</strong>
+              <span>Updated invoice for Q4 partnership uploaded to your library.</span>
+            </li>
+          </ul>
+        </div>
       </div>
     </section>
   </main>
@@ -169,19 +165,19 @@
     <div class="shell footer-grid">
       <div>
         <div class="brand">Yuck<span class="dot">.</span></div>
-        <p>© <span id="year"></span> Yuck Labs. Community-powered nutrition with transparent loops.</p>
+        <p>© <span id="year"></span> Yuck Labs. Keep your rituals honest and your crews close.</p>
       </div>
       <div>
         <strong>Navigation</strong>
+        <a href="index.html">Home</a>
         <a href="products.html">Products</a>
         <a href="community.html">Community</a>
-        <a href="research.html">Research</a>
-        <a href="support.html">Support</a>
+        <a href="dashboard.html">Dashboard</a>
       </div>
       <div>
         <strong>Resources</strong>
-        <a href="experience.html">Experience</a>
-        <a href="about.html">About</a>
+        <a href="products.html">Build a stack</a>
+        <a href="community.html">Join a crew</a>
         <a href="#">Privacy</a>
         <a href="#">Terms</a>
       </div>
@@ -202,7 +198,7 @@
       <button class="modal-close" type="button" data-modal-close aria-label="Close">×</button>
       <header class="account-modal__header">
         <h2 id="accountTitle">Access your Yuck account</h2>
-        <p class="modal-sub account-modal__sub">Log in to manage orders and crews, or create an account with our npm backend.</p>
+        <p class="modal-sub account-modal__sub">Sign in to manage deliveries, communities, and lab notes.</p>
       </header>
       <div class="account-modal__tabs" role="tablist" aria-label="Account actions">
         <button class="account-modal__tab is-active" type="button" id="accountLoginTab" data-account-tab="login" role="tab" aria-selected="true" aria-controls="accountLoginView">Log in</button>
@@ -240,56 +236,25 @@
       </div>
       <p class="account-modal__status" id="accountStatus" role="status"></p>
       <p class="account-modal__error" id="accountError" role="alert" hidden></p>
-      <p class="account-modal__fineprint">FormSubmit handles confirmations while the npm backend handles authentication cookies.</p>
+      <p class="account-modal__fineprint">FormSubmit handles confirmations while the npm backend issues secure cookies.</p>
     </div>
   </div>
 
-  <div class="modal" id="buyModal" role="dialog" aria-modal="true" aria-labelledby="buyTitle" hidden>
+  <div class="modal" id="cartModal" role="dialog" aria-modal="true" aria-labelledby="cartTitle" hidden>
     <div class="modal-backdrop" data-modal-close></div>
     <div class="modal-content" role="document">
       <button class="modal-close" type="button" data-modal-close aria-label="Close">×</button>
-      <h2 id="buyTitle">Build your pack</h2>
-      <p class="modal-sub">Pick a product, choose pack size, set delivery frequency.</p>
-      <form id="buyForm" novalidate>
-        <label class="form-field">
-          <span>Product</span>
-          <select id="buyProduct" name="product">
-            <option value="Y-01™ Organic Protein" data-price="32">Y-01™ Organic Protein</option>
-            <option value="WP-01™ Organic Whey" data-price="55">WP-01™ Organic Whey</option>
-            <option value="CP-01™ Collagen Peptides" data-price="40">CP-01™ Collagen Peptides</option>
-            <option value="CM-01™ Creatine Monohydrate" data-price="38">CM-01™ Creatine Monohydrate</option>
-            <option value="GL-01™ Gel Flight Pack" data-price="28">GL-01™ Gel Flight Pack</option>
-            <option value="NT-01™ Night Tea Ritual" data-price="24">NT-01™ Night Tea Ritual</option>
-          </select>
-        </label>
-        <label class="form-field">
-          <span>Delivery</span>
-          <select id="buyFrequency" name="frequency">
-            <option value="4">Every 4 weeks</option>
-            <option value="6">Every 6 weeks</option>
-            <option value="8">Every 8 weeks</option>
-          </select>
-        </label>
-        <div class="form-row">
-          <label class="form-field">
-            <span>Quantity</span>
-            <div class="qty">
-              <button type="button" class="qty-btn" data-qty="-1" aria-label="Decrease quantity">−</button>
-              <input type="number" id="buyQty" name="quantity" min="1" value="1" inputmode="numeric" />
-              <button type="button" class="qty-btn" data-qty="1" aria-label="Increase quantity">+</button>
-            </div>
-          </label>
-          <label class="form-field">
-            <span>Total</span>
-            <div class="total" id="buyTotal">£32.00</div>
-          </label>
-        </div>
-        <div class="form-actions">
-          <button class="btn solid" type="submit">Add to cart</button>
-          <button class="btn ghost" type="button" data-modal-close>Close</button>
-        </div>
-        <p id="buyMsg" class="form-hint" role="status"></p>
-      </form>
+      <h2 id="cartTitle">Your cart</h2>
+      <p class="modal-sub">Review your picks, adjust quantities, and head to checkout.</p>
+      <div class="cart-items" data-cart-body></div>
+      <div class="cart-total">
+        <span>Total</span>
+        <span class="amount" data-cart-total>£0.00</span>
+      </div>
+      <div class="cart-actions">
+        <button class="btn ghost" type="button" data-modal-close>Continue browsing</button>
+        <button class="btn solid btn-cart" type="button" data-cart-checkout>Checkout</button>
+      </div>
     </div>
   </div>
 
@@ -354,7 +319,6 @@
 
   <script src="./scripts/core.js" defer></script>
   <script src="./scripts/auth.js" defer></script>
-  <script src="./scripts/about.js" defer></script>
   <script src="./scripts/support.js" defer></script>
 </body>
 </html>

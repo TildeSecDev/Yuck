@@ -29,6 +29,7 @@ if (!mockupId) {
 
 const repoRoot = path.resolve(__dirname, '..');
 const mockupRoot = path.resolve(repoRoot, 'src', 'mockups', mockupId);
+const srcAssetsRoot = path.resolve(repoRoot, 'src', 'assets');
 
 await fs
   .stat(mockupRoot)
@@ -77,9 +78,22 @@ const server = createServer(async (req, res) => {
   if (relative.endsWith('/')) {
     relative += 'index.html';
   }
-  const filePath = path.join(mockupRoot, relative);
-  const normalized = path.normalize(filePath);
-  if (!normalized.startsWith(mockupRoot)) {
+  const trimmed = relative.replace(/^\/+/, '');
+  let filePath;
+  let normalized;
+  let scopeRoot = mockupRoot;
+
+  if (/^assets\//.test(trimmed)) {
+    const assetRelative = trimmed.replace(/^assets\//, '');
+    filePath = path.join(srcAssetsRoot, assetRelative);
+    normalized = path.normalize(filePath);
+    scopeRoot = srcAssetsRoot;
+  } else {
+    filePath = path.join(mockupRoot, trimmed);
+    normalized = path.normalize(filePath);
+  }
+
+  if (!normalized.startsWith(scopeRoot)) {
     res.writeHead(403);
     res.end('Forbidden');
     return;

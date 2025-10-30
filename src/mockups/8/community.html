@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Yuck. Performance Fuel</title>
+    <title>Yuck. Community | Join the Lab</title>
     <link rel="manifest" href="manifest.webmanifest" />
     <link rel="stylesheet" href="styles.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -14,7 +14,7 @@
     />
     <meta
       name="description"
-      content="Yuck. makes ruthless natural workout fuel with a premium experience inspired by the flow of Apple."
+      content="Plug into the Yuck. Lab community for meetups, accountability pods, and ritual updates."
     />
     <script src="https://js.stripe.com/v3/" defer></script>
   </head>
@@ -22,11 +22,11 @@
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header" data-module="sticky-nav">
       <div class="nav-inner">
-        <a href="#hero" class="logo" aria-label="Go to hero">Yuck.</a>
+        <a href="index.html#hero" class="logo" aria-label="Go to home">Yuck.</a>
         <nav aria-label="Primary navigation">
           <ul class="nav-list">
-            <li><a href="#product" aria-current="page">Product</a></li>
-            <li><a href="community.html">Community</a></li>
+            <li><a href="index.html#product">Product</a></li>
+            <li><a href="community.html" aria-current="page">Community</a></li>
             <li data-auth-only hidden><a href="dashboard.html">Dashboard</a></li>
             <li><a href="about.html">About</a></li>
           </ul>
@@ -47,138 +47,73 @@
     </header>
 
     <main id="main">
-      <section id="hero" class="hero" data-module="hero">
-        <video
-          class="hero-video"
-          poster="../../assets/images/YuckPowder.webp"
-          autoplay
-          muted
-          loop
-          playsinline
-        >
-          <source src="../../assets/videos/liftWeights.mp4" type="video/mp4" />
-          Your browser does not support background videos. Experience the full ritual in
-          the product gallery below.
-        </video>
-        <div class="hero-overlay"></div>
-        <div class="hero-content" data-animate>
-          <p class="eyebrow">All-natural workout powder</p>
-          <h1>It tastes like effort. Because it is.</h1>
-          <p>
-            Yuck. is the unapologetically potent fuel that powers athletes who care
-            about results more than flavor notes. Minimal ingredients. Maximum output.
-          </p>
-          <div class="cta-row">
-            <a class="cta primary" href="#purchase-options">Shop now</a>
-            <a class="cta ghost" href="about.html#timeline">Discover the ritual</a>
-          </div>
-        </div>
-      </section>
-
-      <section id="product" class="product-overview section-with-media" data-module="section">
+      <section class="community section-with-media" data-module="community">
         <div class="section-media" aria-hidden="true">
           <img class="section-image" src="../../assets/images/Models.png" alt="" />
         </div>
         <div class="section-inner">
           <div class="section-heading" data-animate>
-            <p class="eyebrow">Product</p>
-            <h2>Made to work. Designed to endure.</h2>
+            <p class="eyebrow">Community</p>
+            <h1>Welcome to the Lab crew</h1>
             <p>
-              Each scoop of Yuck. is calibrated with adaptogens, electrolytes, and
-              functional bitterness to shock your system awake. Inspired by Apple’s
-              storytelling rhythm, we lead with the experience, then dive into the
-              science.
+              Train with athletes who crave accountability, ruthless programming, and the bitter ritual that keeps Yuck. sharp. Share your info and we will plug you into pods that match your cadence.
             </p>
           </div>
-          <div class="feature-grid">
-            <article class="feature-card" data-animate data-depth="1.2">
-              <img
-                class="feature-image"
-                src="../../assets/yuck-demo-supplement/MultipleSupplement.png"
-                alt="Yuck. ritual kit arranged in the lab tote"
-                loading="lazy"
-              />
-              <h3>Uncompromising formula</h3>
-              <p>
-                Our lab builds around necessity—no artificial flavors, no synthetic
-                fillers, just purposeful compounds in clinically effective doses.
-              </p>
-            </article>
-            <article class="feature-card" data-animate data-depth="1.5">
-              <img
-                class="feature-image"
-                src="../../assets/images/Models.png"
-                alt="Athletes modeling the Yuck. kit"
-                loading="lazy"
-              />
-              <h3>Precision sourcing</h3>
-              <p>
-                Ingredients are sustainably harvested and third-party verified. Every
-                batch is traceable, so you always know what you’re putting in your body.
-              </p>
-            </article>
-            <article class="feature-card" data-animate data-depth="1.8">
-              <img
-                class="feature-image"
-                src="../../assets/images/YuckPowder.webp"
-                alt="Yuck. powder bursting through a glass surface"
-                loading="lazy"
-              />
-              <h3>Engineered ritual</h3>
-              <p>
-                Bitter by design. That first sip tells your brain it’s time to move. Add
-                cold water, shake, and let your senses dial into the mission.
-              </p>
-            </article>
+          <form class="community-form" data-animate>
+            <label for="community-email">Email address</label>
+            <div class="form-row">
+              <input type="email" id="community-email" name="email" placeholder="you@yuck.com" required />
+              <button type="submit" class="cta primary">Request invite</button>
+            </div>
+            <p class="form-confirmation" role="status" aria-live="polite"></p>
+          </form>
+          <div class="community-feed" aria-live="polite" data-animate></div>
+          <div class="community-videos" data-animate>
+            <video
+              class="community-video"
+              autoplay
+              muted
+              loop
+              playsinline
+              poster="../../assets/images/background-image-title.png"
+            >
+              <source src="../../assets/videos/liftWeights.mp4" type="video/mp4" />
+              Your browser does not support the ritual footage.
+            </video>
+            <video
+              class="community-video"
+              autoplay
+              muted
+              loop
+              playsinline
+              poster="../../assets/images/background-image.png"
+            >
+              <source src="../../assets/videos/videoplayback.mp4" type="video/mp4" />
+              Your browser does not support the ritual footage.
+            </video>
           </div>
-        </div>
-      </section>
-
-      <section id="purchase-options" class="purchase-module section-with-media" data-module="purchase">
-        <div class="section-media" style="background-color: black; background-image: url('../../assets/images/powder-explosion.png'); background-size: cover; background-position: center; min-height: 320px;" aria-hidden="true">
-        </div>
-        <div class="purchase-panel" data-animate>
-          <h2>Choose your path</h2>
-          <p>Commit to consistent training or drop in when the grind calls.</p>
-          <div class="toggle" role="group" aria-label="Purchase options toggle">
-            <button class="toggle-btn active" data-plan="subscription">Subscribe &amp; save</button>
-            <button class="toggle-btn" data-plan="one-time">One-time purchase</button>
+          <div class="community-embeds" data-animate>
+            <div class="embed-card">
+              <iframe
+                src="https://www.youtube.com/embed/2cP7f8kBBpk"
+                title="Yuck. crew ride highlights"
+                loading="lazy"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
+              ></iframe>
+              <p>Drop into a recent crew ride—short, sharp, and full of grit.</p>
+            </div>
+            <div class="embed-card social">
+              <iframe
+                src="https://www.instagram.com/p/DI_s8TaKKQ5/embed"
+                title="Instagram post from the Yuck. community"
+                loading="lazy"
+                allowtransparency="true"
+              ></iframe>
+              <p>See the latest community drop without leaving the Lab.</p>
+            </div>
           </div>
-          <div class="plan-details" aria-live="polite"></div>
-          <button class="cta primary" data-action="purchase">Add to cart</button>
-          <p class="legal">Cancel anytime. Free shipping on all recurring plans.</p>
-        </div>
-        <div class="purchase-imagery" data-animate data-depth="1.3">
-          <img
-            src="../../assets/images/YuckPowder.webp"
-            alt="Yuck. powder bursting through a glass surface"
-            loading="lazy"
-          />
-        </div>
-      </section>
-
-      <section class="portal" data-module="portal">
-        <div class="section-heading" data-animate>
-          <p class="eyebrow">Keep exploring</p>
-          <h2>Tap into the rest of the Lab</h2>
-          <p>Meet the crew, plug into community rituals, or reach out when you need backup.</p>
-        </div>
-        <div class="portal-grid">
-          <article class="portal-card" data-animate>
-            <h3>About Yuck.</h3>
-            <p>Trace every milestone from garage experiments to global rituals.</p>
-            <a class="cta ghost" href="about.html#timeline">Explore the timeline</a>
-          </article>
-          <article class="portal-card" data-animate>
-            <h3>Join the community</h3>
-            <p>Find pods, sessions, and local drop-ins built around stubborn effort.</p>
-            <a class="cta ghost" href="community.html">Enter the Lab</a>
-          </article>
-          <article class="portal-card" data-animate>
-            <h3>Need backup?</h3>
-            <p>Questions about shipping, subscriptions, or stacking the ritual—ping support.</p>
-            <a class="cta ghost" href="about.html#support">Contact support</a>
-          </article>
+          <button class="cta ghost" data-action="load-more">Load more community moments</button>
         </div>
       </section>
     </main>
@@ -193,7 +128,7 @@
           <h4>Explore</h4>
           <ul>
             <li><a href="index.html#product">Product</a></li>
-            <li><a href="community.html">Community</a></li>
+            <li><a href="community.html" aria-current="page">Community</a></li>
             <li><a href="about.html">About</a></li>
             <li><a href="about.html#support">Support</a></li>
           </ul>

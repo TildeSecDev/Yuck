@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Yuck. Dashboard | Lab Control Center</title>
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <meta
+      name="description"
+      content="Monitor shipments, pods, and lab activity from the Yuck. dashboard."
+    />
+    <script src="https://js.stripe.com/v3/" defer></script>
+  </head>
+  <body data-page="dashboard">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header" data-module="sticky-nav">
+      <div class="nav-inner">
+        <a href="index.html#hero" class="logo" aria-label="Go to home">Yuck.</a>
+        <nav aria-label="Primary navigation">
+          <ul class="nav-list">
+            <li><a href="index.html#product">Product</a></li>
+            <li><a href="community.html">Community</a></li>
+            <li data-auth-only hidden><a href="dashboard.html" aria-current="page">Dashboard</a></li>
+            <li><a href="about.html">About</a></li>
+          </ul>
+        </nav>
+        <div class="nav-actions">
+          <button class="nav-icon" data-trigger="search" aria-haspopup="dialog" aria-expanded="false" aria-label="Open search">
+            <span class="icon-search" aria-hidden="true"></span>
+          </button>
+          <button class="nav-icon cart" data-trigger="cart" aria-haspopup="dialog" aria-expanded="false" aria-label="View cart">
+            <span class="icon-cart" aria-hidden="true"></span>
+            <span class="cart-count" aria-live="polite" aria-atomic="true">0</span>
+          </button>
+          <button class="cta ghost nav-auth" data-trigger="auth" aria-haspopup="dialog" aria-expanded="false">
+            Sign in
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main id="main" data-auth-guard hidden>
+      <section class="page-hero section-with-media" data-module="hero">
+        <div class="section-media" aria-hidden="true">
+          <img class="section-image" src="../../assets/images/powder-explosion.png" alt="" />
+        </div>
+        <div class="section-heading" data-animate>
+          <p class="eyebrow">Account Dashboard</p>
+          <h1>Welcome back, <span data-dashboard-name>Athlete</span>.</h1>
+          <p class="hero-description">
+            All your rituals, orders, and crew intel stream here. Keep the effort sharp.
+          </p>
+        </div>
+      </section>
+
+      <section class="portal" data-module="dashboard-overview" aria-labelledby="dashboard-overview-title">
+        <div class="section-heading" data-animate>
+          <p class="eyebrow">Snapshot</p>
+          <h2 id="dashboard-overview-title">Today's ritual summary</h2>
+          <p>Track shipments, community pods, and lab experiments in one calm surface.</p>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card" data-animate>
+            <h3>Next delivery</h3>
+            <p>Your upcoming shipment is staged for <strong>June 28</strong>. Adjust cadence whenever you need.</p>
+          </article>
+          <article class="feature-card" data-animate>
+            <h3>Account contact</h3>
+            <p>We'll send status updates to <strong data-dashboard-email>athlete@yuck.com</strong>. Swap emails inside account settings.</p>
+          </article>
+          <article class="feature-card" data-animate>
+            <h3>Community pods</h3>
+            <p>You're locked into <strong>3 active pods</strong> this week. Expect fresh programming on Thursday night.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="portal" data-module="dashboard-actions" aria-labelledby="dashboard-actions-title">
+        <div class="section-heading" data-animate>
+          <p class="eyebrow">Actions</p>
+          <h2 id="dashboard-actions-title">Manage your ritual flow</h2>
+          <p>Fine-tune billing, revisit orders, or announce an availability change to your crew.</p>
+        </div>
+        <div class="portal-grid">
+          <article class="portal-card" data-animate>
+            <h3>Manage subscription</h3>
+            <p>Pause, fast-forward, or tweak the schedule of your monthly drop.</p>
+            <button class="cta ghost" type="button" data-action="manage-subscription">Open billing controls</button>
+          </article>
+          <article class="portal-card" data-animate>
+            <h3>Order history</h3>
+            <p>Review every batch, tracking detail, and receipt since you joined the Lab.</p>
+            <a class="cta ghost" href="#">View orders</a>
+          </article>
+          <article class="portal-card" data-animate>
+            <h3>Signal the crew</h3>
+            <p>Post updates to your pods when you need backup or want to flex new PRs.</p>
+            <a class="cta ghost" href="community.html">Go to community</a>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-columns">
+        <div>
+          <h4>Yuck.</h4>
+          <p>Natural workout fuel for people who show up even when it hurts.</p>
+        </div>
+        <div>
+          <h4>Explore</h4>
+          <ul>
+            <li><a href="index.html#product">Product</a></li>
+            <li><a href="community.html">Community</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="about.html#support">Support</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Stay bitter</h4>
+          <p>Lab drops, rituals, and performance notes straight to your inbox.</p>
+          <form class="footer-form">
+            <label class="sr-only" for="footer-email">Email address</label>
+            <div class="form-row">
+              <input type="email" id="footer-email" placeholder="you@yuck.com" />
+              <button class="cta primary" type="submit">Subscribe</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; <span data-year></span> Yuck. All rights reserved.</p>
+        <div class="footer-links">
+          <a href="about.html#support">Support</a>
+          <a href="#">Terms</a>
+          <a href="#">Privacy</a>
+        </div>
+      </div>
+    </footer>
+
+    <div class="modal-overlay" data-modal-overlay hidden></div>
+
+    <section class="modal" id="search-modal" role="dialog" aria-modal="true" aria-hidden="true" hidden>
+      <div class="modal-card">
+        <button class="modal-close" data-close-modal aria-label="Close search">&times;</button>
+        <header class="modal-header">
+          <h2>Search the Lab</h2>
+          <p>Use keywords like 'subscription', 'community', or 'dashboard'.</p>
+        </header>
+        <form role="search" class="search-form" data-animate>
+          <label for="site-search" class="sr-only">Search the site</label>
+          <input
+            id="site-search"
+            type="search"
+            name="query"
+            placeholder="Search rituals, docs, and products"
+            autocomplete="off"
+            data-focus
+          />
+        </form>
+        <div class="search-results" role="listbox"></div>
+  <p class="search-empty" hidden>Keep typing—results appear as you search.</p>
+      </div>
+    </section>
+
+    <section class="modal" id="auth-modal" role="dialog" aria-modal="true" aria-hidden="true" hidden>
+      <div class="modal-card">
+        <button class="modal-close" data-close-modal aria-label="Close account">&times;</button>
+        <header class="modal-header">
+          <h2 data-auth-target="title">Welcome back to Yuck.</h2>
+          <p data-auth-target="subtitle">
+            Log in to manage subscriptions, pods, and ritual reminders.
+          </p>
+        </header>
+        <div class="auth-modal">
+          <div class="auth-toggle">
+            <button class="auth-toggle-btn active" type="button" data-auth-view="login" aria-selected="true">
+              Log in
+            </button>
+            <button class="auth-toggle-btn" type="button" data-auth-view="signup" aria-selected="false">
+              Sign up
+            </button>
+          </div>
+          <form class="auth-form" data-auth-form="login">
+            <label for="login-email">Email</label>
+            <input id="login-email" name="email" type="email" autocomplete="email" required />
+            <label for="login-password">Password</label>
+            <input id="login-password" name="password" type="password" autocomplete="current-password" required />
+            <button class="cta primary" type="submit">Log in</button>
+          </form>
+          <form class="auth-form" data-auth-form="signup" hidden>
+            <label for="signup-name">Name</label>
+            <input id="signup-name" name="name" type="text" autocomplete="name" required />
+            <label for="signup-email">Email</label>
+            <input id="signup-email" name="email" type="email" autocomplete="email" required />
+            <label for="signup-password">Password</label>
+            <input id="signup-password" name="password" type="password" autocomplete="new-password" required />
+            <button class="cta primary" type="submit">Create account</button>
+          </form>
+          <div class="auth-account" data-auth-form="account" hidden>
+            <p class="auth-message">You're wired in, <span data-auth-name></span>.</p>
+            <button class="cta primary" data-action="manage-subscription">Manage subscription</button>
+            <button class="cta ghost" data-action="logout">Log out</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <aside class="modal cart-modal" id="cart-modal" role="dialog" aria-modal="true" aria-hidden="true" hidden>
+      <div class="modal-card cart-card">
+        <button class="modal-close" data-close-modal aria-label="Close cart">&times;</button>
+        <header class="cart-header">
+          <p class="eyebrow">Your ritual kit</p>
+          <h3>Ready when you are</h3>
+        </header>
+        <div class="cart-items" data-cart-items></div>
+        <footer class="cart-footer">
+          <div class="cart-total">
+            <span>Total</span>
+            <strong data-cart-total>$0.00</strong>
+          </div>
+          <button class="cta primary" data-action="checkout">Checkout with Stripe</button>
+        </footer>
+        <p class="cart-note">Use Stripe test card 4242 4242 4242 4242 with any future date &amp; CVC to simulate payment.</p>
+      </div>
+    </aside>
+
+    <div class="toast" role="status" aria-live="polite" hidden></div>
+
+    <script src="app.js" defer></script>
+  </body>
+</html>
